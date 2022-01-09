@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "484946719667",
+    "project_id": "bodywellbeing",
+    "storage_bucket": "bodywellbeing.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:484946719667:android:604f3c601098a43e4511c6",
+        "android_client_info": {
+          "package_name": "com.pbarthuel.bodywellbeing"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "484946719667-ie1ac2cbg8so6mhvtkkr8jadnu800vc6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pbarthuel.bodywellbeing",
+            "certificate_hash": "6b100e911b150d7b00957621f73fac4b014c8990"
+          }
+        },
+        {
+          "client_id": "484946719667-b3sklpl5eunfa80ucmcdss5a4t443qb9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrx_MXlgoZfVzj2lC0YQDXBy43rkt9r7g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "484946719667-b3sklpl5eunfa80ucmcdss5a4t443qb9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
