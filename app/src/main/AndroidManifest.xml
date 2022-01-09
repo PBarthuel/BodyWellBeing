@@ -23,9 +23,9 @@
             </intent-filter>
         </activity>
 
-        <!-- Login -->
+        <!-- Home -->
         <activity
-            android:name=".app.modules.login.LoginActivity"
+            android:name=".app.modules.home.HomeActivity"
             android:screenOrientation="fullSensor" />
 
     </application>
