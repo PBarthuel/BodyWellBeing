@@ -1,4 +1,4 @@
-package com.pbarthuel.bodywellbeing.ui.theme
+package com.pbarthuel.bodywellbeing.app.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

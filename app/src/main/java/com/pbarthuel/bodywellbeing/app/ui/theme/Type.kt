@@ -1,4 +1,4 @@
-package com.pbarthuel.bodywellbeing.ui.theme
+package com.pbarthuel.bodywellbeing.app.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
