@@ -9,18 +9,19 @@ import androidx.activity.compose.setContent
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -31,7 +32,14 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.pbarthuel.bodywellbeing.R
 import com.pbarthuel.bodywellbeing.app.modules.home.HomeActivity
+import com.pbarthuel.bodywellbeing.app.ui.component.ButtonFill
+import com.pbarthuel.bodywellbeing.app.ui.component.input.FormInputField
+import com.pbarthuel.bodywellbeing.app.ui.component.input.InputFieldType
+import com.pbarthuel.bodywellbeing.app.ui.component.text.Eyebrow
+import com.pbarthuel.bodywellbeing.app.ui.template.ButtonsBar
+import com.pbarthuel.bodywellbeing.app.ui.theme.Basic2
 import com.pbarthuel.bodywellbeing.app.ui.theme.BodyWellBeingTheme
+import com.pbarthuel.bodywellbeing.app.ui.theme.Layout1
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -71,35 +79,75 @@ class MainActivity : ComponentActivity() {
         setContent {
             BodyWellBeingTheme {
                 Scaffold(content = {
+                    var emailText by remember { mutableStateOf("") }
+                    var passwordText by remember { mutableStateOf("") }
+                    val loginButtonState = remember { mutableStateOf(false) }
                     Column(modifier = Modifier.fillMaxSize()) {
-                        Column(modifier = Modifier.weight(1f)) {
-
-                        }
-                        Button(modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 24.dp, start = 24.dp, end = 24.dp),
-                            onClick = {
-
-                            }) {
-                            Text(text = "Login")
-                        }
-                        Button(modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 24.dp, start = 24.dp, end = 24.dp),
-                            colors = ButtonDefaults.buttonColors(backgroundColor = Color.LightGray),
-                            onClick = {
-                                signInWithGoogle()
-                            }) {
-                            Text(text = "Login with Google")
-                        }
-                        Text(
+                        Box(
                             modifier = Modifier
-                                .align(CenterHorizontally)
-                                .padding(6.dp)
-                                .clickable {
-                                    // TODO create a bottomSheet pour créer un compte
-                                },
-                            text = "Create an account"
+                                .weight(1f)
+                                .fillMaxSize()
+                        ) {
+                            Column(
+                                modifier = Modifier
+                                    .align(Center)
+                                    .fillMaxWidth()
+                            ) {
+                                FormInputField(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(start = Layout1, end = Layout1, bottom = Layout1),
+                                    type = InputFieldType.Text,
+                                    text = emailText,
+                                    placeHolder = "Email",
+                                    onValueChange = {
+                                        emailText = it
+                                    }
+                                )
+                                FormInputField(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(start = Layout1, end = Layout1, bottom = Layout1),
+                                    type = InputFieldType.Password,
+                                    text = passwordText,
+                                    placeHolder = ".........",
+                                    onValueChange = {
+                                        passwordText = it
+                                    }
+                                )
+                            }
+                        }
+                        ButtonsBar(
+                            mainButton = {
+                                ButtonFill(
+                                    text = "Login",
+                                    isLoading = loginButtonState.value,
+                                    onClick = {
+                                        loginButtonState.value = true
+                                        logUser(
+                                            email = emailText,
+                                            password = passwordText,
+                                            loginButtonState = loginButtonState
+                                        )
+                                    }
+                                )
+                                Eyebrow(
+                                    text = "Doesn't have an account ? Create one !",
+                                    modifier = Modifier
+                                        .padding(start = Layout1, end = Layout1, bottom = Basic2)
+                                        .clickable {
+                                            // TODO create a bottomSheet pour créer un compte
+                                        }
+                                )
+                            },
+                            secondaryButton = {
+                                ButtonFill(
+                                    text = "Login with Google",
+                                    onClick = {
+                                        signInWithGoogle()
+                                    }
+                                )
+                            }
                         )
                     }
                 })
@@ -135,8 +183,7 @@ class MainActivity : ComponentActivity() {
             }
     }
 
-    //TODO methode de creation de user a mettre dans le viewModel
-    fun createUser(email: String, password: String) {
+    private fun createUser(email: String, password: String) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 when (task.isSuccessful) {
@@ -156,14 +203,14 @@ class MainActivity : ComponentActivity() {
             }
     }
 
-    //TODO methode de log de user a mettre dans le viewModel
-    fun logUser(email: String, password: String) {
+    private fun logUser(email: String, password: String, loginButtonState: MutableState<Boolean>) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d("LoginActivity", "signInWithEmail:success")
-                    // TODO ici lancer l'activity après connexion (le user vient de se log)
+                    loginButtonState.value = false
+                    startActivity(Intent(this, HomeActivity::class.java))
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w("LoginActivity", "signInWithEmail:failure", task.exception)
@@ -174,9 +221,5 @@ class MainActivity : ComponentActivity() {
                     // TODO ici le log a fail
                 }
             }
-    }
-
-    companion object {
-        private const val RC_SIGN_IN = 9001
     }
 }
