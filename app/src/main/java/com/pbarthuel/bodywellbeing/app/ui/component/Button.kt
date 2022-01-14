@@ -47,7 +47,7 @@ import com.pbarthuel.bodywellbeing.app.ui.theme.Layout4
 enum class ColorStyle {
     Default,
     Bad,
-    Quiet,
+    Quiet
 }
 
 enum class ButtonSize(
@@ -92,6 +92,7 @@ fun ButtonFill(
 fun ButtonOutlined(
     modifier: Modifier = Modifier,
     text: String,
+    startIconSpec: IconSpec? = null,
     enabled: Boolean = true,
     colorStyle: ColorStyle = ColorStyle.Default,
     buttonSize: ButtonSize = ButtonSize.Default,
@@ -109,7 +110,7 @@ fun ButtonOutlined(
         colors = buttonColors(fill = false, colorStyle = colorStyle),
         border = BorderStroke(1.dp, contentAndBorderColor),
         contentPadding = buttonSize.contentPadding,
-        content = { ButtonContent(isLoading, contentAndBorderColor, startIconSpec = null, text, buttonSize) }
+        content = { ButtonContent(isLoading, contentAndBorderColor, startIconSpec, text, buttonSize) }
     )
 }
 
