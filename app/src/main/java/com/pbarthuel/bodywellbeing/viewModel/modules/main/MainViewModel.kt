@@ -4,22 +4,28 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
-import com.pbarthuel.bodywellbeing.app.models.User
+import com.pbarthuel.bodywellbeing.domain.repositories.local.PreferenceDataStoreRepository
+import com.pbarthuel.bodywellbeing.viewModel.utils.CoroutineToolsProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.launch
 
 sealed class State {
     object Loading: State()
     data class Error(val errorMessage: String): State()
-    data class Success(val data: Any): State()
+    data class Success(val data: Any? = null): State()
 }
 
 @HiltViewModel
-class MainViewModel @Inject constructor(): ViewModel() {
+class MainViewModel @Inject constructor(
+    private val dispatcher: CoroutineToolsProvider,
+    private val preferenceDataStoreRepository: PreferenceDataStoreRepository
+): ViewModel() {
 
     private val _state: MutableLiveData<State?> = MutableLiveData(null)
     val state: LiveData<State?> = _state
@@ -41,9 +47,13 @@ class MainViewModel @Inject constructor(): ViewModel() {
                             Log.d("Login", "signInWithEmail:success")
                             task.result.user?.let {
                                 if (it.email != null) {
-                                    _state.value = State.Success(
-                                        User(it.email!!, it.displayName)
-                                    )
+                                    viewModelScope.launch {
+                                        kotlin.runCatching {
+                                            preferenceDataStoreRepository.saveToDataStore(it.uid)
+                                        }.onSuccess {
+                                            _state.value = State.Success()
+                                        }
+                                    }
                                 }
                             }
                         } else {
@@ -66,9 +76,10 @@ class MainViewModel @Inject constructor(): ViewModel() {
                             Log.d("CreateAccount", "createUserWithEmail:success")
                             task.result.user?.let {
                                 if (it.email != null) {
-                                    _state.value = State.Success(
-                                        User(it.email!!, it.displayName)
-                                    )
+                                    viewModelScope.launch {
+                                        preferenceDataStoreRepository.saveToDataStore("10")
+                                        _state.value = State.Success()
+                                    }
                                 }
                             }
                         }
@@ -88,23 +99,22 @@ class MainViewModel @Inject constructor(): ViewModel() {
             if (account == null) {
                 _state.value = State.Error("Something went wrong (google)")
             } else {
-                _state.value = State.Success(User(account.email ?: "", account.displayName))
+                _state.value = State.Success()
             }
         } catch (e: ApiException) {
             _state.value = State.Error("Something went wrong (google)")
         }
     }
 
-    fun loginSuccess() {
+    fun loginSuccess(auth: FirebaseAuth) {
         _state.value = null
+        auth.signOut()
     }
 
-    fun isAlreadyLog(auth: FirebaseAuth) {
-        auth.currentUser?.let {
-            if (it.email != null) {
-                _state.value = State.Success(
-                    User(it.email!!, it.displayName)
-                )
+    fun isAlreadyLog() {
+        viewModelScope.launch(dispatcher.main) {
+            if (preferenceDataStoreRepository.isUserConnected()) {
+                _state.value = State.Success()
             }
         }
     }

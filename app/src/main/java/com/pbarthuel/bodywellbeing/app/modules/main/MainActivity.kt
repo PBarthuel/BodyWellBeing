@@ -14,13 +14,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.Observer
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
@@ -49,8 +47,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        viewModel.isAlreadyLog()
         auth = Firebase.auth
-        viewModel.isAlreadyLog(auth)
 
         setContent {
             var loginButtonState by remember { mutableStateOf(false) }
@@ -91,7 +89,7 @@ class MainActivity : ComponentActivity() {
                 }
             }
 
-            viewModel.state.observe(this, Observer {
+            viewModel.state.observe(this) {
                 when (val s = it) {
                     is State.Error -> {
                         Toast.makeText(this, s.errorMessage, Toast.LENGTH_LONG).show()
@@ -102,28 +100,20 @@ class MainActivity : ComponentActivity() {
                     }
                     is State.Success -> {
                         loginButtonState = false
-                        viewModel.loginSuccess()
+                        viewModel.loginSuccess(auth)
                         startActivity(Intent(this, HomeActivity::class.java))
                     }
                     null -> { }
                 }
-            })
+            }
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        viewModel.isAlreadyLog(auth = auth)
     }
 }
 
 object MainDestinations {
-    const val Main = "main"
-
     object Login {
         const val root = "login"
     }
-
     object CreateAccount {
         const val root = "create-account"
     }

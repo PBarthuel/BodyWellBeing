@@ -80,6 +80,10 @@ dependencies {
     implementation("com.google.accompanist:accompanist-navigation-animation:${LibVersion.accompanistVersion}")
     implementation("com.google.accompanist:accompanist-navigation-material:${LibVersion.accompanistVersion}")
 
+    // DataStore
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+    implementation("androidx.datastore:datastore-preferences-core:1.0.0")
+
     // Firebase
     implementation(platform("com.google.firebase:firebase-bom:29.0.3"))
     implementation("com.google.firebase:firebase-auth-ktx")
