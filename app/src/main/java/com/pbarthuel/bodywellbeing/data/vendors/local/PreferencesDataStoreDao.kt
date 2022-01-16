@@ -8,7 +8,6 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 
 class PreferencesDataStoreDao @Inject constructor(

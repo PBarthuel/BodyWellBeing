@@ -88,6 +88,7 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:29.0.3"))
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.android.gms:play-services-auth:20.0.1")
+    implementation("com.google.firebase:firebase-database-ktx")
 
     // Room
     implementation("androidx.room:room-runtime:${LibVersion.roomVersion}")
@@ -113,10 +114,10 @@ dependencies {
     androidTestImplementation("io.mockk:mockk-agent-jvm:1.12.2")
     // For instrumentation tests
     testImplementation("com.google.dagger:hilt-android-testing:2.37")
-    kaptTest("com.google.dagger:hilt-android-compiler:2.36")
+    kaptTest("com.google.dagger:hilt-android-compiler:${LibVersion.hiltVersion}")
     // For instrumented tests.
     androidTestImplementation("com.google.dagger:hilt-android-testing:2.37")
-    kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.36")
+    kaptAndroidTest("com.google.dagger:hilt-android-compiler:${LibVersion.hiltVersion}")
 
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")

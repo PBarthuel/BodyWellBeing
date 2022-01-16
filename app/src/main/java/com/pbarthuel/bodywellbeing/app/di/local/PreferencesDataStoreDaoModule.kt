@@ -15,7 +15,6 @@ class PreferencesDataStoreDaoModule {
 
     @Provides
     @Singleton
-    fun providePreferenceDataStoreDao(@ApplicationContext appContext: Context): PreferencesDataStoreDao {
-        return PreferencesDataStoreDao(context = appContext)
-    }
+    fun providePreferenceDataStoreDao(@ApplicationContext appContext: Context): PreferencesDataStoreDao =
+        PreferencesDataStoreDao(context = appContext)
 }
