@@ -13,12 +13,14 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.lifecycleScope
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
@@ -26,13 +28,16 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.pbarthuel.bodywellbeing.app.modules.accountCreation.AccountCreationActivity
 import com.pbarthuel.bodywellbeing.app.modules.home.HomeActivity
 import com.pbarthuel.bodywellbeing.app.modules.main.compose.CreateAccountScreen
 import com.pbarthuel.bodywellbeing.app.modules.main.compose.LoginScreen
 import com.pbarthuel.bodywellbeing.app.ui.theme.BodyWellBeingTheme
 import com.pbarthuel.bodywellbeing.viewModel.modules.main.MainViewModel
-import com.pbarthuel.bodywellbeing.viewModel.modules.main.State
+import com.pbarthuel.bodywellbeing.viewModel.modules.main.LoginState
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 @ExperimentalComposeUiApi
 @ExperimentalAnimationApi
@@ -89,23 +94,32 @@ class MainActivity : ComponentActivity() {
                 }
             }
 
-            viewModel.state.observe(this) {
-                when (val s = it) {
-                    is State.Error -> {
-                        Toast.makeText(this, s.errorMessage, Toast.LENGTH_LONG).show()
-                        loginButtonState = false
+            LaunchedEffect(key1 = "", block = {
+                lifecycleScope.launch {
+                    viewModel.state.collect {
+                        when (val s = it) {
+                            is LoginState.Error -> {
+                                Toast.makeText(this@MainActivity, s.errorMessage, Toast.LENGTH_LONG).show()
+                                loginButtonState = false
+                            }
+                            LoginState.Loading -> {
+                                loginButtonState = true
+                            }
+                            is LoginState.Login -> {
+                                loginButtonState = false
+                                viewModel.loginSuccess(auth)
+                                startActivity(Intent(this@MainActivity, HomeActivity::class.java))
+                            }
+                            is LoginState.CreateAccount -> {
+                                loginButtonState = false
+                                viewModel.loginSuccess(auth)
+                                startActivity(Intent(this@MainActivity, AccountCreationActivity::class.java))
+                            }
+                            else -> { }
+                        }
                     }
-                    State.Loading -> {
-                        loginButtonState = true
-                    }
-                    is State.Success -> {
-                        loginButtonState = false
-                        viewModel.loginSuccess(auth)
-                        startActivity(Intent(this, HomeActivity::class.java))
-                    }
-                    null -> { }
                 }
-            }
+            })
         }
     }
 }

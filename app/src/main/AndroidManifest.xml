@@ -26,7 +26,12 @@
         <!-- Home -->
         <activity
             android:name=".app.modules.home.HomeActivity"
-            android:screenOrientation="fullSensor" />
+            android:screenOrientation="portrait" />
+
+        <!-- AccountCreation -->
+        <activity
+            android:name=".app.modules.accountCreation.AccountCreationActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 
