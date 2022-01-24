@@ -61,11 +61,10 @@ class MainActivity : ComponentActivity() {
                 ProvideWindowInsets {
                     val navController = rememberAnimatedNavController()
                     Column(modifier = Modifier.fillMaxSize()) {
-                        Column(modifier = Modifier.weight(1f)) {
                             AnimatedNavHost(
                                 navController,
                                 startDestination = MainDestinations.Login.root,
-                                enterTransition = { fadeIn(animationSpec = tween(700)) }, // TODO check if it works when removing this parameter with accompanist accompanist > 0.19.0
+                                enterTransition = { fadeIn(animationSpec = tween(700)) },
                                 exitTransition = { fadeOut(animationSpec = tween(700)) }
                             ) {
                                 composable(route = MainDestinations.Login.root) {
@@ -89,7 +88,6 @@ class MainActivity : ComponentActivity() {
                                     )
                                 }
                             }
-                        }
                     }
                 }
             }

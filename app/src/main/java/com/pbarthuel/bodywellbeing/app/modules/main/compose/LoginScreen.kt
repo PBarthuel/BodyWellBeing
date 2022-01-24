@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -27,7 +26,6 @@ import com.pbarthuel.bodywellbeing.app.ui.template.ButtonsBar
 import com.pbarthuel.bodywellbeing.app.ui.theme.Basic2
 import com.pbarthuel.bodywellbeing.app.ui.theme.HorizontalMargin
 import com.pbarthuel.bodywellbeing.app.ui.theme.Layout1
-import com.pbarthuel.bodywellbeing.app.ui.theme.Layout2
 import com.pbarthuel.bodywellbeing.viewModel.modules.main.MainViewModel
 
 @ExperimentalMaterialApi
@@ -38,76 +36,74 @@ fun LoginScreen(
     viewModel: MainViewModel,
     onAccountCreationClick: () -> Unit
 ) {
-    Scaffold(content = {
-        var emailText by remember { mutableStateOf("") }
-        var passwordText by remember { mutableStateOf("") }
-        Column(modifier = Modifier.fillMaxSize()) {
-            Box(
+    var emailText by remember { mutableStateOf("") }
+    var passwordText by remember { mutableStateOf("") }
+    Column(modifier = Modifier.fillMaxSize()) {
+        Box(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxSize()
+        ) {
+            Column(
                 modifier = Modifier
-                    .weight(1f)
-                    .fillMaxSize()
+                    .align(Alignment.Center)
+                    .fillMaxWidth()
             ) {
-                Column(
+                FormInputField(
                     modifier = Modifier
-                        .align(Alignment.Center)
                         .fillMaxWidth()
-                ) {
-                    FormInputField(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = HorizontalMargin, end = HorizontalMargin, bottom = Layout1),
-                        label = "Email",
-                        type = InputFieldType.Text,
-                        text = emailText,
-                        placeHolder = "user@gmail.com",
-                        onValueChange = {
-                            emailText = it
-                        }
-                    )
-                    val inputTypePassword = remember { mutableStateOf(InputFieldType.Password) }
-                    PasswordInputField(
-                        label = "Confirm password",
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = HorizontalMargin, end = HorizontalMargin, top = Layout2),
-                        inputType = inputTypePassword,
-                        text = passwordText,
-                        onValueChange = {
-                            passwordText = it
-                        },
-                        focusRequester = FocusRequester(),
-                        imeAction = ImeAction.Done,
-                        onImeAction = { },
-                    )
-                }
+                        .padding(start = HorizontalMargin, end = HorizontalMargin, bottom = Layout1),
+                    label = "Email",
+                    type = InputFieldType.Text,
+                    text = emailText,
+                    placeHolder = "user@gmail.com",
+                    onValueChange = {
+                        emailText = it
+                    }
+                )
+                val inputTypePassword = remember { mutableStateOf(InputFieldType.Password) }
+                PasswordInputField(
+                    label = "Confirm password",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = HorizontalMargin),
+                    inputType = inputTypePassword,
+                    text = passwordText,
+                    onValueChange = {
+                        passwordText = it
+                    },
+                    focusRequester = FocusRequester(),
+                    imeAction = ImeAction.Done,
+                    onImeAction = { },
+                )
             }
-            ButtonsBar(
-                mainButton = {
-                    ButtonFill(
-                        text = "Login",
-                        isLoading = loginButtonState,
-                        onClick = {
-                            viewModel.logUser(
-                                email = emailText,
-                                password = passwordText,
-                                auth = auth
-                            )
-                        }
-                    )
-                    Eyebrow(
-                        text = "Doesn't have an account ? Create one !",
-                        modifier = Modifier
-                            .padding(start = HorizontalMargin, end = HorizontalMargin, bottom = Basic2)
-                            .clickable { onAccountCreationClick() }
-                    )
-                },
-                secondaryButton = {
-                    GoogleAuth(
-                        viewModel = hiltViewModel(),
-                        loginButtonState = loginButtonState,
-                    )
-                }
-            )
         }
-    })
+        ButtonsBar(
+            mainButton = {
+                ButtonFill(
+                    text = "Login",
+                    isLoading = loginButtonState,
+                    onClick = {
+                        viewModel.logUser(
+                            email = emailText,
+                            password = passwordText,
+                            auth = auth
+                        )
+                    }
+                )
+                Eyebrow(
+                    text = "Doesn't have an account ? Create one !",
+                    modifier = Modifier
+                        .padding(start = HorizontalMargin, end = HorizontalMargin, bottom = Basic2)
+                        .clickable { onAccountCreationClick() }
+                )
+            },
+            secondaryButton = {
+                GoogleAuth(
+                    viewModel = hiltViewModel(),
+                    loginButtonState = loginButtonState,
+                )
+            }
+        )
+    }
 }

@@ -9,14 +9,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -33,11 +32,9 @@ import com.pbarthuel.bodywellbeing.app.ui.component.input.FormInputField
 import com.pbarthuel.bodywellbeing.app.ui.component.input.InputFieldType
 import com.pbarthuel.bodywellbeing.app.ui.component.text.Eyebrow
 import com.pbarthuel.bodywellbeing.app.ui.template.ButtonsBar
-import com.pbarthuel.bodywellbeing.app.ui.theme.Basic2
 import com.pbarthuel.bodywellbeing.app.ui.theme.HorizontalMargin
 import com.pbarthuel.bodywellbeing.app.ui.theme.Layout1
 import com.pbarthuel.bodywellbeing.app.ui.theme.Layout2
-import com.pbarthuel.bodywellbeing.app.ui.theme.Layout4
 import com.pbarthuel.bodywellbeing.viewModel.modules.main.MainViewModel
 
 @ExperimentalComposeUiApi
@@ -48,83 +45,81 @@ fun CreateAccountScreen(
     viewModel: MainViewModel,
     onLoginClick: () -> Unit
 ) {
-    Scaffold(content = {
-        var emailText by remember { mutableStateOf("") }
-        var passwordText by remember { mutableStateOf("") }
-        var confirmedPasswordText by remember { mutableStateOf("") }
-        val keyboardController = LocalSoftwareKeyboardController.current
-        Column(modifier = Modifier.fillMaxSize()) {
-            Box(
+    var emailText by remember { mutableStateOf("") }
+    var passwordText by remember { mutableStateOf("") }
+    var confirmedPasswordText by remember { mutableStateOf("") }
+    val keyboardController = LocalSoftwareKeyboardController.current
+    Column(modifier = Modifier.fillMaxSize()) {
+        Box(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxSize()
+        ) {
+            Column(
                 modifier = Modifier
-                    .weight(1f)
-                    .fillMaxSize()
+                    .align(Center)
+                    .fillMaxWidth()
             ) {
-                Column(
+                FormInputField(
                     modifier = Modifier
-                        .align(Alignment.Center)
                         .fillMaxWidth()
-                ) {
-                    FormInputField(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(
-                                start = HorizontalMargin,
-                                end = HorizontalMargin,
-                                bottom = Layout1
-                            ),
-                        label = "Email",
-                        type = InputFieldType.Text,
-                        text = emailText,
-                        placeHolder = "user@gmail.com",
-                        onValueChange = {
-                            emailText = it
-                        }
-                    )
-                    PasswordConfigurationLayout(
-                        title = "Password",
-                        focusRequester = FocusRequester(),
-                        passwordText = passwordText,
-                        onPasswordsChange = { password, confirmedPassword ->
-                            passwordText = password
-                            confirmedPasswordText = confirmedPassword
-                        },
-                        onDone = {
-                            keyboardController?.hide()
-                            viewModel.createAccount(
-                                auth = auth,
-                                email = emailText,
-                                password = passwordText,
-                                confirmedPassword = confirmedPasswordText
-                            )
-                        }
-                    )
-                }
+                        .padding(
+                            start = HorizontalMargin,
+                            end = HorizontalMargin,
+                            bottom = Layout2
+                        ),
+                    label = "Email",
+                    type = InputFieldType.Text,
+                    text = emailText,
+                    placeHolder = "user@gmail.com",
+                    onValueChange = {
+                        emailText = it
+                    }
+                )
+                PasswordConfigurationLayout(
+                    title = "Password",
+                    focusRequester = FocusRequester(),
+                    passwordText = passwordText,
+                    onPasswordsChange = { password, confirmedPassword ->
+                        passwordText = password
+                        confirmedPasswordText = confirmedPassword
+                    },
+                    onDone = {
+                        keyboardController?.hide()
+                        viewModel.createAccount(
+                            auth = auth,
+                            email = emailText,
+                            password = passwordText,
+                            confirmedPassword = confirmedPasswordText
+                        )
+                    }
+                )
             }
-            ButtonsBar(
-                mainButton = {
-                    ButtonFill(
-                        text = "Create account",
-                        isLoading = loginButtonState,
-                        onClick = {
-                            keyboardController?.hide()
-                            viewModel.createAccount(
-                                auth = auth,
-                                email = emailText,
-                                password = passwordText,
-                                confirmedPassword = confirmedPasswordText
-                            )
-                        }
-                    )
-                    Eyebrow(
-                        text = "Already have an account ?",
-                        modifier = Modifier
-                            .padding(start = Layout1, end = Layout1, bottom = Basic2)
-                            .clickable { onLoginClick() }
-                    )
-                }
-            )
         }
-    })
+        ButtonsBar(
+            mainButton = {
+                ButtonFill(
+                    text = "Create account",
+                    isLoading = loginButtonState,
+                    onClick = {
+                        keyboardController?.hide()
+                        viewModel.createAccount(
+                            auth = auth,
+                            email = emailText,
+                            password = passwordText,
+                            confirmedPassword = confirmedPasswordText
+                        )
+                    }
+                )
+                Eyebrow(
+                    text = "Already have an account ?",
+                    modifier = Modifier
+                        .padding(horizontal = Layout1)
+                        .clickable { onLoginClick() }
+                )
+            }
+        )
+    }
 }
 
 @Composable
@@ -149,7 +144,7 @@ fun PasswordConfigurationLayout(
     val repeatPasswordFocusRequester = remember { FocusRequester() }
     PasswordInputField(
         label = title,
-        modifier = Modifier.padding(start = HorizontalMargin, end = HorizontalMargin, top = Layout4),
+        modifier = Modifier.padding(horizontal = HorizontalMargin),
         inputType = inputTypePassword,
         text = password,
         helperText = helperText.value,
@@ -226,7 +221,7 @@ fun SecretIconPassword(
                     passwordIcon = R.drawable.ic_stock_eye
                     inputType.value = InputFieldType.Password
                 }
-                else -> { }
+                else -> {}
             }
         },
         painter = painterResource(id = passwordIcon),

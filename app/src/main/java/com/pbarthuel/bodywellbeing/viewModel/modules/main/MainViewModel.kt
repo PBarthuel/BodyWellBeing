@@ -25,7 +25,6 @@ sealed class LoginState {
     object Loading: LoginState()
     data class Error(val errorMessage: String): LoginState()
     object Login: LoginState()
-    // TODO gérer le create Account
     object CreateAccount: LoginState()
 }
 
