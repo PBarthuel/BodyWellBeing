@@ -61,33 +61,33 @@ class MainActivity : ComponentActivity() {
                 ProvideWindowInsets {
                     val navController = rememberAnimatedNavController()
                     Column(modifier = Modifier.fillMaxSize()) {
-                            AnimatedNavHost(
-                                navController,
-                                startDestination = MainDestinations.Login.root,
-                                enterTransition = { fadeIn(animationSpec = tween(700)) },
-                                exitTransition = { fadeOut(animationSpec = tween(700)) }
-                            ) {
-                                composable(route = MainDestinations.Login.root) {
-                                    LoginScreen(
-                                        auth = auth,
-                                        loginButtonState = loginButtonState,
-                                        viewModel = viewModel,
-                                        onAccountCreationClick = {
-                                            navController.navigate(route = MainDestinations.CreateAccount.root)
-                                        }
-                                    )
-                                }
-                                composable(route = MainDestinations.CreateAccount.root) {
-                                    CreateAccountScreen(
-                                        auth = auth,
-                                        loginButtonState = loginButtonState,
-                                        viewModel = viewModel,
-                                        onLoginClick = {
-                                            navController.navigate(route = MainDestinations.Login.root)
-                                        }
-                                    )
-                                }
+                        AnimatedNavHost(
+                            navController,
+                            startDestination = MainDestinations.Login.root,
+                            enterTransition = { fadeIn(animationSpec = tween(700)) },
+                            exitTransition = { fadeOut(animationSpec = tween(700)) }
+                        ) {
+                            composable(route = MainDestinations.Login.root) {
+                                LoginScreen(
+                                    auth = auth,
+                                    loginButtonState = loginButtonState,
+                                    viewModel = viewModel,
+                                    onAccountCreationClick = {
+                                        navController.navigate(route = MainDestinations.CreateAccount.root)
+                                    }
+                                )
                             }
+                            composable(route = MainDestinations.CreateAccount.root) {
+                                CreateAccountScreen(
+                                    auth = auth,
+                                    loginButtonState = loginButtonState,
+                                    viewModel = viewModel,
+                                    onLoginClick = {
+                                        navController.navigate(route = MainDestinations.Login.root)
+                                    }
+                                )
+                            }
+                        }
                     }
                 }
             }
@@ -113,7 +113,7 @@ class MainActivity : ComponentActivity() {
                                 viewModel.loginSuccess(auth)
                                 startActivity(Intent(this@MainActivity, AccountCreationActivity::class.java))
                             }
-                            else -> { }
+                            else -> {}
                         }
                     }
                 }
@@ -126,6 +126,7 @@ object MainDestinations {
     object Login {
         const val root = "login"
     }
+
     object CreateAccount {
         const val root = "create-account"
     }

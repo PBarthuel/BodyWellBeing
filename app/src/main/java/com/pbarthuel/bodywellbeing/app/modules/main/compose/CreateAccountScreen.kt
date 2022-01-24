@@ -1,5 +1,6 @@
 package com.pbarthuel.bodywellbeing.app.modules.main.compose
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
@@ -49,7 +50,7 @@ fun CreateAccountScreen(
     var passwordText by remember { mutableStateOf("") }
     var confirmedPasswordText by remember { mutableStateOf("") }
     val keyboardController = LocalSoftwareKeyboardController.current
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxSize().background(color = MaterialTheme.colors.background)) {
         Box(
             modifier = Modifier
                 .weight(1f)
@@ -68,16 +69,16 @@ fun CreateAccountScreen(
                             end = HorizontalMargin,
                             bottom = Layout2
                         ),
-                    label = "Email",
+                    label = stringResource(id = R.string.mail),
                     type = InputFieldType.Text,
                     text = emailText,
-                    placeHolder = "user@gmail.com",
+                    placeHolder = stringResource(id = R.string.mail_placeholder),
                     onValueChange = {
                         emailText = it
                     }
                 )
                 PasswordConfigurationLayout(
-                    title = "Password",
+                    title = stringResource(id = R.string.password),
                     focusRequester = FocusRequester(),
                     passwordText = passwordText,
                     onPasswordsChange = { password, confirmedPassword ->
@@ -99,7 +100,7 @@ fun CreateAccountScreen(
         ButtonsBar(
             mainButton = {
                 ButtonFill(
-                    text = "Create account",
+                    text = stringResource(id = R.string.create_account),
                     isLoading = loginButtonState,
                     onClick = {
                         keyboardController?.hide()
@@ -112,7 +113,7 @@ fun CreateAccountScreen(
                     }
                 )
                 Eyebrow(
-                    text = "Already have an account ?",
+                    text = stringResource(id = R.string.already_have_account),
                     modifier = Modifier
                         .padding(horizontal = Layout1)
                         .clickable { onLoginClick() }
@@ -158,7 +159,7 @@ fun PasswordConfigurationLayout(
         onImeAction = { repeatPasswordFocusRequester.requestFocus() },
     )
     PasswordInputField(
-        label = "Confirm password",
+        label = stringResource(id = R.string.confirm_password),
         modifier = Modifier.padding(start = HorizontalMargin, end = HorizontalMargin, top = Layout2),
         inputType = inputTypeConfirm,
         text = confirmPassword,
@@ -190,7 +191,7 @@ fun PasswordInputField(
         type = inputType.value,
         label = label,
         text = text,
-        placeHolder = "••••••",
+        placeHolder = stringResource(id = R.string.password_placeholder),
         helperText = helperText?.let { AnnotatedString(stringResource(id = it)) },
         rightAccessory = { SecretIconPassword(inputType = inputType) },
         onValueChange = onValueChange,

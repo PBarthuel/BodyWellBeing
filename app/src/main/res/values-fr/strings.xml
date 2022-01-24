@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">BodyWellBeing</string>
+
+    <string name="mail">Email</string>
+    <string name="login">Login</string>
+    <string name="create_account">Creez un compte</string>
+    <string name="password">Mot de passe</string>
+    <string name="confirm_password">Confirmez le mot de passe</string>
+    <string name="mail_placeholder">user@gmail.com</string>
+    <string name="password_placeholder">•••••••••</string>
+    <string name="dosent_have_account">Vous n\'avez pas de compte ? Créez en un !</string>
+    <string name="already_have_account">Vous avez déjà un compte ?</string>
+    <string name="signin_google">Enregistrez vous avec Google</string>
+</resources>

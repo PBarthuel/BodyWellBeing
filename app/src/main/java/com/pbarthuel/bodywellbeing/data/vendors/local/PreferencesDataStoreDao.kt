@@ -50,12 +50,11 @@ class PreferencesDataStoreDao @Inject constructor(
         }
     }
 
-    fun isUserConnected(): Flow<LoginState?> =
-        context.dataStore.data.map {
-            when {
-                (it[USER_ID] != null && it[USER_ALREADY_CREATED] == true) -> LoginState.Login
-                (it[USER_ID] != null && it[USER_ALREADY_CREATED] == false) -> LoginState.CreateAccount
-                else -> null
-            }
+    fun isUserConnected(): Flow<LoginState?> = context.dataStore.data.map {
+        when {
+            (it[USER_ID] != null && it[USER_ALREADY_CREATED] == true) -> LoginState.Login
+            (it[USER_ID] != null && it[USER_ALREADY_CREATED] == false) -> LoginState.CreateAccount
+            else -> null
         }
+    }
 }

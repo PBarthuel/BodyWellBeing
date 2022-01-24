@@ -1,5 +1,6 @@
 package com.pbarthuel.bodywellbeing.app.modules.main.compose
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -7,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -15,9 +17,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.firebase.auth.FirebaseAuth
+import com.pbarthuel.bodywellbeing.R
 import com.pbarthuel.bodywellbeing.app.ui.component.ButtonFill
 import com.pbarthuel.bodywellbeing.app.ui.component.input.FormInputField
 import com.pbarthuel.bodywellbeing.app.ui.component.input.InputFieldType
@@ -38,7 +42,7 @@ fun LoginScreen(
 ) {
     var emailText by remember { mutableStateOf("") }
     var passwordText by remember { mutableStateOf("") }
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxSize().background(color = MaterialTheme.colors.background)) {
         Box(
             modifier = Modifier
                 .weight(1f)
@@ -53,17 +57,17 @@ fun LoginScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(start = HorizontalMargin, end = HorizontalMargin, bottom = Layout1),
-                    label = "Email",
+                    label = stringResource(id = R.string.mail),
                     type = InputFieldType.Text,
                     text = emailText,
-                    placeHolder = "user@gmail.com",
+                    placeHolder = stringResource(id = R.string.mail_placeholder),
                     onValueChange = {
                         emailText = it
                     }
                 )
                 val inputTypePassword = remember { mutableStateOf(InputFieldType.Password) }
                 PasswordInputField(
-                    label = "Confirm password",
+                    label = stringResource(id = R.string.password),
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = HorizontalMargin),
@@ -81,7 +85,7 @@ fun LoginScreen(
         ButtonsBar(
             mainButton = {
                 ButtonFill(
-                    text = "Login",
+                    text = stringResource(id = R.string.login),
                     isLoading = loginButtonState,
                     onClick = {
                         viewModel.logUser(
@@ -92,7 +96,7 @@ fun LoginScreen(
                     }
                 )
                 Eyebrow(
-                    text = "Doesn't have an account ? Create one !",
+                    text = stringResource(id = R.string.dosent_have_account),
                     modifier = Modifier
                         .padding(start = HorizontalMargin, end = HorizontalMargin, bottom = Basic2)
                         .clickable { onAccountCreationClick() }

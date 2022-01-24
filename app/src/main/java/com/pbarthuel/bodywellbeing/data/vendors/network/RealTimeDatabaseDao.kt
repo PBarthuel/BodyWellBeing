@@ -35,8 +35,7 @@ class RealTimeDatabaseDao @Inject constructor(
                                 )
                                 trySend(userNotNull)
                             }
-                        } }
-                        .onFailure { throw Exception("User not deserialized") }
+                        } }.onFailure { throw Exception("User not deserialized") }
                 } else {
                     kotlin.runCatching {
                         runBlocking(dispatcher.io) {
