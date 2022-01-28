@@ -1,6 +1,6 @@
 package com.pbarthuel.bodywellbeing.domain.repositories.local
 
-import com.pbarthuel.bodywellbeing.viewModel.modules.main.LoginState
+import com.pbarthuel.bodywellbeing.viewModel.modules.login.LoginState
 import kotlinx.coroutines.flow.Flow
 
 interface PreferenceDataStoreRepository {

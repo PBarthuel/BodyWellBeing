@@ -2,7 +2,7 @@ package com.pbarthuel.bodywellbeing.data.repositories.local
 
 import com.pbarthuel.bodywellbeing.data.vendors.local.PreferencesDataStoreDao
 import com.pbarthuel.bodywellbeing.domain.repositories.local.PreferenceDataStoreRepository
-import com.pbarthuel.bodywellbeing.viewModel.modules.main.LoginState
+import com.pbarthuel.bodywellbeing.viewModel.modules.login.LoginState
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 

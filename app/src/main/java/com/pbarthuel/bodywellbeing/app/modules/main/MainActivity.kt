@@ -1,43 +1,49 @@
 package com.pbarthuel.bodywellbeing.app.modules.main
 
-import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.annotation.StringRes
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.AppBarDefaults
+import androidx.compose.material.BottomNavigation
+import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBox
+import androidx.compose.material.icons.filled.AddCircle
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.lifecycleScope
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
-import com.pbarthuel.bodywellbeing.app.modules.accountCreation.AccountCreationActivity
-import com.pbarthuel.bodywellbeing.app.modules.home.HomeActivity
-import com.pbarthuel.bodywellbeing.app.modules.main.compose.CreateAccountScreen
-import com.pbarthuel.bodywellbeing.app.modules.main.compose.LoginScreen
+import com.pbarthuel.bodywellbeing.R
 import com.pbarthuel.bodywellbeing.app.ui.theme.BodyWellBeingTheme
 import com.pbarthuel.bodywellbeing.viewModel.modules.main.MainViewModel
-import com.pbarthuel.bodywellbeing.viewModel.modules.main.LoginState
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 
 @ExperimentalComposeUiApi
 @ExperimentalAnimationApi
@@ -47,87 +53,102 @@ class MainActivity : ComponentActivity() {
 
     private val viewModel by viewModels<MainViewModel>()
 
-    private lateinit var auth: FirebaseAuth
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.isAlreadyLog()
-        auth = Firebase.auth
-
         setContent {
-            var loginButtonState by remember { mutableStateOf(false) }
             BodyWellBeingTheme {
                 ProvideWindowInsets {
                     val navController = rememberAnimatedNavController()
-                    Column(modifier = Modifier.fillMaxSize()) {
+                    val bottomNavigationItems = listOf(
+                        Screen.Home,
+                        Screen.Body,
+                        Screen.Profile
+                    )
+                    Scaffold(
+                        modifier = Modifier.fillMaxSize(),
+                        topBar = {
+                            TopAppBar(
+                                title = {
+                                    Text(text = "top app bar example")
+                                },
+                                navigationIcon = {
+                                    IconButton(
+                                        onClick = {
+                                            kotlin.runCatching {
+                                                viewModel.logOut()
+                                            }.onSuccess {
+                                                finish()
+                                            }
+                                        }
+                                    ) { Icon(Icons.Filled.Menu, contentDescription = "Menu") }
+                                },
+                                elevation = AppBarDefaults.TopAppBarElevation
+                            )
+                        },
+                        bottomBar = {
+                            BottomNavigation {
+                                val navBackStackEntry by navController.currentBackStackEntryAsState()
+                                val currentDestination = navBackStackEntry?.destination
+                                bottomNavigationItems.forEach { screen ->
+                                    BottomNavigationItem(
+                                        icon = { Icon(screen.icon, contentDescription = null) },
+                                        label = { Text(stringResource(id = screen.resourceId)) },
+                                        selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
+                                        onClick = {
+                                            navController.navigate(screen.route) {
+                                                popUpTo(navController.graph.findStartDestination().id) {
+                                                    saveState = true
+                                                }
+                                                launchSingleTop = true
+                                                restoreState = true
+                                            }
+                                        }
+                                    )
+                                }
+                            }
+                        }
+                    ) {
                         AnimatedNavHost(
                             navController,
-                            startDestination = MainDestinations.Login.root,
+                            startDestination = Screen.Home.route,
                             enterTransition = { fadeIn(animationSpec = tween(700)) },
                             exitTransition = { fadeOut(animationSpec = tween(700)) }
                         ) {
-                            composable(route = MainDestinations.Login.root) {
-                                LoginScreen(
-                                    auth = auth,
-                                    loginButtonState = loginButtonState,
-                                    viewModel = viewModel,
-                                    onAccountCreationClick = {
-                                        navController.navigate(route = MainDestinations.CreateAccount.root)
-                                    }
-                                )
+                            composable(Screen.Home.route) {
+                                Box(modifier = Modifier
+                                    .fillMaxSize()
+                                    .background(color = colorResource(id = R.color.black))
+                                ) {
+
+                                }
                             }
-                            composable(route = MainDestinations.CreateAccount.root) {
-                                CreateAccountScreen(
-                                    auth = auth,
-                                    loginButtonState = loginButtonState,
-                                    viewModel = viewModel,
-                                    onLoginClick = {
-                                        navController.navigate(route = MainDestinations.Login.root)
-                                    }
-                                )
+                            composable(Screen.Body.route) {
+                                Box(modifier = Modifier
+                                    .fillMaxSize()
+                                    .background(color = colorResource(id = R.color.purple_500))
+                                ) {
+
+                                }
+                            }
+                            composable(Screen.Profile.route) {
+                                Box(modifier = Modifier
+                                    .fillMaxSize()
+                                    .background(color = colorResource(id = R.color.teal_700))
+                                ) {
+
+                                }
                             }
                         }
                     }
                 }
             }
-
-            LaunchedEffect(key1 = "", block = {
-                lifecycleScope.launch {
-                    viewModel.state.collect {
-                        when (val s = it) {
-                            is LoginState.Error -> {
-                                Toast.makeText(this@MainActivity, s.errorMessage, Toast.LENGTH_LONG).show()
-                                loginButtonState = false
-                            }
-                            LoginState.Loading -> {
-                                loginButtonState = true
-                            }
-                            is LoginState.Login -> {
-                                loginButtonState = false
-                                viewModel.loginSuccess(auth)
-                                startActivity(Intent(this@MainActivity, HomeActivity::class.java))
-                            }
-                            is LoginState.CreateAccount -> {
-                                loginButtonState = false
-                                viewModel.loginSuccess(auth)
-                                startActivity(Intent(this@MainActivity, AccountCreationActivity::class.java))
-                            }
-                            else -> {}
-                        }
-                    }
-                }
-            })
         }
     }
 }
 
-object MainDestinations {
-    object Login {
-        const val root = "login"
-    }
-
-    object CreateAccount {
-        const val root = "create-account"
-    }
+sealed class Screen(val route: String, @StringRes val resourceId: Int, val icon: ImageVector) {
+    object Home : Screen("home", R.string.home, Icons.Filled.Home)
+    object Body : Screen("body", R.string.body, Icons.Filled.AddCircle)
+    object Profile : Screen("profile", R.string.profile, Icons.Filled.Person)
 }

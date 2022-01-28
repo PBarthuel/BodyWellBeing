@@ -1,4 +1,4 @@
-package com.pbarthuel.bodywellbeing.app.modules.main.compose
+package com.pbarthuel.bodywellbeing.app.modules.login.compose
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -36,14 +36,14 @@ import com.pbarthuel.bodywellbeing.app.ui.template.ButtonsBar
 import com.pbarthuel.bodywellbeing.app.ui.theme.HorizontalMargin
 import com.pbarthuel.bodywellbeing.app.ui.theme.Layout1
 import com.pbarthuel.bodywellbeing.app.ui.theme.Layout2
-import com.pbarthuel.bodywellbeing.viewModel.modules.main.MainViewModel
+import com.pbarthuel.bodywellbeing.viewModel.modules.login.LoginViewModel
 
 @ExperimentalComposeUiApi
 @Composable
 fun CreateAccountScreen(
     loginButtonState: Boolean,
     auth: FirebaseAuth,
-    viewModel: MainViewModel,
+    viewModel: LoginViewModel,
     onLoginClick: () -> Unit
 ) {
     var emailText by remember { mutableStateOf("") }

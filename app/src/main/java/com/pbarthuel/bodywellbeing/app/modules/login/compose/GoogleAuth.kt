@@ -1,4 +1,4 @@
-package com.pbarthuel.bodywellbeing.app.modules.main.compose
+package com.pbarthuel.bodywellbeing.app.modules.login.compose
 
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.material.ExperimentalMaterialApi
@@ -6,15 +6,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.pbarthuel.bodywellbeing.R
-import com.pbarthuel.bodywellbeing.app.modules.main.utils.googleAuth.GoogleAuthResultContract
+import com.pbarthuel.bodywellbeing.app.modules.login.googleAuth.GoogleAuthResultContract
 import com.pbarthuel.bodywellbeing.app.ui.component.ButtonOutlined
 import com.pbarthuel.bodywellbeing.app.ui.component.IconSpec
-import com.pbarthuel.bodywellbeing.viewModel.modules.main.MainViewModel
+import com.pbarthuel.bodywellbeing.viewModel.modules.login.LoginViewModel
 
 @ExperimentalMaterialApi
 @Composable
 fun GoogleAuth(
-    viewModel: MainViewModel,
+    viewModel: LoginViewModel,
     loginButtonState: Boolean
 ) {
     val signInRequestCode = 1

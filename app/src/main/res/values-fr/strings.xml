@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">BodyWellBeing</string>
 
+    //Login
     <string name="mail">Email</string>
     <string name="login">Login</string>
     <string name="create_account">Creez un compte</string>
@@ -11,4 +12,9 @@
     <string name="dosent_have_account">Vous n\'avez pas de compte ? Créez en un !</string>
     <string name="already_have_account">Vous avez déjà un compte ?</string>
     <string name="signin_google">Enregistrez vous avec Google</string>
+
+    //Home
+    <string name="home">Accueil</string>
+    <string name="body">Corps</string>
+    <string name="profile">Profil</string>
 </resources>
