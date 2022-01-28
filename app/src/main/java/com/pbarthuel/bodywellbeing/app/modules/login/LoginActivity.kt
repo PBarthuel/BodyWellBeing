@@ -29,8 +29,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.pbarthuel.bodywellbeing.app.modules.accountCreation.AccountCreationActivity
-import com.pbarthuel.bodywellbeing.app.modules.login.compose.CreateAccountScreen
-import com.pbarthuel.bodywellbeing.app.modules.login.compose.LoginScreen
+import com.pbarthuel.bodywellbeing.app.modules.login.composeScreen.CreateAccountScreen
+import com.pbarthuel.bodywellbeing.app.modules.login.composeScreen.LoginScreen
 import com.pbarthuel.bodywellbeing.app.modules.main.MainActivity
 import com.pbarthuel.bodywellbeing.app.ui.theme.BodyWellBeingTheme
 import com.pbarthuel.bodywellbeing.viewModel.modules.login.LoginState

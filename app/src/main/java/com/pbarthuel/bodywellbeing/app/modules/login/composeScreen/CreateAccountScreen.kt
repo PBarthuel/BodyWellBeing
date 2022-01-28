@@ -1,4 +1,4 @@
-package com.pbarthuel.bodywellbeing.app.modules.login.compose
+package com.pbarthuel.bodywellbeing.app.modules.login.composeScreen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

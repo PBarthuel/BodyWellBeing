@@ -9,10 +9,9 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.AppBarDefaults
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.ExperimentalMaterialApi
@@ -22,17 +21,18 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -41,6 +41,7 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.pbarthuel.bodywellbeing.R
+import com.pbarthuel.bodywellbeing.app.modules.profile.ProfileScreen
 import com.pbarthuel.bodywellbeing.app.ui.theme.BodyWellBeingTheme
 import com.pbarthuel.bodywellbeing.viewModel.modules.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -61,32 +62,51 @@ class MainActivity : ComponentActivity() {
                 ProvideWindowInsets {
                     val navController = rememberAnimatedNavController()
                     val bottomNavigationItems = listOf(
-                        Screen.Home,
-                        Screen.Body,
-                        Screen.Profile
+                        MainBottomBarNavigation.Home,
+                        MainBottomBarNavigation.Body,
+                        MainBottomBarNavigation.Profile
                     )
                     Scaffold(
                         modifier = Modifier.fillMaxSize(),
                         topBar = {
                             TopAppBar(
-                                title = {
-                                    Text(text = "top app bar example")
-                                },
-                                navigationIcon = {
+                                backgroundColor = Color.Transparent.copy(alpha = 0f),
+                                elevation = 0.dp,
+                                title = { },
+                                actions = {
                                     IconButton(
-                                        onClick = {
-                                            kotlin.runCatching {
-                                                viewModel.logOut()
-                                            }.onSuccess {
-                                                finish()
-                                            }
-                                        }
-                                    ) { Icon(Icons.Filled.Menu, contentDescription = "Menu") }
-                                },
-                                elevation = AppBarDefaults.TopAppBarElevation
+                                        onClick = { }
+                                    ) { Icon(Icons.Filled.Settings, contentDescription = "Settings") }
+                                }
                             )
-                        },
-                        bottomBar = {
+                        }
+                    ) {
+                        Column(modifier = Modifier.fillMaxSize()) {
+                            Box(modifier = Modifier
+                                .fillMaxSize()
+                                .weight(1f)) {
+                                AnimatedNavHost(
+                                    navController,
+                                    startDestination = MainBottomBarNavigation.Home.route,
+                                    enterTransition = { fadeIn(animationSpec = tween(700)) },
+                                    exitTransition = { fadeOut(animationSpec = tween(700)) }
+                                ) {
+                                    composable(MainBottomBarNavigation.Home.route) {
+                                        Box(modifier = Modifier.fillMaxSize()) {
+                                        }
+                                    }
+                                    composable(MainBottomBarNavigation.Body.route) {
+                                        Box(modifier = Modifier.fillMaxSize()) {
+                                        }
+                                    }
+                                    composable(MainBottomBarNavigation.Profile.route) {
+                                        ProfileScreen(
+                                            profileScreenViewModel = hiltViewModel(),
+                                            context = this@MainActivity
+                                        )
+                                    }
+                                }
+                            }
                             BottomNavigation {
                                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                                 val currentDestination = navBackStackEntry?.destination
@@ -108,38 +128,6 @@ class MainActivity : ComponentActivity() {
                                 }
                             }
                         }
-                    ) {
-                        AnimatedNavHost(
-                            navController,
-                            startDestination = Screen.Home.route,
-                            enterTransition = { fadeIn(animationSpec = tween(700)) },
-                            exitTransition = { fadeOut(animationSpec = tween(700)) }
-                        ) {
-                            composable(Screen.Home.route) {
-                                Box(modifier = Modifier
-                                    .fillMaxSize()
-                                    .background(color = colorResource(id = R.color.black))
-                                ) {
-
-                                }
-                            }
-                            composable(Screen.Body.route) {
-                                Box(modifier = Modifier
-                                    .fillMaxSize()
-                                    .background(color = colorResource(id = R.color.purple_500))
-                                ) {
-
-                                }
-                            }
-                            composable(Screen.Profile.route) {
-                                Box(modifier = Modifier
-                                    .fillMaxSize()
-                                    .background(color = colorResource(id = R.color.teal_700))
-                                ) {
-
-                                }
-                            }
-                        }
                     }
                 }
             }
@@ -147,8 +135,8 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-sealed class Screen(val route: String, @StringRes val resourceId: Int, val icon: ImageVector) {
-    object Home : Screen("home", R.string.home, Icons.Filled.Home)
-    object Body : Screen("body", R.string.body, Icons.Filled.AddCircle)
-    object Profile : Screen("profile", R.string.profile, Icons.Filled.Person)
+sealed class MainBottomBarNavigation(val route: String, @StringRes val resourceId: Int, val icon: ImageVector) {
+    object Home : MainBottomBarNavigation("home", R.string.home, Icons.Filled.Home)
+    object Body : MainBottomBarNavigation("body", R.string.body, Icons.Filled.AddCircle)
+    object Profile : MainBottomBarNavigation("profile", R.string.profile, Icons.Filled.Person)
 }

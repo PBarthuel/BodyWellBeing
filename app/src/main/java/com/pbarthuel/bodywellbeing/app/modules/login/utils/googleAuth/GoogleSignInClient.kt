@@ -1,4 +1,4 @@
-package com.pbarthuel.bodywellbeing.app.modules.login.googleAuth
+package com.pbarthuel.bodywellbeing.app.modules.login.utils.googleAuth
 
 import android.content.Context
 import com.google.android.gms.auth.api.signin.GoogleSignIn

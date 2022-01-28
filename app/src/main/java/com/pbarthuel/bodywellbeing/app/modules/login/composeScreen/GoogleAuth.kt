@@ -1,4 +1,4 @@
-package com.pbarthuel.bodywellbeing.app.modules.login.compose
+package com.pbarthuel.bodywellbeing.app.modules.login.composeScreen
 
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.material.ExperimentalMaterialApi
@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.pbarthuel.bodywellbeing.R
-import com.pbarthuel.bodywellbeing.app.modules.login.googleAuth.GoogleAuthResultContract
+import com.pbarthuel.bodywellbeing.app.modules.login.utils.googleAuth.GoogleAuthResultContract
 import com.pbarthuel.bodywellbeing.app.ui.component.ButtonOutlined
 import com.pbarthuel.bodywellbeing.app.ui.component.IconSpec
 import com.pbarthuel.bodywellbeing.viewModel.modules.login.LoginViewModel
