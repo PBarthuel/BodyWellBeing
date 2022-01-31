@@ -12,6 +12,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.ExperimentalMaterialApi
@@ -25,7 +26,11 @@ import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -42,7 +47,11 @@ import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.pbarthuel.bodywellbeing.R
 import com.pbarthuel.bodywellbeing.app.modules.profile.ProfileScreen
+import com.pbarthuel.bodywellbeing.app.ui.component.text.Header2
+import com.pbarthuel.bodywellbeing.app.ui.theme.Basic1
 import com.pbarthuel.bodywellbeing.app.ui.theme.BodyWellBeingTheme
+import com.pbarthuel.bodywellbeing.app.ui.theme.Layout1
+import com.pbarthuel.bodywellbeing.viewModel.modules.main.MainScreenState
 import com.pbarthuel.bodywellbeing.viewModel.modules.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -66,17 +75,32 @@ class MainActivity : ComponentActivity() {
                         MainBottomBarNavigation.Body,
                         MainBottomBarNavigation.Profile
                     )
+                    val screenState = viewModel.displayedScreenState.collectAsState(initial = null)
+                    var topBarTitle by remember { mutableStateOf("") }
                     Scaffold(
                         modifier = Modifier.fillMaxSize(),
                         topBar = {
                             TopAppBar(
+                                modifier = Modifier.padding(Basic1),
                                 backgroundColor = Color.Transparent.copy(alpha = 0f),
-                                elevation = 0.dp,
-                                title = { },
+                                elevation = 2.dp,
+                                title = { Header2(text = topBarTitle) },
                                 actions = {
-                                    IconButton(
-                                        onClick = { }
-                                    ) { Icon(Icons.Filled.Settings, contentDescription = "Settings") }
+                                    when (screenState.value) {
+                                        MainScreenState.Home -> {
+                                            topBarTitle = stringResource(id = R.string.home)
+                                        }
+                                        MainScreenState.Body -> {
+                                            topBarTitle = stringResource(id = R.string.body)
+                                        }
+                                        MainScreenState.Profile -> {
+                                            topBarTitle = stringResource(id = R.string.profile)
+                                            IconButton(
+                                                onClick = { onSettingsClicked() }
+                                            ) { Icon(Icons.Filled.Settings, contentDescription = "Settings") }
+                                        }
+                                        else -> {}
+                                    }
                                 }
                             )
                         }
@@ -92,14 +116,17 @@ class MainActivity : ComponentActivity() {
                                     exitTransition = { fadeOut(animationSpec = tween(700)) }
                                 ) {
                                     composable(MainBottomBarNavigation.Home.route) {
+                                        viewModel.onScreenChanged(MainScreenState.Home)
                                         Box(modifier = Modifier.fillMaxSize()) {
                                         }
                                     }
                                     composable(MainBottomBarNavigation.Body.route) {
+                                        viewModel.onScreenChanged(MainScreenState.Body)
                                         Box(modifier = Modifier.fillMaxSize()) {
                                         }
                                     }
                                     composable(MainBottomBarNavigation.Profile.route) {
+                                        viewModel.onScreenChanged(MainScreenState.Profile)
                                         ProfileScreen(
                                             profileScreenViewModel = hiltViewModel(),
                                             context = this@MainActivity
@@ -133,7 +160,12 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+    private fun onSettingsClicked() {
+        // TODO
+    }
 }
+
 
 sealed class MainBottomBarNavigation(val route: String, @StringRes val resourceId: Int, val icon: ImageVector) {
     object Home : MainBottomBarNavigation("home", R.string.home, Icons.Filled.Home)

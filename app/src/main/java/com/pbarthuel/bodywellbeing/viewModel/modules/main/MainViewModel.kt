@@ -18,30 +18,22 @@ import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
+sealed class MainScreenState {
+    object Home: MainScreenState()
+    object Body: MainScreenState()
+    object Profile: MainScreenState()
+}
+
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val dispatcher: CoroutineToolsProvider,
     private val preferenceDataStoreRepository: PreferenceDataStoreRepository
 ) : ViewModel() {
 
-    val id: String? = runBlocking { preferenceDataStoreRepository.getUserId() }
+    private val _displayedScreenState: MutableStateFlow<MainScreenState?> = MutableStateFlow(null)
+    val displayedScreenState: Flow<MainScreenState?> = _displayedScreenState
 
-    val email: String? = runBlocking { preferenceDataStoreRepository.getUserEmail() }
-
-    val user: MutableStateFlow<User?> = MutableStateFlow(User())
-
-    fun logOut() {
-        viewModelScope.launch(dispatcher.io) {
-            preferenceDataStoreRepository.clearDataStore()
-        }
-    }
-
-    fun getUser() {
-        viewModelScope.launch {
-            user.value = User(
-                uid = preferenceDataStoreRepository.getUserId() ?: throw Exception("uid is null"),
-                email = preferenceDataStoreRepository.getUserEmail() ?: throw Exception("email is null")
-            )
-        }
+    fun onScreenChanged(screenState: MainScreenState) {
+        _displayedScreenState.value = screenState
     }
 }

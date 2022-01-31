@@ -10,10 +10,20 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import com.pbarthuel.bodywellbeing.R
 import com.pbarthuel.bodywellbeing.app.ui.component.CustomCard
 import com.pbarthuel.bodywellbeing.app.ui.component.text.Body1
+import com.pbarthuel.bodywellbeing.app.ui.component.text.Header2
 import com.pbarthuel.bodywellbeing.app.ui.theme.Layout1
 import com.pbarthuel.bodywellbeing.viewModel.modules.profile.ProfileScreenViewModel
 
@@ -25,7 +35,6 @@ fun ProfileScreen(
     Column(modifier = Modifier
         .fillMaxSize()
         .verticalScroll(rememberScrollState())
-        .padding(vertical = Layout1)
     ) {
         CustomCard {
             Column {
@@ -47,7 +56,8 @@ fun ProfileScreen(
                     }
                     .padding(Layout1))
                 Divider()
-                Body1(text = "Courgette", modifier = Modifier.fillMaxWidth()
+                Body1(text = "Courgette", modifier = Modifier
+                    .fillMaxWidth()
                     .clickable {
                         Toast
                             .makeText(context, "Courgette", Toast.LENGTH_LONG)
@@ -55,7 +65,8 @@ fun ProfileScreen(
                     }
                     .padding(Layout1))
                 Divider()
-                Body1(text = "Courgette", modifier = Modifier.fillMaxWidth()
+                Body1(text = "Courgette", modifier = Modifier
+                    .fillMaxWidth()
                     .clickable {
                         Toast
                             .makeText(context, "Courgette", Toast.LENGTH_LONG)
@@ -63,7 +74,8 @@ fun ProfileScreen(
                     }
                     .padding(Layout1))
                 Divider()
-                Body1(text = "Courgette", modifier = Modifier.fillMaxWidth()
+                Body1(text = "Courgette", modifier = Modifier
+                    .fillMaxWidth()
                     .clickable {
                         Toast
                             .makeText(context, "Courgette", Toast.LENGTH_LONG)
@@ -71,7 +83,8 @@ fun ProfileScreen(
                     }
                     .padding(Layout1))
                 Divider()
-                Body1(text = "Courgette", modifier = Modifier.fillMaxWidth()
+                Body1(text = "Courgette", modifier = Modifier
+                    .fillMaxWidth()
                     .clickable {
                         Toast
                             .makeText(context, "Courgette", Toast.LENGTH_LONG)
@@ -79,7 +92,8 @@ fun ProfileScreen(
                     }
                     .padding(Layout1))
                 Divider()
-                Body1(text = "Courgette", modifier = Modifier.fillMaxWidth()
+                Body1(text = "Courgette", modifier = Modifier
+                    .fillMaxWidth()
                     .clickable {
                         Toast
                             .makeText(context, "Courgette", Toast.LENGTH_LONG)
@@ -87,7 +101,8 @@ fun ProfileScreen(
                     }
                     .padding(Layout1))
                 Divider()
-                Body1(text = "Courgette", modifier = Modifier.fillMaxWidth()
+                Body1(text = "Courgette", modifier = Modifier
+                    .fillMaxWidth()
                     .clickable {
                         Toast
                             .makeText(context, "Courgette", Toast.LENGTH_LONG)
@@ -95,7 +110,8 @@ fun ProfileScreen(
                     }
                     .padding(Layout1))
                 Divider()
-                Body1(text = "Courgette", modifier = Modifier.fillMaxWidth()
+                Body1(text = "Courgette", modifier = Modifier
+                    .fillMaxWidth()
                     .clickable {
                         Toast
                             .makeText(context, "Courgette", Toast.LENGTH_LONG)
@@ -103,7 +119,8 @@ fun ProfileScreen(
                     }
                     .padding(Layout1))
                 Divider()
-                Body1(text = "Courgette", modifier = Modifier.fillMaxWidth()
+                Body1(text = "Courgette", modifier = Modifier
+                    .fillMaxWidth()
                     .clickable {
                         Toast
                             .makeText(context, "Courgette", Toast.LENGTH_LONG)
@@ -111,7 +128,8 @@ fun ProfileScreen(
                     }
                     .padding(Layout1))
                 Divider()
-                Body1(text = "Courgette", modifier = Modifier.fillMaxWidth()
+                Body1(text = "Courgette", modifier = Modifier
+                    .fillMaxWidth()
                     .clickable {
                         Toast
                             .makeText(context, "Courgette", Toast.LENGTH_LONG)
@@ -119,7 +137,8 @@ fun ProfileScreen(
                     }
                     .padding(Layout1))
                 Divider()
-                Body1(text = "Courgette", modifier = Modifier.fillMaxWidth()
+                Body1(text = "Courgette", modifier = Modifier
+                    .fillMaxWidth()
                     .clickable {
                         Toast
                             .makeText(context, "Courgette", Toast.LENGTH_LONG)
@@ -127,7 +146,8 @@ fun ProfileScreen(
                     }
                     .padding(Layout1))
                 Divider()
-                Body1(text = "Courgette", modifier = Modifier.fillMaxWidth()
+                Body1(text = "Courgette", modifier = Modifier
+                    .fillMaxWidth()
                     .clickable {
                         Toast
                             .makeText(context, "Courgette", Toast.LENGTH_LONG)
