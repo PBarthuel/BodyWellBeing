@@ -1,5 +1,6 @@
 package com.pbarthuel.bodywellbeing.data.repositories.local
 
+import com.pbarthuel.bodywellbeing.app.models.User
 import com.pbarthuel.bodywellbeing.data.vendors.local.PreferencesDataStoreDao
 import com.pbarthuel.bodywellbeing.domain.repositories.local.PreferenceDataStoreRepository
 import com.pbarthuel.bodywellbeing.viewModel.modules.login.LoginState
@@ -12,6 +13,9 @@ class PreferenceDataStoreRepositoryImpl @Inject constructor(
 
     override suspend fun saveToDataStore(userId: String, email: String, isAlreadyCreated: Boolean) =
         preferencesDataStoreDao.saveToDataStore(userId = userId, email = email, isAlreadyCreated = isAlreadyCreated)
+
+    override fun getUser(): Flow<User> =
+        preferencesDataStoreDao.getUser()
 
     override suspend fun getUserId(): String? =
         preferencesDataStoreDao.getUserId()

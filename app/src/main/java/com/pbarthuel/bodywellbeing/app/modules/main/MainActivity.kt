@@ -50,7 +50,6 @@ import com.pbarthuel.bodywellbeing.app.modules.profile.ProfileScreen
 import com.pbarthuel.bodywellbeing.app.ui.component.text.Header2
 import com.pbarthuel.bodywellbeing.app.ui.theme.Basic1
 import com.pbarthuel.bodywellbeing.app.ui.theme.BodyWellBeingTheme
-import com.pbarthuel.bodywellbeing.app.ui.theme.Layout1
 import com.pbarthuel.bodywellbeing.viewModel.modules.main.MainScreenState
 import com.pbarthuel.bodywellbeing.viewModel.modules.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -128,8 +127,7 @@ class MainActivity : ComponentActivity() {
                                     composable(MainBottomBarNavigation.Profile.route) {
                                         viewModel.onScreenChanged(MainScreenState.Profile)
                                         ProfileScreen(
-                                            profileScreenViewModel = hiltViewModel(),
-                                            context = this@MainActivity
+                                            viewModel = hiltViewModel(),
                                         )
                                     }
                                 }

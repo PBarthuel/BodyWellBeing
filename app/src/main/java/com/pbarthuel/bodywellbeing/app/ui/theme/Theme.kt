@@ -19,6 +19,7 @@ private val LightColorPalette = BodyWellBeingColorPalette(
     actionPrimaryBad = AliasToken.actionPrimaryBad.light,
     actionPrimaryDisabled = AliasToken.actionPrimaryDisabled.light,
     actionPrimaryUnchecked = AliasToken.actionPrimaryUnchecked.light,
+    actionSecondary = AliasToken.actionSecondary.light,
     actionSecondaryDisabled = AliasToken.actionSecondaryDisabled.light,
     statusGood = AliasToken.statusGood.light,
     statusModerate = AliasToken.statusModerate.light,
@@ -34,6 +35,7 @@ private val DarkColorPalette = BodyWellBeingColorPalette(
     actionPrimaryBad = AliasToken.actionPrimaryBad.dark,
     actionPrimaryDisabled = AliasToken.actionPrimaryDisabled.dark,
     actionPrimaryUnchecked = AliasToken.actionPrimaryUnchecked.dark,
+    actionSecondary = AliasToken.actionSecondary.dark,
     actionSecondaryDisabled = AliasToken.actionSecondaryDisabled.dark,
     statusGood = AliasToken.statusGood.dark,
     statusModerate = AliasToken.statusModerate.dark,
@@ -136,6 +138,7 @@ class BodyWellBeingColorPalette(
     actionPrimaryBad: Color,
     actionPrimaryDisabled: Color,
     actionPrimaryUnchecked: Color,
+    actionSecondary: Color,
     actionSecondaryDisabled: Color,
     statusGood: Color,
     statusModerate: Color,
@@ -154,6 +157,8 @@ class BodyWellBeingColorPalette(
     var actionPrimaryDisabled by mutableStateOf(actionPrimaryDisabled)
         private set
     var actionPrimaryUnchecked by mutableStateOf(actionPrimaryUnchecked)
+        private set
+    var actionSecondary by mutableStateOf(actionSecondary)
         private set
     var actionSecondaryDisabled by mutableStateOf(actionSecondaryDisabled)
         private set
@@ -175,6 +180,7 @@ class BodyWellBeingColorPalette(
         actionPrimaryBad = other.actionPrimaryBad
         actionPrimaryDisabled = other.actionPrimaryDisabled
         actionPrimaryUnchecked = other.actionPrimaryUnchecked
+        actionSecondary = other.actionSecondary
         actionSecondaryDisabled = other.actionSecondaryDisabled
         statusGood = other.statusGood
         statusModerate = other.statusModerate

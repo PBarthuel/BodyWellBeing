@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.pbarthuel.bodywellbeing.app.models.User
 import com.pbarthuel.bodywellbeing.viewModel.modules.login.LoginState
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
@@ -34,6 +35,10 @@ class PreferencesDataStoreDao @Inject constructor(
             it[USER_EMAIL] = email
             it[USER_ALREADY_CREATED] = isAlreadyCreated
         }
+    }
+
+    fun getUser() = context.dataStore.data.map {
+        User(uid = it[USER_ID] ?: "", email = it[USER_EMAIL] ?: "")
     }
 
     suspend fun getUserId() = context.dataStore.data.map {
