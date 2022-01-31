@@ -95,9 +95,9 @@ class LoginActivity : ComponentActivity() {
             LaunchedEffect(key1 = "", block = {
                 lifecycleScope.launch {
                     viewModel.state.collect {
-                        when (val s = it) {
+                        when (val state = it) {
                             is LoginState.Error -> {
-                                Toast.makeText(this@LoginActivity, s.errorMessage, Toast.LENGTH_LONG).show()
+                                Toast.makeText(this@LoginActivity, state.errorMessage, Toast.LENGTH_LONG).show()
                                 loginButtonState = false
                             }
                             LoginState.Loading -> {

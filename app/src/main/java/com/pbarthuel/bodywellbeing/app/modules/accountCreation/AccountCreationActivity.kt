@@ -2,25 +2,23 @@ package com.pbarthuel.bodywellbeing.app.modules.accountCreation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.AppBarDefaults
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
-import androidx.compose.ui.Modifier
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import com.google.accompanist.insets.ProvideWindowInsets
+import com.google.accompanist.navigation.animation.AnimatedNavHost
+import com.google.accompanist.navigation.animation.composable
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import com.pbarthuel.bodywellbeing.app.modules.accountCreation.composeScreen.UserInfoScreen
 import com.pbarthuel.bodywellbeing.app.ui.theme.BodyWellBeingTheme
 import com.pbarthuel.bodywellbeing.viewModel.modules.accountCreation.AccountCreationViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
+@ExperimentalAnimationApi
 @AndroidEntryPoint
 class AccountCreationActivity : ComponentActivity() {
 
@@ -32,37 +30,36 @@ class AccountCreationActivity : ComponentActivity() {
         setContent {
             BodyWellBeingTheme {
                 ProvideWindowInsets {
-                    Scaffold(
-                        modifier = Modifier.fillMaxSize(),
-                        topBar = {
-                            TopAppBar(
-                                title = {
-                                    Text(text = "Bottom app bar example")
-                                },
-                                navigationIcon = {
-                                    IconButton(
-                                        onClick = {
-                                            kotlin.runCatching {
-                                                viewModel.logOut()
-                                            }.onSuccess {
-                                                finish()
-                                            }
-                                        }
-                                    ) { Icon(Icons.Filled.Menu, contentDescription = "") }
-                                },
-                                elevation = AppBarDefaults.TopAppBarElevation
-                            )
-                        }
+                    val navController = rememberAnimatedNavController()
+                    BackHandler {
+                        viewModel.logOut()
+                    }
+                    AnimatedNavHost(
+                        navController,
+                        startDestination = AccountCreationDestinations.AppInfo.root,
+                        enterTransition = { fadeIn(animationSpec = tween(700)) },
+                        exitTransition = { fadeOut(animationSpec = tween(700)) }
                     ) {
-                        Column(modifier = Modifier.fillMaxSize()) {
-                            Text(
-                                modifier = Modifier.align(CenterHorizontally),
-                                text = viewModel.id ?: "error"
-                            )
+                        composable(AccountCreationDestinations.AppInfo.root) {
+
+                        }
+                        composable(AccountCreationDestinations.UserInfo.root) {
+                            UserInfoScreen(viewModel = viewModel)
                         }
                     }
                 }
             }
         }
+    }
+}
+
+object AccountCreationDestinations {
+
+    object AppInfo {
+        const val root = "app-info"
+    }
+
+    object UserInfo {
+        const val root = "user-info"
     }
 }

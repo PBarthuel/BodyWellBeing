@@ -15,4 +15,5 @@ class ProfileScreenViewModel @Inject constructor(
 ): ViewModel() {
 
     val user: Flow<User> = preferenceDataStoreRepository.getUser()
+
 }

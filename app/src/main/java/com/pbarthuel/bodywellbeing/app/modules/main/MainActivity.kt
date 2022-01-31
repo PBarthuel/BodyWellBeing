@@ -110,21 +110,21 @@ class MainActivity : ComponentActivity() {
                                 .weight(1f)) {
                                 AnimatedNavHost(
                                     navController,
-                                    startDestination = MainBottomBarNavigation.Home.route,
+                                    startDestination = MainBottomBarNavigation.Home.root,
                                     enterTransition = { fadeIn(animationSpec = tween(700)) },
                                     exitTransition = { fadeOut(animationSpec = tween(700)) }
                                 ) {
-                                    composable(MainBottomBarNavigation.Home.route) {
+                                    composable(MainBottomBarNavigation.Home.root) {
                                         viewModel.onScreenChanged(MainScreenState.Home)
                                         Box(modifier = Modifier.fillMaxSize()) {
                                         }
                                     }
-                                    composable(MainBottomBarNavigation.Body.route) {
+                                    composable(MainBottomBarNavigation.Body.root) {
                                         viewModel.onScreenChanged(MainScreenState.Body)
                                         Box(modifier = Modifier.fillMaxSize()) {
                                         }
                                     }
-                                    composable(MainBottomBarNavigation.Profile.route) {
+                                    composable(MainBottomBarNavigation.Profile.root) {
                                         viewModel.onScreenChanged(MainScreenState.Profile)
                                         ProfileScreen(
                                             viewModel = hiltViewModel(),
@@ -139,9 +139,9 @@ class MainActivity : ComponentActivity() {
                                     BottomNavigationItem(
                                         icon = { Icon(screen.icon, contentDescription = null) },
                                         label = { Text(stringResource(id = screen.resourceId)) },
-                                        selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
+                                        selected = currentDestination?.hierarchy?.any { it.route == screen.root } == true,
                                         onClick = {
-                                            navController.navigate(screen.route) {
+                                            navController.navigate(screen.root) {
                                                 popUpTo(navController.graph.findStartDestination().id) {
                                                     saveState = true
                                                 }
@@ -160,12 +160,12 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun onSettingsClicked() {
-        // TODO
+        viewModel.logOut() // TODO will be changed
     }
 }
 
 
-sealed class MainBottomBarNavigation(val route: String, @StringRes val resourceId: Int, val icon: ImageVector) {
+sealed class MainBottomBarNavigation(val root: String, @StringRes val resourceId: Int, val icon: ImageVector) {
     object Home : MainBottomBarNavigation("home", R.string.home, Icons.Filled.Home)
     object Body : MainBottomBarNavigation("body", R.string.body, Icons.Filled.AddCircle)
     object Profile : MainBottomBarNavigation("profile", R.string.profile, Icons.Filled.Person)
