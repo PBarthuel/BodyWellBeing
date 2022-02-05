@@ -17,6 +17,7 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.pbarthuel.bodywellbeing.app.modules.accountCreation.composeScreen.AppInfoScreen
+import com.pbarthuel.bodywellbeing.app.modules.accountCreation.composeScreen.CongratsScreen
 import com.pbarthuel.bodywellbeing.app.modules.accountCreation.composeScreen.UserInfoScreen
 import com.pbarthuel.bodywellbeing.app.modules.login.LoginActivity
 import com.pbarthuel.bodywellbeing.app.ui.theme.BodyWellBeingTheme
@@ -60,12 +61,21 @@ class AccountCreationActivity : ComponentActivity() {
                             }
                         }
                         composable(AccountCreationDestinations.userInfo) {
-                            UserInfoScreen(
-                                viewModel = viewModel
-                            )
+                            UserInfoScreen(viewModel = viewModel) {
+                                navController.navigate(AccountCreationDestinations.congrats)
+                            }
                         }
                         composable(AccountCreationDestinations.congrats) {
-
+                            CongratsScreen(viewModel = viewModel) {
+                                kotlin.runCatching {
+                                    viewModel.createUser()
+                                }.onSuccess {
+                                    Intent(this@AccountCreationActivity, LoginActivity::class.java).also {
+                                        it.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                        startActivity(it)
+                                    }
+                                }
+                            }
                         }
                     }
                 }

@@ -1,5 +1,6 @@
 package com.pbarthuel.bodywellbeing.data.repositories.network
 
+import com.pbarthuel.bodywellbeing.app.models.User
 import com.pbarthuel.bodywellbeing.data.vendors.network.RealTimeDatabaseDao
 import com.pbarthuel.bodywellbeing.domain.repositories.network.RealTimeDatabaseRepository
 import javax.inject.Inject
@@ -10,7 +11,9 @@ class RealTimeDatabaseRepositoryImpl @Inject constructor(
     private val realTimeDatabaseDao: RealTimeDatabaseDao
 ) : RealTimeDatabaseRepository {
 
-    override suspend fun checkIfUserAlreadyExist(userId: String, email: String) {
+    override suspend fun checkIfUserAlreadyExist(userId: String, email: String) =
         realTimeDatabaseDao.checkIfUserAlreadyExist(userId = userId, email = email)
-    }
+
+    override suspend fun updateUserFromAccountCreation(user: User) =
+        realTimeDatabaseDao.updateUserFromAccountCreation(user)
 }

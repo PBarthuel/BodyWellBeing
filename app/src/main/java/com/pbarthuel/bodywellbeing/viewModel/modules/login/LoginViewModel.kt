@@ -89,8 +89,7 @@ class LoginViewModel @Inject constructor(
                         }
                     }
                 }
-        } else { _state.value = LoginState.Error("Passwords don't match !")
-        }
+        } else { _state.value = LoginState.Error("Passwords don't match !") }
     }
 
     fun loginWithGoogle(task: Task<GoogleSignInAccount>?) {

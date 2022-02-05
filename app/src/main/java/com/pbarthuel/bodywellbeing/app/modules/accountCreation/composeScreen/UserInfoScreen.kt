@@ -12,7 +12,6 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -24,20 +23,22 @@ import com.pbarthuel.bodywellbeing.app.ui.component.ButtonFill
 import com.pbarthuel.bodywellbeing.app.ui.component.input.FormInputField
 import com.pbarthuel.bodywellbeing.app.ui.component.input.InputFieldType
 import com.pbarthuel.bodywellbeing.app.ui.component.text.Header2
-import com.pbarthuel.bodywellbeing.app.ui.component.text.Header4
 import com.pbarthuel.bodywellbeing.app.ui.template.ButtonsBar
-import com.pbarthuel.bodywellbeing.app.ui.theme.Basic1
 import com.pbarthuel.bodywellbeing.app.ui.theme.HorizontalMargin
 import com.pbarthuel.bodywellbeing.app.ui.theme.Layout1
 import com.pbarthuel.bodywellbeing.app.ui.theme.VerticalMargin
 import com.pbarthuel.bodywellbeing.viewModel.modules.accountCreation.AccountCreationViewModel
-import com.pbarthuel.bodywellbeing.viewModel.modules.main.MainScreenState
 
 @Composable
 fun UserInfoScreen(
-    viewModel: AccountCreationViewModel
+    viewModel: AccountCreationViewModel,
+    onNextClicked: () -> Unit
 ) {
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+    ) {
         TopAppBar(
             navigationIcon = {
                 IconButton(onClick = {}) {
@@ -83,12 +84,54 @@ fun UserInfoScreen(
                     viewModel.lastName.value = it
                 }
             )
+            FormInputField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = HorizontalMargin, end = HorizontalMargin, bottom = Layout1),
+                label = stringResource(id = R.string.age),
+                type = InputFieldType.Number,
+                text = viewModel.age.value,
+                placeHolder = stringResource(id = R.string.age_placeholder),
+                onValueChange = {
+                    viewModel.age.value = it
+                }
+            )
+            FormInputField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = HorizontalMargin, end = HorizontalMargin, bottom = Layout1),
+                label = stringResource(id = R.string.height),
+                type = InputFieldType.Number,
+                text = viewModel.height.value,
+                placeHolder = stringResource(id = R.string.height_placeholder),
+                onValueChange = {
+                    viewModel.height.value = it
+                }
+            )
+            FormInputField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = HorizontalMargin, end = HorizontalMargin, bottom = Layout1),
+                label = stringResource(id = R.string.weight),
+                type = InputFieldType.Number,
+                text = viewModel.weight.value,
+                placeHolder = stringResource(id = R.string.weight_placeholder),
+                onValueChange = {
+                    viewModel.weight.value = it
+                }
+            )
         }
         ButtonsBar(
             mainButton = {
-                ButtonFill(text = stringResource(id = R.string._CONTINUE_)) {
-
-                }
+                ButtonFill(
+                    text = stringResource(id = R.string._CONTINUE_),
+                    enabled = viewModel.firstName.value.isNotEmpty()
+                            && viewModel.lastName.value.isNotEmpty()
+                            && viewModel.age.value.isNotEmpty()
+                            && viewModel.height.value.isNotEmpty()
+                            && viewModel.weight.value.isNotEmpty(),
+                    onClick = onNextClicked
+                )
             }
         )
     }

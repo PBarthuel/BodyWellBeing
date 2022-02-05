@@ -26,4 +26,10 @@
     <string name="first_name_placeholder">Jack</string>
     <string name="last_name">Last name</string>
     <string name="last_name_placeholder">Smith</string>
+    <string name="age">Age</string>
+    <string name="age_placeholder">18</string>
+    <string name="height">Height</string>
+    <string name="height_placeholder">175</string>
+    <string name="weight">Weight</string>
+    <string name="weight_placeholder">70</string>
 </resources>

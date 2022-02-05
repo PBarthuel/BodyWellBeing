@@ -81,7 +81,7 @@ class MainActivity : ComponentActivity() {
                         MainBottomBarNavigation.Profile
                     )
                     val screenState = viewModel.screenState.collectAsState()
-                    var topBarTitle by remember { mutableStateOf("") }
+                    var topBarTitle by remember { mutableStateOf(getString(R.string.home)) }
                     Scaffold(
                         modifier = Modifier.fillMaxSize(),
                         topBar = {
@@ -91,15 +91,9 @@ class MainActivity : ComponentActivity() {
                                 elevation = 2.dp,
                                 title = { Header2(text = topBarTitle) },
                                 actions = {
+                                    // TODO trouver une meilleur solution pour les actions
                                     when (screenState.value) {
-                                        MainScreenState.Home -> {
-                                            topBarTitle = stringResource(id = R.string.home)
-                                        }
-                                        MainScreenState.Body -> {
-                                            topBarTitle = stringResource(id = R.string.body)
-                                        }
                                         MainScreenState.Profile -> {
-                                            topBarTitle = stringResource(id = R.string.profile)
                                             IconButton(
                                                 onClick = { onSettingsClicked() }
                                             ) { Icon(Icons.Filled.Settings, contentDescription = "Settings") }
@@ -110,6 +104,7 @@ class MainActivity : ComponentActivity() {
                                                 startActivity(it)
                                             }
                                         }
+                                        else -> { }
                                     }
                                 }
                             )
@@ -152,6 +147,7 @@ class MainActivity : ComponentActivity() {
                                         label = { Text(stringResource(id = screen.resourceId)) },
                                         selected = currentDestination?.hierarchy?.any { it.route == screen.root } == true,
                                         onClick = {
+                                            topBarTitle = getString(screen.resourceId)
                                             navController.navigate(screen.root) {
                                                 popUpTo(navController.graph.findStartDestination().id) {
                                                     saveState = true

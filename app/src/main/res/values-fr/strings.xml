@@ -26,4 +26,10 @@
     <string name="first_name_placeholder">Jacques</string>
     <string name="last_name">Nom de famille</string>
     <string name="last_name_placeholder">Dupont</string>
+    <string name="age">Age</string>
+    <string name="age_placeholder">18</string>
+    <string name="height">Taille</string>
+    <string name="height_placeholder">175</string>
+    <string name="weight">Poids</string>
+    <string name="weight_placeholder">70</string>
 </resources>

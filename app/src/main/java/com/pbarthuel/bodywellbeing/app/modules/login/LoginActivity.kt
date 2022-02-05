@@ -63,27 +63,27 @@ class LoginActivity : ComponentActivity() {
                     Column(modifier = Modifier.fillMaxSize()) {
                         AnimatedNavHost(
                             navController,
-                            startDestination = LoginDestinations.Login.root,
+                            startDestination = LoginDestinations.login,
                             enterTransition = { fadeIn(animationSpec = tween(700)) },
                             exitTransition = { fadeOut(animationSpec = tween(700)) }
                         ) {
-                            composable(route = LoginDestinations.Login.root) {
+                            composable(route = LoginDestinations.login) {
                                 LoginScreen(
                                     auth = auth,
                                     loginButtonState = loginButtonState,
                                     viewModel = viewModel,
                                     onAccountCreationClick = {
-                                        navController.navigate(route = LoginDestinations.CreateAccount.root)
+                                        navController.navigate(route = LoginDestinations.createAccount)
                                     }
                                 )
                             }
-                            composable(route = LoginDestinations.CreateAccount.root) {
+                            composable(route = LoginDestinations.createAccount) {
                                 CreateAccountScreen(
                                     auth = auth,
                                     loginButtonState = loginButtonState,
                                     viewModel = viewModel,
                                     onLoginClick = {
-                                        navController.navigate(route = LoginDestinations.Login.root)
+                                        navController.navigate(route = LoginDestinations.login)
                                     }
                                 )
                             }
@@ -100,9 +100,7 @@ class LoginActivity : ComponentActivity() {
                                 Toast.makeText(this@LoginActivity, state.errorMessage, Toast.LENGTH_LONG).show()
                                 loginButtonState = false
                             }
-                            LoginState.Loading -> {
-                                loginButtonState = true
-                            }
+                            LoginState.Loading -> { loginButtonState = true }
                             is LoginState.Login -> {
                                 loginButtonState = false
                                 viewModel.loginSuccess(auth)
@@ -123,11 +121,6 @@ class LoginActivity : ComponentActivity() {
 }
 
 object LoginDestinations {
-    object Login {
-        const val root = "login"
-    }
-
-    object CreateAccount {
-        const val root = "create-account"
-    }
+    const val login = "login"
+    const val createAccount = "create-account"
 }

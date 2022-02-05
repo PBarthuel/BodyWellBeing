@@ -21,7 +21,7 @@ class RealTimeDatabaseDao @Inject constructor(
         .getInstance("https://bodywellbeing-default-rtdb.europe-west1.firebasedatabase.app/")
         .getReference(USER_DATABASE_REF)
 
-    suspend fun checkIfUserAlreadyExist(userId: String, email: String) =
+    suspend fun checkIfUserAlreadyExist(userId: String, email: String) {
         db.child(userId).get()
             .addOnSuccessListener {
                 if (it.exists()) {
@@ -54,7 +54,18 @@ class RealTimeDatabaseDao @Inject constructor(
                     }.onFailure { throw Exception("createUserForFirstTime Fail") }
                 }
             }.addOnFailureListener { Log.e("firebase", "Error getting data", it) }
+    }
 
+    suspend fun updateUserFromAccountCreation(user: User) {
+        kotlin.runCatching {
+            db.child(user.uid).setValue(user)
+        }.onSuccess {
+            preferenceDataStoreRepository.saveToDataStore(
+                userId = user.uid,
+                isAlreadyCreated = true
+            )
+        }
+    }
 
     companion object {
         const val USER_DATABASE_REF = "users"
