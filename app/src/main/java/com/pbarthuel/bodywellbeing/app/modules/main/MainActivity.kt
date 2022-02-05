@@ -1,5 +1,6 @@
 package com.pbarthuel.bodywellbeing.app.modules.main
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
@@ -47,6 +48,7 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.pbarthuel.bodywellbeing.R
+import com.pbarthuel.bodywellbeing.app.modules.login.LoginActivity
 import com.pbarthuel.bodywellbeing.app.modules.profile.ProfileScreen
 import com.pbarthuel.bodywellbeing.app.ui.component.text.Header2
 import com.pbarthuel.bodywellbeing.app.ui.theme.Basic1
@@ -101,6 +103,12 @@ class MainActivity : ComponentActivity() {
                                             IconButton(
                                                 onClick = { onSettingsClicked() }
                                             ) { Icon(Icons.Filled.Settings, contentDescription = "Settings") }
+                                        }
+                                        MainScreenState.Logout -> {
+                                            Intent(this@MainActivity, LoginActivity::class.java).also {
+                                                it.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                                startActivity(it)
+                                            }
                                         }
                                     }
                                 }

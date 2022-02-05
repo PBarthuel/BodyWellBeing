@@ -15,6 +15,7 @@ sealed class MainScreenState {
     object Home: MainScreenState()
     object Body: MainScreenState()
     object Profile: MainScreenState()
+    object Logout: MainScreenState()
 }
 
 @HiltViewModel
@@ -33,8 +34,12 @@ class MainViewModel @Inject constructor(
 
     fun logOut() {
         viewModelScope.launch(dispatcher.io) {
-            userRepository.clearUserDb()
-            preferenceDataStoreRepository.clearDataStore()
+            kotlin.runCatching {
+                preferenceDataStoreRepository.clearDataStore()
+                userRepository.clearUserDb()
+            }.onSuccess {
+                _screenState.value = MainScreenState.Logout
+            }
         }
     }
 }

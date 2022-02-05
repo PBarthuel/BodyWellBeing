@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
 class PreferencesDataStoreDao @Inject constructor(
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
 ) {
 
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = USER_DATASTORE)
