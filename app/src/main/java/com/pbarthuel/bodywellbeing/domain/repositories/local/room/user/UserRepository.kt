@@ -7,4 +7,5 @@ interface UserRepository {
     fun getUser(): Flow<User>
     suspend fun createUser(user: User)
     suspend fun updateUser(user: User)
+    suspend fun clearUserDb()
 }

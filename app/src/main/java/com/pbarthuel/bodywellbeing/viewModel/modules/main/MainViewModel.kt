@@ -3,6 +3,7 @@ package com.pbarthuel.bodywellbeing.viewModel.modules.main
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pbarthuel.bodywellbeing.domain.repositories.local.dataStore.PreferenceDataStoreRepository
+import com.pbarthuel.bodywellbeing.domain.repositories.local.room.user.UserRepository
 import com.pbarthuel.bodywellbeing.viewModel.utils.CoroutineToolsProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -19,7 +20,8 @@ sealed class MainScreenState {
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val dispatcher: CoroutineToolsProvider,
-    private val preferenceDataStoreRepository: PreferenceDataStoreRepository
+    private val preferenceDataStoreRepository: PreferenceDataStoreRepository,
+    private val userRepository: UserRepository
 ) : ViewModel() {
 
     private val _screenState: MutableStateFlow<MainScreenState> = MutableStateFlow(MainScreenState.Home)
@@ -31,6 +33,7 @@ class MainViewModel @Inject constructor(
 
     fun logOut() {
         viewModelScope.launch(dispatcher.io) {
+            userRepository.clearUserDb()
             preferenceDataStoreRepository.clearDataStore()
         }
     }

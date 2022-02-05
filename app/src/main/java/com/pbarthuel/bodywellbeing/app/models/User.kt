@@ -13,7 +13,7 @@ data class User(
     val lastName: String = "",
     val age: Int = 0,
     val height: Int = 0,
-    val weight: Int = 0,
+    val weight: Double = 0.0,
     val alreadyCreated: Boolean = true
 ) {
     fun toUserRequest(): UserRequest {

@@ -22,7 +22,7 @@ data class UserRequest(
     @ColumnInfo(name = "height")
     val height: Int = 0,
     @ColumnInfo(name = "weight")
-    val weight: Int = 0,
+    val weight: Double = 0.0,
     @ColumnInfo(name = "already_created")
     val alreadyCreated: Boolean = true
 ) {

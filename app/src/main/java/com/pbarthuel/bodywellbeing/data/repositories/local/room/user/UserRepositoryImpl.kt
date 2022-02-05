@@ -12,11 +12,14 @@ class UserRepositoryImpl @Inject constructor(
 ): UserRepository {
 
     override fun getUser(): Flow<User> =
-        userDao.getUser().map { it.toUser() }
+        userDao.getUser().map { it?.toUser() ?: User() }
 
     override suspend fun createUser(user: User) =
         userDao.createUser(user.toUserRequest())
 
     override suspend fun updateUser(user: User) =
         userDao.updateUser(user.toUserRequest())
+
+    override suspend fun clearUserDb() =
+        userDao.clearUserDb()
 }

@@ -28,8 +28,8 @@ fun ProfileScreen(
     ) {
         ProfileDetailCard(
             drawableId = R.drawable.ic_launcher_background,
-            displayName = "Paul",
-            info = user.email
+            displayName = "${user.firstName} ${user.lastName}",
+            info = "${user.age}ans, ${user.height}cm, ${user.weight}kg "
         )
     }
 }
