@@ -9,6 +9,9 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.Modifier
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
@@ -36,15 +39,17 @@ class AccountCreationActivity : ComponentActivity() {
                     }
                     AnimatedNavHost(
                         navController,
-                        startDestination = AccountCreationDestinations.AppInfo.root,
+                        startDestination = AccountCreationDestinations.userInfo,
                         enterTransition = { fadeIn(animationSpec = tween(700)) },
                         exitTransition = { fadeOut(animationSpec = tween(700)) }
                     ) {
-                        composable(AccountCreationDestinations.AppInfo.root) {
+                        composable(AccountCreationDestinations.appInfo) {
 
                         }
-                        composable(AccountCreationDestinations.UserInfo.root) {
-                            UserInfoScreen(viewModel = viewModel)
+                        composable(AccountCreationDestinations.userInfo) {
+                            UserInfoScreen(
+                                viewModel = viewModel
+                            )
                         }
                     }
                 }
@@ -54,12 +59,6 @@ class AccountCreationActivity : ComponentActivity() {
 }
 
 object AccountCreationDestinations {
-
-    object AppInfo {
-        const val root = "app-info"
-    }
-
-    object UserInfo {
-        const val root = "user-info"
-    }
+    const val appInfo = "app-info"
+    const val userInfo = "user-info"
 }

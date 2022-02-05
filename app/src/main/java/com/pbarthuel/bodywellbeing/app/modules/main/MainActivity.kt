@@ -2,6 +2,7 @@ package com.pbarthuel.bodywellbeing.app.modules.main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
@@ -68,13 +69,16 @@ class MainActivity : ComponentActivity() {
         setContent {
             BodyWellBeingTheme {
                 ProvideWindowInsets {
+                    BackHandler {
+
+                    }
                     val navController = rememberAnimatedNavController()
                     val bottomNavigationItems = listOf(
                         MainBottomBarNavigation.Home,
                         MainBottomBarNavigation.Body,
                         MainBottomBarNavigation.Profile
                     )
-                    val screenState = viewModel.displayedScreenState.collectAsState(initial = null)
+                    val screenState = viewModel.screenState.collectAsState()
                     var topBarTitle by remember { mutableStateOf("") }
                     Scaffold(
                         modifier = Modifier.fillMaxSize(),
@@ -98,7 +102,6 @@ class MainActivity : ComponentActivity() {
                                                 onClick = { onSettingsClicked() }
                                             ) { Icon(Icons.Filled.Settings, contentDescription = "Settings") }
                                         }
-                                        else -> {}
                                     }
                                 }
                             )

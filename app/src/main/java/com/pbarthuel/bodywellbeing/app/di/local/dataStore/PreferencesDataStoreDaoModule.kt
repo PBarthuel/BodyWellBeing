@@ -1,7 +1,7 @@
-package com.pbarthuel.bodywellbeing.app.di.local
+package com.pbarthuel.bodywellbeing.app.di.local.dataStore
 
 import android.content.Context
-import com.pbarthuel.bodywellbeing.data.vendors.local.PreferencesDataStoreDao
+import com.pbarthuel.bodywellbeing.data.vendors.local.dataStore.PreferencesDataStoreDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

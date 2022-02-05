@@ -31,7 +31,8 @@ import com.pbarthuel.bodywellbeing.app.ui.theme.VerticalMargin
 @Composable
 fun ProfileDetailCard(
     @DrawableRes drawableId: Int,
-    displayName: String
+    displayName: String,
+    info: String
 ) {
     CustomCard {
         Row(
@@ -66,7 +67,7 @@ fun ProfileDetailCard(
                         content = {
                             Column(modifier = Modifier.background(BodyWellBeingTheme.colors.actionSecondary)) {
                                 Body2(
-                                    text = "Courgette",
+                                    text = info,
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .padding(Basic3)

@@ -26,6 +26,10 @@ fun ProfileScreen(
             .verticalScroll(rememberScrollState())
             .padding(vertical = VerticalMargin)
     ) {
-        ProfileDetailCard(drawableId = R.drawable.ic_launcher_background, displayName = "Paul")
+        ProfileDetailCard(
+            drawableId = R.drawable.ic_launcher_background,
+            displayName = "Paul",
+            info = user.email
+        )
     }
 }

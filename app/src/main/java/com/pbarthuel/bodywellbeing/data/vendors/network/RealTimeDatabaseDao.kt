@@ -3,7 +3,7 @@ package com.pbarthuel.bodywellbeing.data.vendors.network
 import android.util.Log
 import com.google.firebase.database.FirebaseDatabase
 import com.pbarthuel.bodywellbeing.app.models.User
-import com.pbarthuel.bodywellbeing.domain.repositories.local.PreferenceDataStoreRepository
+import com.pbarthuel.bodywellbeing.domain.repositories.local.dataStore.PreferenceDataStoreRepository
 import com.pbarthuel.bodywellbeing.viewModel.utils.CoroutineToolsProvider
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi

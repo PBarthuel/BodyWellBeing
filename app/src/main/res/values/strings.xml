@@ -1,7 +1,10 @@
 <resources>
     <string name="app_name">BodyWellBeing</string>
 
-    // Login
+    <!-- Global -->
+    <string name="_CONTINUE_">Continue</string>
+
+    <!-- Login -->
     <string name="mail">Mail</string>
     <string name="login">Login</string>
     <string name="create_account">Create account</string>
@@ -13,8 +16,14 @@
     <string name="already_have_account">Already have an account ?</string>
     <string name="signin_google">Sign in with Google</string>
 
-    // Home
+    <!-- Home -->
     <string name="home">Home</string>
     <string name="body">Body</string>
     <string name="profile">Profile</string>
+
+    <!-- AccountCreation -->
+    <string name="first_name">First name</string>
+    <string name="first_name_placeholder">Jack</string>
+    <string name="last_name">Last name</string>
+    <string name="last_name_placeholder">Smith</string>
 </resources>

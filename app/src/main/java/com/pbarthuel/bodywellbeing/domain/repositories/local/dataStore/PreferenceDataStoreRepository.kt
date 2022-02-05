@@ -1,4 +1,4 @@
-package com.pbarthuel.bodywellbeing.domain.repositories.local
+package com.pbarthuel.bodywellbeing.domain.repositories.local.dataStore
 
 import com.pbarthuel.bodywellbeing.app.models.User
 import com.pbarthuel.bodywellbeing.viewModel.modules.login.LoginState

@@ -1,7 +1,7 @@
 package com.pbarthuel.bodywellbeing.app.di.repositories
 
-import com.pbarthuel.bodywellbeing.data.repositories.local.PreferenceDataStoreRepositoryImpl
-import com.pbarthuel.bodywellbeing.domain.repositories.local.PreferenceDataStoreRepository
+import com.pbarthuel.bodywellbeing.data.repositories.local.dataStore.PreferenceDataStoreRepositoryImpl
+import com.pbarthuel.bodywellbeing.domain.repositories.local.dataStore.PreferenceDataStoreRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

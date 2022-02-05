@@ -1,4 +1,4 @@
-package com.pbarthuel.bodywellbeing.data.vendors.local
+package com.pbarthuel.bodywellbeing.data.vendors.local.dataStore
 
 import android.content.Context
 import androidx.datastore.core.DataStore

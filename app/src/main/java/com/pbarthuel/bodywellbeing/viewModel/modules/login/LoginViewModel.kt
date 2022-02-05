@@ -7,7 +7,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
-import com.pbarthuel.bodywellbeing.domain.repositories.local.PreferenceDataStoreRepository
+import com.pbarthuel.bodywellbeing.domain.repositories.local.dataStore.PreferenceDataStoreRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.network.RealTimeDatabaseRepository
 import com.pbarthuel.bodywellbeing.viewModel.utils.CoroutineToolsProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -40,10 +40,8 @@ class LoginViewModel @Inject constructor(
         auth: FirebaseAuth
     ) {
         when {
-            email.isEmpty() -> { _state.value = LoginState.Error("No email")
-            }
-            password.isEmpty() -> { _state.value = LoginState.Error("No password")
-            }
+            email.isEmpty() -> { _state.value = LoginState.Error("No email") }
+            password.isEmpty() -> { _state.value = LoginState.Error("No password") }
             else -> {
                 _state.value = LoginState.Loading
                 auth.signInWithEmailAndPassword(email, password)
