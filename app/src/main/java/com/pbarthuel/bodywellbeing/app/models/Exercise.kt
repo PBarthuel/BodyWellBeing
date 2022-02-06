@@ -11,7 +11,8 @@ data class Exercise(
     val image: String = "",
     val name: String,
     val description: String,
-    val isFavorite: Boolean = false
+    val isFavorite: Boolean = false,
+    val type: Int
 ) {
     fun toExerciseEntity(): ExerciseEntity =
         ExerciseEntity(
@@ -19,6 +20,7 @@ data class Exercise(
             image = image,
             name = name,
             description = description,
-            isFavorite = isFavorite
+            isFavorite = isFavorite,
+            type = type
         )
 }

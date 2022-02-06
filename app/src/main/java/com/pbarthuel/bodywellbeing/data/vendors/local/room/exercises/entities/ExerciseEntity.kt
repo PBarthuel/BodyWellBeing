@@ -18,7 +18,9 @@ data class ExerciseEntity(
     @ColumnInfo(name = "description")
     val description: String,
     @ColumnInfo(name = "is_favorite")
-    val isFavorite: Boolean = false
+    val isFavorite: Boolean = false,
+    @ColumnInfo(name = "type")
+    val type: Int
 ) {
     fun toExercise(): Exercise =
         Exercise(
@@ -26,6 +28,7 @@ data class ExerciseEntity(
             image = image,
             name = name,
             description = description,
-            isFavorite = isFavorite
+            isFavorite = isFavorite,
+            type = type
         )
 }
