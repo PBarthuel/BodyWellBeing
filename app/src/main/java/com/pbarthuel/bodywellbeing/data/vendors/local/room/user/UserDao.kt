@@ -4,21 +4,21 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.pbarthuel.bodywellbeing.data.vendors.local.room.user.objectRequest.UserRequest
+import com.pbarthuel.bodywellbeing.data.vendors.local.room.user.entities.UserEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface UserDao {
 
-    @Query("SELECT * FROM UserRequest")
-    fun getUser(): Flow<UserRequest?>
+    @Query("SELECT * FROM UserEntity")
+    fun getUser(): Flow<UserEntity?>
 
     @Insert
-    suspend fun createUser(userRequest: UserRequest)
+    suspend fun createUser(userEntity: UserEntity)
 
     @Update
-    suspend fun updateUser(userRequest: UserRequest)
+    suspend fun updateUser(userEntity: UserEntity)
 
-    @Query("DELETE FROM UserRequest")
+    @Query("DELETE FROM UserEntity")
     suspend fun clearUserDb()
 }

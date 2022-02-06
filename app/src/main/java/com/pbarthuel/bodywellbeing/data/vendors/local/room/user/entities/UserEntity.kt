@@ -1,4 +1,4 @@
-package com.pbarthuel.bodywellbeing.data.vendors.local.room.user.objectRequest
+package com.pbarthuel.bodywellbeing.data.vendors.local.room.user.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
 
 @Entity
 @Serializable
-data class UserRequest(
+data class UserEntity(
     @PrimaryKey
     val uid: String = "",
     @ColumnInfo(name = "email")
@@ -26,8 +26,8 @@ data class UserRequest(
     @ColumnInfo(name = "already_created")
     val alreadyCreated: Boolean = true
 ) {
-    fun toUser(): User {
-        return User(
+    fun toUser(): User =
+        User(
             uid = uid,
             email = email,
             firstName = firstName,
@@ -37,5 +37,4 @@ data class UserRequest(
             weight = weight,
             alreadyCreated = alreadyCreated
         )
-    }
 }

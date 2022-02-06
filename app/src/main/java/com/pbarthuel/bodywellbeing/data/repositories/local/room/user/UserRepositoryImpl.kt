@@ -15,10 +15,10 @@ class UserRepositoryImpl @Inject constructor(
         userDao.getUser().map { it?.toUser() ?: User() }
 
     override suspend fun createUser(user: User) =
-        userDao.createUser(user.toUserRequest())
+        userDao.createUser(user.toUserEntity())
 
     override suspend fun updateUser(user: User) =
-        userDao.updateUser(user.toUserRequest())
+        userDao.updateUser(user.toUserEntity())
 
     override suspend fun clearUserDb() =
         userDao.clearUserDb()

@@ -4,21 +4,21 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises.objectRequest.ExerciseRequest
+import com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises.entities.ExerciseEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ExercisesDao {
 
-    @Query("SELECT * FROM ExerciseRequest")
-    fun getExercises(): Flow<List<ExerciseRequest>?>
+    @Query("SELECT * FROM ExerciseEntity")
+    fun getExercises(): Flow<List<ExerciseEntity>?>
 
     @Insert
-    suspend fun createExercise(exerciseRequest: ExerciseRequest)
+    suspend fun createExercise(exerciseEntity: ExerciseEntity)
 
     @Update
-    suspend fun updateExercise(exerciseRequest: ExerciseRequest)
+    suspend fun updateExercise(exerciseEntity: ExerciseEntity)
 
-    @Query("DELETE FROM ExerciseRequest")
+    @Query("DELETE FROM ExerciseEntity")
     suspend fun clearExercisesDb()
 }
