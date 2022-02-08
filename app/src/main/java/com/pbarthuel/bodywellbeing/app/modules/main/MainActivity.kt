@@ -11,6 +11,7 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,6 +26,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
@@ -37,6 +39,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -78,6 +81,7 @@ class MainActivity : ComponentActivity() {
                     val bottomNavigationItems = listOf(
                         MainBottomBarNavigation.Home,
                         MainBottomBarNavigation.Body,
+                        MainBottomBarNavigation.Exercises,
                         MainBottomBarNavigation.Profile
                     )
                     val screenState = viewModel.screenState.collectAsState()
@@ -122,12 +126,17 @@ class MainActivity : ComponentActivity() {
                                 ) {
                                     composable(MainBottomBarNavigation.Home.root) {
                                         viewModel.onScreenChanged(MainScreenState.Home)
-                                        Box(modifier = Modifier.fillMaxSize()) {
+                                        Box(modifier = Modifier.fillMaxSize().background(colorResource(id = R.color.teal_700))) {
                                         }
                                     }
                                     composable(MainBottomBarNavigation.Body.root) {
                                         viewModel.onScreenChanged(MainScreenState.Body)
-                                        Box(modifier = Modifier.fillMaxSize()) {
+                                        Box(modifier = Modifier.fillMaxSize().background(BodyWellBeingTheme.colors.actionSecondary)) {
+                                        }
+                                    }
+                                    composable(MainBottomBarNavigation.Exercises.root) {
+                                        viewModel.onScreenChanged(MainScreenState.Exercises)
+                                        Box(modifier = Modifier.fillMaxSize().background(colorResource(id = R.color.purple_700))) {
                                         }
                                     }
                                     composable(MainBottomBarNavigation.Profile.root) {
@@ -175,5 +184,6 @@ class MainActivity : ComponentActivity() {
 sealed class MainBottomBarNavigation(val root: String, @StringRes val resourceId: Int, val icon: ImageVector) {
     object Home : MainBottomBarNavigation("home", R.string.home, Icons.Filled.Home)
     object Body : MainBottomBarNavigation("body", R.string.body, Icons.Filled.AddCircle)
+    object Exercises : MainBottomBarNavigation("exercises", R.string.exercises, Icons.Filled.Favorite)
     object Profile : MainBottomBarNavigation("profile", R.string.profile, Icons.Filled.Person)
 }

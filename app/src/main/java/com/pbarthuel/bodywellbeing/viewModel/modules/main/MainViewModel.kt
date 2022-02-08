@@ -14,6 +14,7 @@ import kotlinx.coroutines.launch
 sealed class MainScreenState {
     object Home: MainScreenState()
     object Body: MainScreenState()
+    object Exercises: MainScreenState()
     object Profile: MainScreenState()
     object Logout: MainScreenState()
 }

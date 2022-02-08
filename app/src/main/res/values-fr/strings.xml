@@ -31,6 +31,7 @@
     <!-- Home -->
     <string name="home">Accueil</string>
     <string name="body">Corps</string>
+    <string name="exercises">Exercices</string>
     <string name="profile">Profil</string>
 
     <!-- Profile -->
