@@ -5,6 +5,7 @@ import com.pbarthuel.bodywellbeing.app.models.Exercise
 import com.pbarthuel.bodywellbeing.data.constants.ExercisesConstants
 import com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises.ExercisesDao
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.ExercisesRepository
+import java.lang.Exception
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -20,6 +21,9 @@ class ExercisesRepositoryImpl @Inject constructor(
         exercisesDao.getAllExercises().mapLatest { exercisesRequest ->
             exercisesRequest?.map { it.toExercise() } ?: listOf()
         }
+
+    override suspend fun getExerciseFromId(exerciseId: String): Exercise =
+        exercisesDao.getExerciseFromId(exerciseId = exerciseId)?.toExercise() ?: throw Exception("ExerciseId reference nothing")
 
     override fun getArmExercises(): Flow<List<CondenseExercise>> =
         exercisesDao.getCondenseExercisesFromType(ExercisesConstants.ARM_EXERCISE_TYPE).mapLatest { exercisesRequest ->
