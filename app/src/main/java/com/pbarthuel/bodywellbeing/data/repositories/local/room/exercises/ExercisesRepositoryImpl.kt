@@ -16,6 +16,11 @@ class ExercisesRepositoryImpl @Inject constructor(
             exercisesRequest?.map { it.toExercise() } ?: listOf()
         }
 
+    override fun getFavoritesExercises(): Flow<List<Exercise>> =
+        exercisesDao.getFavoritesExercises().map { exercisesRequest ->
+            exercisesRequest?.map { it.toExercise() } ?: listOf()
+        }
+
     override suspend fun createExercise(exercise: Exercise) =
         exercisesDao.createExercise(exercise.toExerciseEntity())
 

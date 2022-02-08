@@ -16,11 +16,6 @@
     <string name="already_have_account">Already have an account ?</string>
     <string name="signin_google">Sign in with Google</string>
 
-    <!-- Home -->
-    <string name="home">Home</string>
-    <string name="body">Body</string>
-    <string name="profile">Profile</string>
-
     <!-- AccountCreation -->
     <string name="first_name">First name</string>
     <string name="first_name_placeholder">Jack</string>
@@ -32,4 +27,14 @@
     <string name="height_placeholder">175</string>
     <string name="weight">Weight</string>
     <string name="weight_placeholder">70</string>
+
+    <!-- Home -->
+    <string name="home">Home</string>
+    <string name="body">Body</string>
+    <string name="profile">Profile</string>
+
+    <!-- Profile -->
+    <string name="empty_favorites_exercises_description">You don\'t have exercises in you favorites. Go add some !</string>
+    <string name="favorites_exercises">Favorites exercises</string>
+
 </resources>

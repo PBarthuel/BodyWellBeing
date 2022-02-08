@@ -1,4 +1,4 @@
-package com.pbarthuel.bodywellbeing.app.ui.component
+package com.pbarthuel.bodywellbeing.app.ui.component.card
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
@@ -21,7 +21,6 @@ import androidx.compose.ui.unit.dp
 import com.pbarthuel.bodywellbeing.app.ui.component.text.Body2
 import com.pbarthuel.bodywellbeing.app.ui.component.text.Header1
 import com.pbarthuel.bodywellbeing.app.ui.theme.Basic1
-import com.pbarthuel.bodywellbeing.app.ui.theme.Basic2
 import com.pbarthuel.bodywellbeing.app.ui.theme.Basic3
 import com.pbarthuel.bodywellbeing.app.ui.theme.BodyWellBeingTheme
 import com.pbarthuel.bodywellbeing.app.ui.theme.BottomCardMargin

@@ -13,6 +13,9 @@ interface ExercisesDao {
     @Query("SELECT * FROM ExerciseEntity")
     fun getExercises(): Flow<List<ExerciseEntity>?>
 
+    @Query("SELECT * FROM ExerciseEntity WHERE is_favorite == 1")
+    fun getFavoritesExercises(): Flow<List<ExerciseEntity>?>
+
     @Insert
     suspend fun createExercise(exerciseEntity: ExerciseEntity)
 
