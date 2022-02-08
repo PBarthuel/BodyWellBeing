@@ -11,6 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.pbarthuel.bodywellbeing.R
 import com.pbarthuel.bodywellbeing.app.models.Exercise
 import com.pbarthuel.bodywellbeing.app.ui.component.text.Header2
+import com.pbarthuel.bodywellbeing.app.ui.component.text.Header3
 import com.pbarthuel.bodywellbeing.app.ui.theme.Basic2
 import com.pbarthuel.bodywellbeing.app.ui.theme.BodyWellBeingTheme
 import com.pbarthuel.bodywellbeing.app.ui.theme.HorizontalMargin
@@ -23,7 +24,7 @@ fun ExercisesCardSection(
     onCardClicked: (String) -> Unit
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
-        Header2(
+        Header3(
             modifier = Modifier.padding(horizontal = HorizontalMargin, vertical = Basic2),
             text = title
         )

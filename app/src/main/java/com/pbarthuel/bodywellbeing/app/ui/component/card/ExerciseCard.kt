@@ -15,6 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.pbarthuel.bodywellbeing.R
 import com.pbarthuel.bodywellbeing.app.ui.component.text.Body1
+import com.pbarthuel.bodywellbeing.app.ui.theme.Basic2
 import com.pbarthuel.bodywellbeing.app.ui.theme.Basic3
 import com.pbarthuel.bodywellbeing.app.ui.theme.HorizontalMargin
 import com.pbarthuel.bodywellbeing.app.ui.theme.VerticalMargin
@@ -30,7 +31,7 @@ fun ExerciseCard(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = HorizontalMargin, vertical = VerticalMargin)
+                .padding(horizontal = HorizontalMargin, vertical = Basic2)
         ) {
             Image(
                 modifier = Modifier
@@ -54,10 +55,10 @@ fun ExerciseCard(
 
 private fun getDrawableFromType(exerciseType: Int?): Int {
     return when (exerciseType) {
-        ExercisesConstants.ARM_EXERCISE_TYPE -> R.drawable.ic_google_logo
-        ExercisesConstants.TRICEPS_EXERCISE_TYPE -> R.drawable.ic_google_logo
-        ExercisesConstants.BACK_EXERCISE_TYPE -> R.drawable.ic_google_logo
-        ExercisesConstants.SHOULDER_EXERCISE_TYPE -> R.drawable.ic_google_logo
+        ExercisesConstants.ARM_EXERCISE_TYPE -> R.drawable.ic_stock_eye
+        ExercisesConstants.TRICEPS_EXERCISE_TYPE -> R.drawable.ic_launcher_foreground
+        ExercisesConstants.BACK_EXERCISE_TYPE -> R.drawable.ic_launcher_background
+        ExercisesConstants.SHOULDER_EXERCISE_TYPE -> R.drawable.ic_stock_eye2
         ExercisesConstants.CHEST_EXERCISE_TYPE -> R.drawable.ic_google_logo
         ExercisesConstants.ABS_EXERCISE_TYPE -> R.drawable.ic_google_logo
         ExercisesConstants.LEG_EXERCISE_TYPE -> R.drawable.ic_google_logo

@@ -16,4 +16,4 @@ val Layout5 = 56.dp
 
 val HorizontalMargin = 16.dp
 val VerticalMargin = 16.dp
-val BottomCardMargin = 12.dp
+val BottomCardMargin = 8.dp

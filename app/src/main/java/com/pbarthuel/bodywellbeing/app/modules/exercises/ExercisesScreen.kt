@@ -2,7 +2,6 @@ package com.pbarthuel.bodywellbeing.app.modules.exercises
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
@@ -12,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.pbarthuel.bodywellbeing.R
 import com.pbarthuel.bodywellbeing.app.ui.component.card.ExercisesCardSection
-import com.pbarthuel.bodywellbeing.app.ui.theme.VerticalMargin
 import com.pbarthuel.bodywellbeing.viewModel.modules.exercises.ExercisesViewModel
 
 @Composable
@@ -29,7 +27,6 @@ fun ExercisesScreen(
     Column(modifier = Modifier
         .fillMaxSize()
         .verticalScroll(rememberScrollState())
-        .padding(vertical = VerticalMargin)
     ) {
         ExercisesCardSection(
             title = stringResource(id = R.string.arm_exercises),

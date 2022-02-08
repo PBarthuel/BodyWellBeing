@@ -74,6 +74,18 @@ class MainViewModel @Inject constructor(
                 type = ExercisesConstants.CHEST_EXERCISE_TYPE
             ),
             Exercise(
+                id = "developpéCouché2",
+                name = "Developpé couché",
+                description = "Developpé couché",
+                type = ExercisesConstants.CHEST_EXERCISE_TYPE
+            ),
+            Exercise(
+                id = "developpéCouché3",
+                name = "Developpé couché",
+                description = "Developpé couché",
+                type = ExercisesConstants.CHEST_EXERCISE_TYPE
+            ),
+            Exercise(
                 id = "press1",
                 name = "Press",
                 description = "Press",
@@ -86,10 +98,34 @@ class MainViewModel @Inject constructor(
                 type = ExercisesConstants.ARM_EXERCISE_TYPE
             ),
             Exercise(
+                id = "curl2",
+                name = "Curl",
+                description = "Curl",
+                type = ExercisesConstants.ARM_EXERCISE_TYPE
+            ),
+            Exercise(
                 id = "dips1",
                 name = "Dips",
                 description = "Dips",
                 type = ExercisesConstants.TRICEPS_EXERCISE_TYPE
+            ),
+            Exercise(
+                id = "curl3",
+                name = "Curl",
+                description = "Curl",
+                type = ExercisesConstants.SHOULDER_EXERCISE_TYPE
+            ),
+            Exercise(
+                id = "curl4",
+                name = "Curl",
+                description = "Curl",
+                type = ExercisesConstants.ABS_EXERCISE_TYPE
+            ),
+            Exercise(
+                id = "curl5",
+                name = "Curl",
+                description = "Curl",
+                type = ExercisesConstants.BACK_EXERCISE_TYPE
             )
         )
     }
