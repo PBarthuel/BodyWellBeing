@@ -15,7 +15,8 @@ import com.pbarthuel.bodywellbeing.viewModel.modules.exercises.ExercisesViewMode
 
 @Composable
 fun ExercisesScreen(
-    viewModel: ExercisesViewModel
+    viewModel: ExercisesViewModel,
+    onExerciseCardClicked: (String) -> Unit
 ) {
     val armExercises by viewModel.armExercises.collectAsState(initial = listOf())
     val tricepsExercises by viewModel.tricepsExercises.collectAsState(initial = listOf())
@@ -31,51 +32,37 @@ fun ExercisesScreen(
         ExercisesCardSection(
             title = stringResource(id = R.string.arm_exercises),
             exercises = armExercises,
-            onCardClicked = { exerciseId ->
-
-            }
+            onCardClicked = { exerciseId -> onExerciseCardClicked(exerciseId) }
         )
         ExercisesCardSection(
             title = stringResource(id = R.string.triceps_exercises),
             exercises = tricepsExercises,
-            onCardClicked = { exerciseId ->
-
-            }
+            onCardClicked = { exerciseId -> onExerciseCardClicked(exerciseId) }
         )
         ExercisesCardSection(
             title = stringResource(id = R.string.back_exercises),
             exercises = backExercises,
-            onCardClicked = { exerciseId ->
-
-            }
+            onCardClicked = { exerciseId -> onExerciseCardClicked(exerciseId) }
         )
         ExercisesCardSection(
             title = stringResource(id = R.string.shoulder_exercises),
             exercises = shoulderExercises,
-            onCardClicked = { exerciseId ->
-
-            }
+            onCardClicked = { exerciseId -> onExerciseCardClicked(exerciseId) }
         )
         ExercisesCardSection(
             title = stringResource(id = R.string.chest_exercises),
             exercises = chestExercises,
-            onCardClicked = { exerciseId ->
-
-            }
+            onCardClicked = { exerciseId -> onExerciseCardClicked(exerciseId) }
         )
         ExercisesCardSection(
             title = stringResource(id = R.string.abs_exercises),
             exercises = absExercises,
-            onCardClicked = { exerciseId ->
-
-            }
+            onCardClicked = { exerciseId -> onExerciseCardClicked(exerciseId) }
         )
         ExercisesCardSection(
             title = stringResource(id = R.string.leg_exercises),
             exercises = legExercises,
-            onCardClicked = { exerciseId ->
-
-            }
+            onCardClicked = { exerciseId -> onExerciseCardClicked(exerciseId) }
         )
     }
 }

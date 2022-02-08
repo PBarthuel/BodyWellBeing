@@ -18,7 +18,8 @@ import com.pbarthuel.bodywellbeing.viewModel.modules.profile.ProfileScreenViewMo
 
 @Composable
 fun ProfileScreen(
-    viewModel: ProfileScreenViewModel
+    viewModel: ProfileScreenViewModel,
+    onExerciseCardClicked: (String) -> Unit
 ) {
     val user by viewModel.user.collectAsState(initial = User())
     val favoritesExercises by viewModel.favoritesExercises.collectAsState(initial = listOf())
@@ -35,9 +36,7 @@ fun ProfileScreen(
         )
         FavoriteExercisesCardSection(
             exercises = favoritesExercises,
-            onCardClicked = { exerciseId ->
-
-            }
+            onCardClicked = { exerciseId -> onExerciseCardClicked(exerciseId) }
         )
     }
 }

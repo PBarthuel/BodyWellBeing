@@ -20,6 +20,7 @@ sealed class MainScreenState {
     object Body: MainScreenState()
     object Exercises: MainScreenState()
     object Profile: MainScreenState()
+    object ExerciseDetail: MainScreenState()
     object Logout: MainScreenState()
 }
 

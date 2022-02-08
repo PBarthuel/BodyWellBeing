@@ -51,6 +51,7 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.pbarthuel.bodywellbeing.R
+import com.pbarthuel.bodywellbeing.app.modules.exerciseDetail.ExerciseDetailScreen
 import com.pbarthuel.bodywellbeing.app.modules.exercises.ExercisesScreen
 import com.pbarthuel.bodywellbeing.app.modules.login.LoginActivity
 import com.pbarthuel.bodywellbeing.app.modules.profile.ProfileScreen
@@ -82,23 +83,23 @@ class MainActivity : ComponentActivity() {
                     }
                     val navController = rememberAnimatedNavController()
                     val bottomNavigationItems = listOf(
-                        MainBottomBarNavigation.Home,
-                        MainBottomBarNavigation.Body,
-                        MainBottomBarNavigation.Exercises,
-                        MainBottomBarNavigation.Profile
+                        Destinations.MainBottomBarNavigation.Home,
+                        Destinations.MainBottomBarNavigation.Body,
+                        Destinations.MainBottomBarNavigation.Exercises,
+                        Destinations.MainBottomBarNavigation.Profile
                     )
                     val screenState = viewModel.screenState.collectAsState()
                     var topBarTitle by remember { mutableStateOf(getString(R.string.home)) }
+                    var shouldShowBars by remember { mutableStateOf(true) }
                     Scaffold(
                         modifier = Modifier.fillMaxSize(),
-                        topBar = {
+                        topBar = { if (shouldShowBars) {
                             TopAppBar(
                                 modifier = Modifier.padding(Basic1),
                                 backgroundColor = Color.Transparent.copy(alpha = 0f),
                                 elevation = 2.dp,
                                 title = { Header2(text = topBarTitle) },
                                 actions = {
-                                    // TODO trouver une meilleur solution pour les actions
                                     when (screenState.value) {
                                         MainScreenState.Profile -> {
                                             IconButton(
@@ -111,11 +112,11 @@ class MainActivity : ComponentActivity() {
                                                 startActivity(it)
                                             }
                                         }
-                                        else -> { }
+                                        else -> {}
                                     }
                                 }
                             )
-                        }
+                        } }
                     ) {
                         Column(modifier = Modifier.fillMaxSize()) {
                             Box(
@@ -125,53 +126,74 @@ class MainActivity : ComponentActivity() {
                             ) {
                                 AnimatedNavHost(
                                     navController,
-                                    startDestination = MainBottomBarNavigation.Home.root,
+                                    startDestination = Destinations.MainBottomBarNavigation.Home.root,
                                     enterTransition = { fadeIn(animationSpec = tween(700)) },
                                     exitTransition = { fadeOut(animationSpec = tween(700)) }
                                 ) {
-                                    composable(MainBottomBarNavigation.Home.root) {
+                                    composable(Destinations.MainBottomBarNavigation.Home.root) {
                                         viewModel.onScreenChanged(MainScreenState.Home)
+                                        shouldShowBars = true
                                         Box(modifier = Modifier
                                             .fillMaxSize()
                                             .background(colorResource(id = R.color.teal_700))) {
                                         }
                                     }
-                                    composable(MainBottomBarNavigation.Body.root) {
+                                    composable(Destinations.MainBottomBarNavigation.Body.root) {
                                         viewModel.onScreenChanged(MainScreenState.Body)
+                                        shouldShowBars = true
                                         Box(modifier = Modifier
                                             .fillMaxSize()
                                             .background(BodyWellBeingTheme.colors.actionSecondary)) {
                                         }
                                     }
-                                    composable(MainBottomBarNavigation.Exercises.root) {
+                                    composable(Destinations.MainBottomBarNavigation.Exercises.root) {
                                         viewModel.onScreenChanged(MainScreenState.Exercises)
-                                        ExercisesScreen(viewModel = hiltViewModel())
+                                        shouldShowBars = true
+                                        ExercisesScreen(
+                                            viewModel = hiltViewModel(),
+                                            onExerciseCardClicked = { exerciseId -> navController.navigate(Destinations.ExerciseDetail.root) }
+                                        )
                                     }
-                                    composable(MainBottomBarNavigation.Profile.root) {
+                                    composable(Destinations.MainBottomBarNavigation.Profile.root) {
                                         viewModel.onScreenChanged(MainScreenState.Profile)
-                                        ProfileScreen(viewModel = hiltViewModel())
+                                        shouldShowBars = true
+                                        ProfileScreen(
+                                            viewModel = hiltViewModel(),
+                                            onExerciseCardClicked = { exerciseId -> navController.navigate(Destinations.ExerciseDetail.root) }
+                                        )
+                                    }
+                                    composable(Destinations.ExerciseDetail.root) {
+                                        viewModel.onScreenChanged(MainScreenState.ExerciseDetail)
+                                        shouldShowBars = false
+                                        BackHandler { navController.popBackStack() }
+                                        ExerciseDetailScreen(
+                                            viewModel = hiltViewModel(),
+                                            exerciseId = "press1"
+                                        )
                                     }
                                 }
                             }
-                            BottomNavigation {
-                                val navBackStackEntry by navController.currentBackStackEntryAsState()
-                                val currentDestination = navBackStackEntry?.destination
-                                bottomNavigationItems.forEach { screen ->
-                                    BottomNavigationItem(
-                                        icon = { Icon(screen.icon, contentDescription = null) },
-                                        label = { Text(stringResource(id = screen.resourceId)) },
-                                        selected = currentDestination?.hierarchy?.any { it.route == screen.root } == true,
-                                        onClick = {
-                                            topBarTitle = getString(screen.resourceId)
-                                            navController.navigate(screen.root) {
-                                                popUpTo(navController.graph.findStartDestination().id) {
-                                                    saveState = true
+                            if(shouldShowBars) {
+                                BottomNavigation {
+                                    val navBackStackEntry by navController.currentBackStackEntryAsState()
+                                    val currentDestination = navBackStackEntry?.destination
+                                    bottomNavigationItems.forEach { screen ->
+                                        BottomNavigationItem(
+                                            icon = { Icon(screen.icon, contentDescription = null) },
+                                            label = { Text(stringResource(id = screen.resourceId)) },
+                                            selected = currentDestination?.hierarchy?.any { it.route == screen.root } == true,
+                                            onClick = {
+                                                topBarTitle = getString(screen.resourceId)
+                                                navController.navigate(screen.root) {
+                                                    popUpTo(navController.graph.findStartDestination().id) {
+                                                        saveState = true
+                                                    }
+                                                    launchSingleTop = true
+                                                    restoreState = true
                                                 }
-                                                launchSingleTop = true
-                                                restoreState = true
                                             }
-                                        }
-                                    )
+                                        )
+                                    }
                                 }
                             }
                         }
@@ -186,10 +208,15 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+object Destinations {
+    sealed class MainBottomBarNavigation(val root: String, @StringRes val resourceId: Int, val icon: ImageVector) {
+        object Home : MainBottomBarNavigation("home", R.string.home, Icons.Filled.Home)
+        object Body : MainBottomBarNavigation("body", R.string.body, Icons.Filled.AddCircle)
+        object Exercises : MainBottomBarNavigation("exercises", R.string.exercises, Icons.Filled.Favorite)
+        object Profile : MainBottomBarNavigation("profile", R.string.profile, Icons.Filled.Person)
+    }
 
-sealed class MainBottomBarNavigation(val root: String, @StringRes val resourceId: Int, val icon: ImageVector) {
-    object Home : MainBottomBarNavigation("home", R.string.home, Icons.Filled.Home)
-    object Body : MainBottomBarNavigation("body", R.string.body, Icons.Filled.AddCircle)
-    object Exercises : MainBottomBarNavigation("exercises", R.string.exercises, Icons.Filled.Favorite)
-    object Profile : MainBottomBarNavigation("profile", R.string.profile, Icons.Filled.Person)
+    object ExerciseDetail {
+        const val root = "exercise_detail"
+    }
 }
