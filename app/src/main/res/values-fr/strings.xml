@@ -46,4 +46,7 @@
     <string name="abs_exercises">Exercices abdominaux</string>
     <string name="leg_exercises">Exercices jambes</string>
 
+    <!-- Exercise Detail -->
+    <string name="exercise_detail">Detail de l\'exercice</string>
+
 </resources>

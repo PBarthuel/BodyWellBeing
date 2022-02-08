@@ -7,6 +7,7 @@ import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -93,30 +94,36 @@ class MainActivity : ComponentActivity() {
                     var shouldShowBars by remember { mutableStateOf(true) }
                     Scaffold(
                         modifier = Modifier.fillMaxSize(),
-                        topBar = { if (shouldShowBars) {
-                            TopAppBar(
-                                modifier = Modifier.padding(Basic1),
-                                backgroundColor = Color.Transparent.copy(alpha = 0f),
-                                elevation = 2.dp,
-                                title = { Header2(text = topBarTitle) },
-                                actions = {
-                                    when (screenState.value) {
-                                        MainScreenState.Profile -> {
-                                            IconButton(
-                                                onClick = { onSettingsClicked() }
-                                            ) { Icon(Icons.Filled.Settings, contentDescription = "Settings") }
-                                        }
-                                        MainScreenState.Logout -> {
-                                            Intent(this@MainActivity, LoginActivity::class.java).also {
-                                                it.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                                                startActivity(it)
+                        topBar = {
+                            AnimatedVisibility(
+                                visible = shouldShowBars,
+                                enter = fadeIn(animationSpec = tween(200)),
+                                exit = fadeOut(animationSpec = tween(200))
+                            ) {
+                                TopAppBar(
+                                    modifier = Modifier.padding(Basic1),
+                                    backgroundColor = Color.Transparent.copy(alpha = 0f),
+                                    elevation = 2.dp,
+                                    title = { Header2(text = topBarTitle) },
+                                    actions = {
+                                        when (screenState.value) {
+                                            MainScreenState.Profile -> {
+                                                IconButton(
+                                                    onClick = { onSettingsClicked() }
+                                                ) { Icon(Icons.Filled.Settings, contentDescription = "Settings") }
                                             }
+                                            MainScreenState.Logout -> {
+                                                Intent(this@MainActivity, LoginActivity::class.java).also {
+                                                    it.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                                    startActivity(it)
+                                                }
+                                            }
+                                            else -> {}
                                         }
-                                        else -> {}
                                     }
-                                }
-                            )
-                        } }
+                                )
+                            }
+                        }
                     ) {
                         Column(modifier = Modifier.fillMaxSize()) {
                             Box(
@@ -133,18 +140,12 @@ class MainActivity : ComponentActivity() {
                                     composable(Destinations.MainBottomBarNavigation.Home.root) {
                                         viewModel.onScreenChanged(MainScreenState.Home)
                                         shouldShowBars = true
-                                        Box(modifier = Modifier
-                                            .fillMaxSize()
-                                            .background(colorResource(id = R.color.teal_700))) {
-                                        }
+                                        Box(modifier = Modifier.fillMaxSize().background(colorResource(id = R.color.teal_700))) {}
                                     }
                                     composable(Destinations.MainBottomBarNavigation.Body.root) {
                                         viewModel.onScreenChanged(MainScreenState.Body)
                                         shouldShowBars = true
-                                        Box(modifier = Modifier
-                                            .fillMaxSize()
-                                            .background(BodyWellBeingTheme.colors.actionSecondary)) {
-                                        }
+                                        Box(modifier = Modifier.fillMaxSize().background(BodyWellBeingTheme.colors.actionSecondary)) {}
                                     }
                                     composable(Destinations.MainBottomBarNavigation.Exercises.root) {
                                         viewModel.onScreenChanged(MainScreenState.Exercises)
@@ -168,12 +169,17 @@ class MainActivity : ComponentActivity() {
                                         BackHandler { navController.popBackStack() }
                                         ExerciseDetailScreen(
                                             viewModel = hiltViewModel(),
-                                            exerciseId = "press1"
+                                            exerciseId = "press1",
+                                            onNavigationBackClicked = { navController.popBackStack() }
                                         )
                                     }
                                 }
                             }
-                            if(shouldShowBars) {
+                            AnimatedVisibility(
+                                visible = shouldShowBars,
+                                enter = fadeIn(animationSpec = tween(200)),
+                                exit = fadeOut(animationSpec = tween(200))
+                            ) {
                                 BottomNavigation {
                                     val navBackStackEntry by navController.currentBackStackEntryAsState()
                                     val currentDestination = navBackStackEntry?.destination
