@@ -51,6 +51,7 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.pbarthuel.bodywellbeing.R
+import com.pbarthuel.bodywellbeing.app.modules.exercises.ExercisesScreen
 import com.pbarthuel.bodywellbeing.app.modules.login.LoginActivity
 import com.pbarthuel.bodywellbeing.app.modules.profile.ProfileScreen
 import com.pbarthuel.bodywellbeing.app.ui.component.text.Header2
@@ -117,9 +118,11 @@ class MainActivity : ComponentActivity() {
                         }
                     ) {
                         Column(modifier = Modifier.fillMaxSize()) {
-                            Box(modifier = Modifier
-                                .fillMaxSize()
-                                .weight(1f)) {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .weight(1f)
+                            ) {
                                 AnimatedNavHost(
                                     navController,
                                     startDestination = MainBottomBarNavigation.Home.root,
@@ -128,24 +131,25 @@ class MainActivity : ComponentActivity() {
                                 ) {
                                     composable(MainBottomBarNavigation.Home.root) {
                                         viewModel.onScreenChanged(MainScreenState.Home)
-                                        Box(modifier = Modifier.fillMaxSize().background(colorResource(id = R.color.teal_700))) {
+                                        Box(modifier = Modifier
+                                            .fillMaxSize()
+                                            .background(colorResource(id = R.color.teal_700))) {
                                         }
                                     }
                                     composable(MainBottomBarNavigation.Body.root) {
                                         viewModel.onScreenChanged(MainScreenState.Body)
-                                        Box(modifier = Modifier.fillMaxSize().background(BodyWellBeingTheme.colors.actionSecondary)) {
+                                        Box(modifier = Modifier
+                                            .fillMaxSize()
+                                            .background(BodyWellBeingTheme.colors.actionSecondary)) {
                                         }
                                     }
                                     composable(MainBottomBarNavigation.Exercises.root) {
                                         viewModel.onScreenChanged(MainScreenState.Exercises)
-                                        Box(modifier = Modifier.fillMaxSize().background(colorResource(id = R.color.purple_700))) {
-                                        }
+                                        ExercisesScreen(viewModel = hiltViewModel())
                                     }
                                     composable(MainBottomBarNavigation.Profile.root) {
                                         viewModel.onScreenChanged(MainScreenState.Profile)
-                                        ProfileScreen(
-                                            viewModel = hiltViewModel(),
-                                        )
+                                        ProfileScreen(viewModel = hiltViewModel())
                                     }
                                 }
                             }
