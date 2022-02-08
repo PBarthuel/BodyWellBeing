@@ -34,8 +34,16 @@
     <string name="exercises">Exercices</string>
     <string name="profile">Profil</string>
 
-    <!-- Profile -->
+    <!-- Exercises -->
     <string name="empty_favorites_exercises_description">Vous n\'avez pas d\'exercices en favoris. Allez en ajouter !</string>
     <string name="favorites_exercises">Exercices favoris</string>
+    <string name="empty_exercises_description">Il n\'y a pas d\'exercices !</string>
+    <string name="arm_exercises">Exercices bras</string>
+    <string name="triceps_exercises">Exercices triceps</string>
+    <string name="back_exercises">Exercices dos</string>
+    <string name="shoulder_exercises">Exercices épaules</string>
+    <string name="chest_exercises">Exercices pectoraux</string>
+    <string name="abs_exercises">Exercices abdominaux</string>
+    <string name="leg_exercises">Exercices jambes</string>
 
 </resources>

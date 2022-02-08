@@ -13,6 +13,7 @@ import androidx.compose.ui.res.stringResource
 import com.pbarthuel.bodywellbeing.R
 import com.pbarthuel.bodywellbeing.app.models.User
 import com.pbarthuel.bodywellbeing.app.ui.component.card.ExercisesCardSection
+import com.pbarthuel.bodywellbeing.app.ui.component.card.FavoriteExercisesCardSection
 import com.pbarthuel.bodywellbeing.app.ui.component.card.ProfileDetailCard
 import com.pbarthuel.bodywellbeing.app.ui.theme.VerticalMargin
 import com.pbarthuel.bodywellbeing.viewModel.modules.profile.ProfileScreenViewModel
@@ -34,8 +35,7 @@ fun ProfileScreen(
             displayName = "${user.firstName} ${user.lastName}",
             info = "${user.age}ans, ${user.height}cm, ${user.weight}kg "
         )
-        ExercisesCardSection(
-            title = stringResource(id = R.string.favorites_exercises),
+        FavoriteExercisesCardSection(
             exercises = favoritesExercises,
             onCardClicked = { exerciseId ->
 
