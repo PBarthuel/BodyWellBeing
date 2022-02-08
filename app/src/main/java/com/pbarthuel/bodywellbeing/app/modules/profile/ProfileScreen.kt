@@ -9,10 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import com.pbarthuel.bodywellbeing.R
 import com.pbarthuel.bodywellbeing.app.models.User
-import com.pbarthuel.bodywellbeing.app.ui.component.card.ExercisesCardSection
 import com.pbarthuel.bodywellbeing.app.ui.component.card.FavoriteExercisesCardSection
 import com.pbarthuel.bodywellbeing.app.ui.component.card.ProfileDetailCard
 import com.pbarthuel.bodywellbeing.app.ui.theme.VerticalMargin

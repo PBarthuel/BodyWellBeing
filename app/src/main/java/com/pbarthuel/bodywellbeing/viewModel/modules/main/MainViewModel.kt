@@ -57,7 +57,7 @@ class MainViewModel @Inject constructor(
     // region A delete
     fun createExercise() {
         viewModelScope.launch(dispatcher.io) {
-            if (exercisesRepository.getExercises().first().isEmpty()) {
+            if (exercisesRepository.getAllExercises().first().isEmpty()) {
                 exercisesList().forEach {
                     exercisesRepository.createExercise(it)
                 }

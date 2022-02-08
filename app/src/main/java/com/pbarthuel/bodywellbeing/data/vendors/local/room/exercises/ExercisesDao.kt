@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
+import com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises.entities.CondenseExerciseEntity
 import com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises.entities.ExerciseEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -11,13 +12,13 @@ import kotlinx.coroutines.flow.Flow
 interface ExercisesDao {
 
     @Query("SELECT * FROM ExerciseEntity")
-    fun getExercises(): Flow<List<ExerciseEntity>?>
+    fun getAllExercises(): Flow<List<ExerciseEntity>?>
 
     @Query("SELECT * FROM ExerciseEntity WHERE type == :exerciseType")
-    fun getExercisesFromType(exerciseType: Int): Flow<List<ExerciseEntity>?>
+    fun getCondenseExercisesFromType(exerciseType: Int): Flow<List<CondenseExerciseEntity>?>
 
     @Query("SELECT * FROM ExerciseEntity WHERE is_favorite == 1")
-    fun getFavoritesExercises(): Flow<List<ExerciseEntity>?>
+    fun getCondenseFavoritesExercises(): Flow<List<CondenseExerciseEntity>?>
 
     @Insert
     suspend fun createExercise(exerciseEntity: ExerciseEntity)

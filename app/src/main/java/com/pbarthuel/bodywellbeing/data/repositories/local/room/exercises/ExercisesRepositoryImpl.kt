@@ -1,5 +1,6 @@
 package com.pbarthuel.bodywellbeing.data.repositories.local.room.exercises
 
+import com.pbarthuel.bodywellbeing.app.models.CondenseExercise
 import com.pbarthuel.bodywellbeing.app.models.Exercise
 import com.pbarthuel.bodywellbeing.data.constants.ExercisesConstants
 import com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises.ExercisesDao
@@ -15,49 +16,49 @@ class ExercisesRepositoryImpl @Inject constructor(
     private val exercisesDao: ExercisesDao
 ): ExercisesRepository {
 
-    override fun getExercises(): Flow<List<Exercise>> =
-        exercisesDao.getExercises().mapLatest { exercisesRequest ->
+    override fun getAllExercises(): Flow<List<Exercise>> =
+        exercisesDao.getAllExercises().mapLatest { exercisesRequest ->
             exercisesRequest?.map { it.toExercise() } ?: listOf()
         }
 
-    override fun getArmExercises(): Flow<List<Exercise>> =
-        exercisesDao.getExercisesFromType(ExercisesConstants.ARM_EXERCISE_TYPE).mapLatest { exercisesRequest ->
-            exercisesRequest?.map { it.toExercise() } ?: listOf()
+    override fun getArmExercises(): Flow<List<CondenseExercise>> =
+        exercisesDao.getCondenseExercisesFromType(ExercisesConstants.ARM_EXERCISE_TYPE).mapLatest { exercisesRequest ->
+            exercisesRequest?.map { it.toCondenseExercise() } ?: listOf()
         }
 
-    override fun getTricepsExercises(): Flow<List<Exercise>> =
-        exercisesDao.getExercisesFromType(ExercisesConstants.TRICEPS_EXERCISE_TYPE).mapLatest { exercisesRequest ->
-            exercisesRequest?.map { it.toExercise() } ?: listOf()
+    override fun getTricepsExercises(): Flow<List<CondenseExercise>> =
+        exercisesDao.getCondenseExercisesFromType(ExercisesConstants.TRICEPS_EXERCISE_TYPE).mapLatest { exercisesRequest ->
+            exercisesRequest?.map { it.toCondenseExercise() } ?: listOf()
         }
 
-    override fun getBackExercises(): Flow<List<Exercise>> =
-        exercisesDao.getExercisesFromType(ExercisesConstants.BACK_EXERCISE_TYPE).mapLatest { exercisesRequest ->
-            exercisesRequest?.map { it.toExercise() } ?: listOf()
+    override fun getBackExercises(): Flow<List<CondenseExercise>> =
+        exercisesDao.getCondenseExercisesFromType(ExercisesConstants.BACK_EXERCISE_TYPE).mapLatest { exercisesRequest ->
+            exercisesRequest?.map { it.toCondenseExercise() } ?: listOf()
         }
 
-    override fun getShoulderExercises(): Flow<List<Exercise>> =
-        exercisesDao.getExercisesFromType(ExercisesConstants.SHOULDER_EXERCISE_TYPE).mapLatest { exercisesRequest ->
-            exercisesRequest?.map { it.toExercise() } ?: listOf()
+    override fun getShoulderExercises(): Flow<List<CondenseExercise>> =
+        exercisesDao.getCondenseExercisesFromType(ExercisesConstants.SHOULDER_EXERCISE_TYPE).mapLatest { exercisesRequest ->
+            exercisesRequest?.map { it.toCondenseExercise() } ?: listOf()
         }
 
-    override fun getChestExercises(): Flow<List<Exercise>> =
-        exercisesDao.getExercisesFromType(ExercisesConstants.CHEST_EXERCISE_TYPE).mapLatest { exercisesRequest ->
-            exercisesRequest?.map { it.toExercise() } ?: listOf()
+    override fun getChestExercises(): Flow<List<CondenseExercise>> =
+        exercisesDao.getCondenseExercisesFromType(ExercisesConstants.CHEST_EXERCISE_TYPE).mapLatest { exercisesRequest ->
+            exercisesRequest?.map { it.toCondenseExercise() } ?: listOf()
         }
 
-    override fun getAbsExercises(): Flow<List<Exercise>> =
-        exercisesDao.getExercisesFromType(ExercisesConstants.ABS_EXERCISE_TYPE).mapLatest { exercisesRequest ->
-            exercisesRequest?.map { it.toExercise() } ?: listOf()
+    override fun getAbsExercises(): Flow<List<CondenseExercise>> =
+        exercisesDao.getCondenseExercisesFromType(ExercisesConstants.ABS_EXERCISE_TYPE).mapLatest { exercisesRequest ->
+            exercisesRequest?.map { it.toCondenseExercise() } ?: listOf()
         }
 
-    override fun getLegExercises(): Flow<List<Exercise>> =
-        exercisesDao.getExercisesFromType(ExercisesConstants.LEG_EXERCISE_TYPE).mapLatest { exercisesRequest ->
-            exercisesRequest?.map { it.toExercise() } ?: listOf()
+    override fun getLegExercises(): Flow<List<CondenseExercise>> =
+        exercisesDao.getCondenseExercisesFromType(ExercisesConstants.LEG_EXERCISE_TYPE).mapLatest { exercisesRequest ->
+            exercisesRequest?.map { it.toCondenseExercise() } ?: listOf()
         }
 
-    override fun getFavoritesExercises(): Flow<List<Exercise>> =
-        exercisesDao.getFavoritesExercises().map { exercisesRequest ->
-            exercisesRequest?.map { it.toExercise() } ?: listOf()
+    override fun getFavoritesExercises(): Flow<List<CondenseExercise>> =
+        exercisesDao.getCondenseFavoritesExercises().map { exercisesRequest ->
+            exercisesRequest?.map { it.toCondenseExercise() } ?: listOf()
         }
 
     override suspend fun createExercise(exercise: Exercise) = exercisesDao.createExercise(exercise.toExerciseEntity())

@@ -1,19 +1,20 @@
 package com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises
 
+import com.pbarthuel.bodywellbeing.app.models.CondenseExercise
 import com.pbarthuel.bodywellbeing.app.models.Exercise
 import com.pbarthuel.bodywellbeing.app.models.User
 import kotlinx.coroutines.flow.Flow
 
 interface ExercisesRepository {
-    fun getExercises(): Flow<List<Exercise>>
-    fun getArmExercises(): Flow<List<Exercise>>
-    fun getTricepsExercises(): Flow<List<Exercise>>
-    fun getBackExercises(): Flow<List<Exercise>>
-    fun getShoulderExercises(): Flow<List<Exercise>>
-    fun getChestExercises(): Flow<List<Exercise>>
-    fun getAbsExercises(): Flow<List<Exercise>>
-    fun getLegExercises(): Flow<List<Exercise>>
-    fun getFavoritesExercises(): Flow<List<Exercise>>
+    fun getAllExercises(): Flow<List<Exercise>>
+    fun getArmExercises(): Flow<List<CondenseExercise>>
+    fun getTricepsExercises(): Flow<List<CondenseExercise>>
+    fun getBackExercises(): Flow<List<CondenseExercise>>
+    fun getShoulderExercises(): Flow<List<CondenseExercise>>
+    fun getChestExercises(): Flow<List<CondenseExercise>>
+    fun getAbsExercises(): Flow<List<CondenseExercise>>
+    fun getLegExercises(): Flow<List<CondenseExercise>>
+    fun getFavoritesExercises(): Flow<List<CondenseExercise>>
     suspend fun createExercise(exercise: Exercise)
     suspend fun updateExercise(exercise: Exercise)
     suspend fun clearExercisesDb()

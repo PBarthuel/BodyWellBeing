@@ -1,6 +1,7 @@
 package com.pbarthuel.bodywellbeing.viewModel.modules.profile
 
 import androidx.lifecycle.ViewModel
+import com.pbarthuel.bodywellbeing.app.models.CondenseExercise
 import com.pbarthuel.bodywellbeing.app.models.Exercise
 import com.pbarthuel.bodywellbeing.app.models.User
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.ExercisesRepository
@@ -20,5 +21,5 @@ class ProfileScreenViewModel @Inject constructor(
 
     val user: Flow<User> = userRepository.getUser().flowOn(dispatcher.io)
 
-    val favoritesExercises: Flow<List<Exercise>> = exercisesRepository.getFavoritesExercises().flowOn(dispatcher.io)
+    val favoritesExercises: Flow<List<CondenseExercise>> = exercisesRepository.getFavoritesExercises().flowOn(dispatcher.io)
 }

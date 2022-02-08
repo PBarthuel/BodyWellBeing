@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.pbarthuel.bodywellbeing.R
+import com.pbarthuel.bodywellbeing.app.models.CondenseExercise
 import com.pbarthuel.bodywellbeing.app.models.Exercise
 import com.pbarthuel.bodywellbeing.app.ui.component.text.Header2
 import com.pbarthuel.bodywellbeing.app.ui.component.text.Header3
@@ -20,7 +21,7 @@ import com.pbarthuel.bodywellbeing.data.constants.ExercisesConstants
 @Composable
 fun ExercisesCardSection(
     title: String,
-    exercises: List<Exercise>,
+    exercises: List<CondenseExercise>,
     onCardClicked: (String) -> Unit
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
@@ -49,7 +50,7 @@ fun ExercisesCardSection(
 
 @Composable
 fun FavoriteExercisesCardSection(
-    exercises: List<Exercise>,
+    exercises: List<CondenseExercise>,
     onCardClicked: (String) -> Unit
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
@@ -84,7 +85,7 @@ fun PreviewExercisesCardSection() {
             ExercisesCardSection(title = "Arm exercises", exercises = listOf(), onCardClicked = {})
             ExercisesCardSection(
                 title = "Arm exercises",
-                exercises = listOf(Exercise(id = "arm1", name = "Arm", description = "Arm", type = ExercisesConstants.ARM_EXERCISE_TYPE)),
+                exercises = listOf(CondenseExercise(id = "arm1", name = "Arm", type = ExercisesConstants.ARM_EXERCISE_TYPE)),
                 onCardClicked = {}
             )
         }
@@ -98,7 +99,7 @@ fun PreviewFavoriteExercisesCardSection() {
         Column(modifier = Modifier.fillMaxSize()) {
             FavoriteExercisesCardSection(exercises = listOf(), onCardClicked = {})
             FavoriteExercisesCardSection(
-                exercises = listOf(Exercise(id = "arm1", name = "Arm", description = "Arm", type = ExercisesConstants.ARM_EXERCISE_TYPE)),
+                exercises = listOf(CondenseExercise(id = "arm1", name = "Arm", type = ExercisesConstants.ARM_EXERCISE_TYPE)),
                 onCardClicked = {}
             )
         }
