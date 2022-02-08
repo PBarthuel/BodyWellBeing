@@ -58,6 +58,7 @@ private fun getDrawableFromType(exerciseType: Int?): Int {
         ExercisesConstants.TRICEPS_EXERCISE_TYPE -> R.drawable.ic_google_logo
         ExercisesConstants.BACK_EXERCISE_TYPE -> R.drawable.ic_google_logo
         ExercisesConstants.SHOULDER_EXERCISE_TYPE -> R.drawable.ic_google_logo
+        ExercisesConstants.CHEST_EXERCISE_TYPE -> R.drawable.ic_google_logo
         ExercisesConstants.ABS_EXERCISE_TYPE -> R.drawable.ic_google_logo
         ExercisesConstants.LEG_EXERCISE_TYPE -> R.drawable.ic_google_logo
         else -> R.drawable.ic_google_logo
