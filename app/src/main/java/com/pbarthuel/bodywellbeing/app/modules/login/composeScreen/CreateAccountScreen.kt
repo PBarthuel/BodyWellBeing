@@ -28,7 +28,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.ImeAction
 import com.google.firebase.auth.FirebaseAuth
 import com.pbarthuel.bodywellbeing.R
-import com.pbarthuel.bodywellbeing.app.ui.component.ButtonFill
+import com.pbarthuel.bodywellbeing.app.ui.component.button.ButtonFill
 import com.pbarthuel.bodywellbeing.app.ui.component.input.FormInputField
 import com.pbarthuel.bodywellbeing.app.ui.component.input.InputFieldType
 import com.pbarthuel.bodywellbeing.app.ui.component.text.Eyebrow

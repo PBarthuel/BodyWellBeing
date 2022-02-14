@@ -17,13 +17,12 @@ class ExercisesRepositoryImpl @Inject constructor(
     private val exercisesDao: ExercisesDao
 ): ExercisesRepository {
 
-    override fun getAllExercises(): Flow<List<Exercise>> =
-        exercisesDao.getAllExercises().mapLatest { exercisesRequest ->
+    override fun getAllExercises(): Flow<List<Exercise>> = exercisesDao.getAllExercises().mapLatest { exercisesRequest ->
             exercisesRequest?.map { it.toExercise() } ?: listOf()
         }
 
-    override suspend fun getExerciseFromId(exerciseId: String): Exercise =
-        exercisesDao.getExerciseFromId(exerciseId = exerciseId)?.toExercise() ?: throw Exception("ExerciseId reference nothing")
+    override fun getExerciseFromId(exerciseId: String): Flow<Exercise> =
+        exercisesDao.getExerciseFromId(exerciseId = exerciseId).mapLatest { it?.toExercise() ?: throw Exception("ExerciseId reference nothing") }
 
     override fun getArmExercises(): Flow<List<CondenseExercise>> =
         exercisesDao.getCondenseExercisesFromType(ExercisesConstants.ARM_EXERCISE_TYPE).mapLatest { exercisesRequest ->
@@ -68,6 +67,11 @@ class ExercisesRepositoryImpl @Inject constructor(
     override suspend fun createExercise(exercise: Exercise) = exercisesDao.createExercise(exercise.toExerciseEntity())
 
     override suspend fun updateExercise(exercise: Exercise) = exercisesDao.updateExercise(exercise.toExerciseEntity())
+
+    override suspend fun updateIsFavorite(exerciseId: String, isFavorite: Boolean) = exercisesDao.updateIsFavorite(
+        exerciseId = exerciseId,
+        isFavorite = isFavorite
+    )
 
     override suspend fun clearExercisesDb() = exercisesDao.clearExercisesDb()
 }

@@ -7,8 +7,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.pbarthuel.bodywellbeing.R
 import com.pbarthuel.bodywellbeing.app.modules.login.utils.googleAuth.GoogleAuthResultContract
-import com.pbarthuel.bodywellbeing.app.ui.component.ButtonOutlined
-import com.pbarthuel.bodywellbeing.app.ui.component.IconSpec
+import com.pbarthuel.bodywellbeing.app.ui.component.button.ButtonOutlined
+import com.pbarthuel.bodywellbeing.app.ui.component.button.IconSpec
 import com.pbarthuel.bodywellbeing.viewModel.modules.login.LoginViewModel
 
 @ExperimentalMaterialApi

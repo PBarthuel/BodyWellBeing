@@ -9,7 +9,7 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.pbarthuel.bodywellbeing.R
-import com.pbarthuel.bodywellbeing.app.ui.component.ButtonFill
+import com.pbarthuel.bodywellbeing.app.ui.component.button.ButtonFill
 import com.pbarthuel.bodywellbeing.app.ui.theme.HorizontalMargin
 import com.pbarthuel.bodywellbeing.viewModel.modules.accountCreation.AccountCreationViewModel
 

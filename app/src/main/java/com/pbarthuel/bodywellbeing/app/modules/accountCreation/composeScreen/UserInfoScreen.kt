@@ -19,7 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.pbarthuel.bodywellbeing.R
-import com.pbarthuel.bodywellbeing.app.ui.component.ButtonFill
+import com.pbarthuel.bodywellbeing.app.ui.component.button.ButtonFill
 import com.pbarthuel.bodywellbeing.app.ui.component.input.FormInputField
 import com.pbarthuel.bodywellbeing.app.ui.component.input.InputFieldType
 import com.pbarthuel.bodywellbeing.app.ui.component.text.Header2

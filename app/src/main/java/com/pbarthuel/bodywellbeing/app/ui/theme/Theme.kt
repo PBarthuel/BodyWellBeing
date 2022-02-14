@@ -77,10 +77,10 @@ private val BodyWellBeingShapes = Shapes(
 object BodyWellBeingTheme {
 
     val colors: BodyWellBeingColorPalette
-        @Composable get() = LocalColorWithings.current
+        @Composable get() = LocalColorBodyWellBeing.current
 
     val types: BodyWellBeingTypeList
-        @Composable get() = LocalTypeWithings.current
+        @Composable get() = LocalTypeBodyWellBeing.current
 }
 
 @Composable
@@ -91,7 +91,7 @@ fun BodyWellBeingTheme(
     val colors = if (darkTheme) DarkColorPalette else LightColorPalette
     val materialColors = if (darkTheme) MaterialDarkPalette else MaterialLightPalette
     val typeList = typeList()
-    ProvideWithings(colors, typeList) {
+    ProvideBodyWellBeing(colors, typeList) {
         MaterialTheme(
             colors = materialColors,
             shapes = BodyWellBeingShapes,
@@ -101,7 +101,7 @@ fun BodyWellBeingTheme(
 }
 
 @Composable
-fun ProvideWithings(
+fun ProvideBodyWellBeing(
     colors: BodyWellBeingColorPalette,
     types: BodyWellBeingTypeList,
     content: @Composable () -> Unit
@@ -111,18 +111,18 @@ fun ProvideWithings(
     val typeList = remember { types }
     typeList.update(types)
     CompositionLocalProvider(
-        LocalColorWithings provides colorPalette,
-        LocalTypeWithings provides typeList,
+        LocalColorBodyWellBeing provides colorPalette,
+        LocalTypeBodyWellBeing provides typeList,
         LocalPrimaryTextColor provides colorPalette.textPrimary,
         LocalSecondaryTextColor provides colorPalette.textSecondary,
         content = content
     )
 }
 
-private val LocalTypeWithings = staticCompositionLocalOf<BodyWellBeingTypeList> {
+private val LocalTypeBodyWellBeing = staticCompositionLocalOf<BodyWellBeingTypeList> {
     error("No BodyWellBeingTypeList provided")
 }
-val LocalColorWithings = staticCompositionLocalOf<BodyWellBeingColorPalette> {
+val LocalColorBodyWellBeing = staticCompositionLocalOf<BodyWellBeingColorPalette> {
     error("No BodyWellBeingColorPalette provided")
 }
 

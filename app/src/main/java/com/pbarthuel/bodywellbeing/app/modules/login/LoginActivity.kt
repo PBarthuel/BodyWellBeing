@@ -111,7 +111,7 @@ class LoginActivity : ComponentActivity() {
                                 viewModel.loginSuccess(auth)
                                 startActivity(Intent(this@LoginActivity, AccountCreationActivity::class.java))
                             }
-                            else -> {}
+                            else -> { }
                         }
                     }
                 }

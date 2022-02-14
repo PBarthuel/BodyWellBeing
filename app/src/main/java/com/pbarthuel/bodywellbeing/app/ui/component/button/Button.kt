@@ -1,4 +1,4 @@
-package com.pbarthuel.bodywellbeing.app.ui.component
+package com.pbarthuel.bodywellbeing.app.ui.component.button
 
 import androidx.annotation.IntRange
 import androidx.compose.animation.Crossfade

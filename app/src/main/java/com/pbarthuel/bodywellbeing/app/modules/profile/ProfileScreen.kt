@@ -8,9 +8,13 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.pbarthuel.bodywellbeing.R
 import com.pbarthuel.bodywellbeing.app.models.User
+import com.pbarthuel.bodywellbeing.app.ui.component.button.FavoriteButton
 import com.pbarthuel.bodywellbeing.app.ui.component.card.FavoriteExercisesCardSection
 import com.pbarthuel.bodywellbeing.app.ui.component.card.ProfileDetailCard
 import com.pbarthuel.bodywellbeing.app.ui.theme.VerticalMargin
@@ -36,7 +40,10 @@ fun ProfileScreen(
         )
         FavoriteExercisesCardSection(
             exercises = favoritesExercises,
-            onCardClicked = { exerciseId -> onExerciseCardClicked(exerciseId) }
+            onCardClicked = { exerciseId -> onExerciseCardClicked(exerciseId) },
+            onNoFavoriteExerciseCardClicked = {
+                // TODO redirection vers l'écran des exercices
+            }
         )
     }
 }

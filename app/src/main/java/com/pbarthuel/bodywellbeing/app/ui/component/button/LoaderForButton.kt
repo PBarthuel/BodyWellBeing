@@ -1,4 +1,4 @@
-package com.pbarthuel.bodywellbeing.app.ui.component
+package com.pbarthuel.bodywellbeing.app.ui.component.button
 
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat

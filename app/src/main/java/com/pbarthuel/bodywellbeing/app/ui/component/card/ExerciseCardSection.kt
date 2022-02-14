@@ -10,7 +10,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.pbarthuel.bodywellbeing.R
 import com.pbarthuel.bodywellbeing.app.models.CondenseExercise
-import com.pbarthuel.bodywellbeing.app.models.Exercise
 import com.pbarthuel.bodywellbeing.app.ui.component.text.Header2
 import com.pbarthuel.bodywellbeing.app.ui.component.text.Header3
 import com.pbarthuel.bodywellbeing.app.ui.theme.Basic2
@@ -51,7 +50,8 @@ fun ExercisesCardSection(
 @Composable
 fun FavoriteExercisesCardSection(
     exercises: List<CondenseExercise>,
-    onCardClicked: (String) -> Unit
+    onCardClicked: (String) -> Unit,
+    onNoFavoriteExerciseCardClicked: () -> Unit
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Header2(
@@ -70,7 +70,7 @@ fun FavoriteExercisesCardSection(
                 ExerciseCard(
                     exerciseType = null,
                     exerciseName = stringResource(id = R.string.empty_favorites_exercises_description),
-                    onCardClicked = {}
+                    onCardClicked =onNoFavoriteExerciseCardClicked
                 )
             }
         }
@@ -85,7 +85,18 @@ fun PreviewExercisesCardSection() {
             ExercisesCardSection(title = "Arm exercises", exercises = listOf(), onCardClicked = {})
             ExercisesCardSection(
                 title = "Arm exercises",
-                exercises = listOf(CondenseExercise(id = "arm1", name = "Arm", type = ExercisesConstants.ARM_EXERCISE_TYPE)),
+                exercises = listOf(
+                    CondenseExercise(
+                        id = "arm1",
+                        name = "Arm",
+                        type = ExercisesConstants.ARM_EXERCISE_TYPE
+                    ),
+                    CondenseExercise(
+                        id = "arm1",
+                        name = "Arm",
+                        type = ExercisesConstants.ARM_EXERCISE_TYPE
+                    )
+                ),
                 onCardClicked = {}
             )
         }
@@ -97,10 +108,22 @@ fun PreviewExercisesCardSection() {
 fun PreviewFavoriteExercisesCardSection() {
     BodyWellBeingTheme {
         Column(modifier = Modifier.fillMaxSize()) {
-            FavoriteExercisesCardSection(exercises = listOf(), onCardClicked = {})
+            FavoriteExercisesCardSection(exercises = listOf(), onCardClicked = {}, onNoFavoriteExerciseCardClicked = {})
             FavoriteExercisesCardSection(
-                exercises = listOf(CondenseExercise(id = "arm1", name = "Arm", type = ExercisesConstants.ARM_EXERCISE_TYPE)),
-                onCardClicked = {}
+                exercises = listOf(
+                    CondenseExercise(
+                        id = "arm1",
+                        name = "Arm",
+                        type = ExercisesConstants.ARM_EXERCISE_TYPE
+                    ),
+                    CondenseExercise(
+                        id = "arm1",
+                        name = "Arm",
+                        type = ExercisesConstants.ARM_EXERCISE_TYPE
+                    )
+                ),
+                onCardClicked = {},
+                onNoFavoriteExerciseCardClicked = {}
             )
         }
     }

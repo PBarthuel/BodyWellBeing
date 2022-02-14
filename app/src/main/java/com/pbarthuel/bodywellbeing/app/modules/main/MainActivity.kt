@@ -62,7 +62,9 @@ import com.pbarthuel.bodywellbeing.app.ui.theme.BodyWellBeingTheme
 import com.pbarthuel.bodywellbeing.viewModel.modules.main.MainScreenState
 import com.pbarthuel.bodywellbeing.viewModel.modules.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalCoroutinesApi
 @ExperimentalComposeUiApi
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi
@@ -152,7 +154,13 @@ class MainActivity : ComponentActivity() {
                                         shouldShowBars = true
                                         ExercisesScreen(
                                             viewModel = hiltViewModel(),
-                                            onExerciseCardClicked = { exerciseId -> navController.navigate(Destinations.ExerciseDetail.root) }
+                                            onExerciseCardClicked = { exerciseId ->
+                                                kotlin.runCatching {
+                                                    viewModel.setExerciseId(exerciseId)
+                                                }.onSuccess {
+                                                    navController.navigate(Destinations.ExerciseDetail.root)
+                                                }
+                                            }
                                         )
                                     }
                                     composable(Destinations.MainBottomBarNavigation.Profile.root) {
@@ -160,7 +168,13 @@ class MainActivity : ComponentActivity() {
                                         shouldShowBars = true
                                         ProfileScreen(
                                             viewModel = hiltViewModel(),
-                                            onExerciseCardClicked = { exerciseId -> navController.navigate(Destinations.ExerciseDetail.root) }
+                                            onExerciseCardClicked = { exerciseId ->
+                                                kotlin.runCatching {
+                                                    viewModel.setExerciseId(exerciseId)
+                                                }.onSuccess {
+                                                    navController.navigate(Destinations.ExerciseDetail.root)
+                                                }
+                                            }
                                         )
                                     }
                                     composable(Destinations.ExerciseDetail.root) {
@@ -169,7 +183,6 @@ class MainActivity : ComponentActivity() {
                                         BackHandler { navController.popBackStack() }
                                         ExerciseDetailScreen(
                                             viewModel = hiltViewModel(),
-                                            exerciseId = "press1",
                                             onNavigationBackClicked = { navController.popBackStack() }
                                         )
                                     }
