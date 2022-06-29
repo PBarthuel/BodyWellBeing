@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.Flow
 interface ExercisesRepository {
     fun getAllExercises(): Flow<List<Exercise>>
     fun getExerciseFromId(exerciseId: String): Flow<Exercise>
+    fun getAllCondenseExercises(): Flow<List<CondenseExercise>>
     fun getArmExercises(): Flow<List<CondenseExercise>>
     fun getTricepsExercises(): Flow<List<CondenseExercise>>
     fun getBackExercises(): Flow<List<CondenseExercise>>

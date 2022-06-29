@@ -45,6 +45,7 @@
     <string name="chest_exercises">Exercices pectoraux</string>
     <string name="abs_exercises">Exercices abdominaux</string>
     <string name="leg_exercises">Exercices jambes</string>
+    <string name="error_exercises">Erreur ce type n\'existe pas</string>
 
     <!-- Exercise Detail -->
     <string name="exercise_detail">Detail de l\'exercice</string>

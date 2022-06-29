@@ -24,6 +24,11 @@ class ExercisesRepositoryImpl @Inject constructor(
     override fun getExerciseFromId(exerciseId: String): Flow<Exercise> =
         exercisesDao.getExerciseFromId(exerciseId = exerciseId).mapLatest { it?.toExercise() ?: throw Exception("ExerciseId reference nothing") }
 
+    override fun getAllCondenseExercises(): Flow<List<CondenseExercise>> =
+        exercisesDao.getAllCondenseExercises().map { exercises ->
+            exercises?.map { it.toCondenseExercise() } ?: listOf()
+        }
+
     override fun getArmExercises(): Flow<List<CondenseExercise>> =
         exercisesDao.getCondenseExercisesFromType(ExercisesConstants.ARM_EXERCISE_TYPE).mapLatest { exercisesRequest ->
             exercisesRequest?.map { it.toCondenseExercise() } ?: listOf()

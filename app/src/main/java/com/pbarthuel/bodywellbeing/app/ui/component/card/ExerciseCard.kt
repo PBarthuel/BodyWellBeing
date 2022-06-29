@@ -14,6 +14,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.pbarthuel.bodywellbeing.R
+import com.pbarthuel.bodywellbeing.app.models.CondenseExercise
 import com.pbarthuel.bodywellbeing.app.ui.component.text.Body1
 import com.pbarthuel.bodywellbeing.app.ui.theme.Basic2
 import com.pbarthuel.bodywellbeing.app.ui.theme.Basic3
@@ -23,8 +24,7 @@ import com.pbarthuel.bodywellbeing.data.constants.ExercisesConstants
 
 @Composable
 fun ExerciseCard(
-    exerciseType: Int?,
-    exerciseName: String,
+    exercise: CondenseExercise,
     onCardClicked: () -> Unit
 ) {
     CustomCard(onCardClicked = onCardClicked) {
@@ -38,11 +38,11 @@ fun ExerciseCard(
                     .size(40.dp)
                     .clip(CircleShape)
                     .align(Alignment.CenterVertically),
-                painter = painterResource(id = getDrawableFromType(exerciseType)),
+                painter = painterResource(id = exercise.getDrawableFromType()),
                 contentDescription = "Exercise icon"
             )
             Spacer(modifier = Modifier.size(Basic3))
-            Body1(modifier = Modifier.weight(1f).align(Alignment.CenterVertically), text = exerciseName)
+            Body1(modifier = Modifier.weight(1f).align(Alignment.CenterVertically), text = exercise.name)
             Spacer(modifier = Modifier.size(Basic3))
             Image(
                 modifier = Modifier.size(30.dp).align(Alignment.CenterVertically),
@@ -50,18 +50,5 @@ fun ExerciseCard(
                 contentDescription = "arrow right"
             )
         }
-    }
-}
-
-private fun getDrawableFromType(exerciseType: Int?): Int {
-    return when (exerciseType) {
-        ExercisesConstants.ARM_EXERCISE_TYPE -> R.drawable.ic_stock_eye
-        ExercisesConstants.TRICEPS_EXERCISE_TYPE -> R.drawable.ic_launcher_foreground
-        ExercisesConstants.BACK_EXERCISE_TYPE -> R.drawable.ic_launcher_background
-        ExercisesConstants.SHOULDER_EXERCISE_TYPE -> R.drawable.ic_stock_eye2
-        ExercisesConstants.CHEST_EXERCISE_TYPE -> R.drawable.ic_google_logo
-        ExercisesConstants.ABS_EXERCISE_TYPE -> R.drawable.ic_google_logo
-        ExercisesConstants.LEG_EXERCISE_TYPE -> R.drawable.ic_google_logo
-        else -> R.drawable.ic_google_logo
     }
 }

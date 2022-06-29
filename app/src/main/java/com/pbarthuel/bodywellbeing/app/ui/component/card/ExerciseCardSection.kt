@@ -19,27 +19,29 @@ import com.pbarthuel.bodywellbeing.data.constants.ExercisesConstants
 
 @Composable
 fun ExercisesCardSection(
-    title: String,
     exercises: List<CondenseExercise>,
     onCardClicked: (String) -> Unit
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Header3(
             modifier = Modifier.padding(horizontal = HorizontalMargin, vertical = Basic2),
-            text = title
+            text = stringResource(id = exercises.first().getTitleFromType())
         )
         when (exercises.isEmpty()) {
-            false -> exercises.forEach {
+            false -> exercises.forEach { exercise ->
                 ExerciseCard(
-                    exerciseType = it.type,
-                    exerciseName = it.name,
-                    onCardClicked = { onCardClicked(it.id) }
+                    exercise = exercise,
+                    onCardClicked = { onCardClicked(exercise.id) }
                 )
             }
             true -> {
                 ExerciseCard(
-                    exerciseType = null,
-                    exerciseName = stringResource(id = R.string.empty_exercises_description),
+                    exercise = CondenseExercise(
+                        id = "O",
+                        name = stringResource(id = R.string.empty_exercises_description),
+                        isFavorite = false,
+                        type = 0
+                    ),
                     onCardClicked = {}
                 )
             }
@@ -59,17 +61,20 @@ fun FavoriteExercisesCardSection(
             text = stringResource(id = R.string.favorites_exercises)
         )
         when (exercises.isEmpty()) {
-            false -> exercises.forEach {
+            false -> exercises.forEach { exercise ->
                 ExerciseCard(
-                    exerciseType = it.type,
-                    exerciseName = it.name,
-                    onCardClicked = { onCardClicked(it.id) }
+                    exercise = exercise,
+                    onCardClicked = { onCardClicked(exercise.id) }
                 )
             }
             true -> {
                 ExerciseCard(
-                    exerciseType = null,
-                    exerciseName = stringResource(id = R.string.empty_favorites_exercises_description),
+                    exercise = CondenseExercise(
+                        id = "O",
+                        name = stringResource(id = R.string.empty_favorites_exercises_description),
+                        isFavorite = false,
+                        type = 0
+                    ),
                     onCardClicked =onNoFavoriteExerciseCardClicked
                 )
             }
@@ -82,9 +87,8 @@ fun FavoriteExercisesCardSection(
 fun PreviewExercisesCardSection() {
     BodyWellBeingTheme {
         Column(modifier = Modifier.fillMaxSize()) {
-            ExercisesCardSection(title = "Arm exercises", exercises = listOf(), onCardClicked = {})
+            ExercisesCardSection(exercises = listOf(), onCardClicked = {})
             ExercisesCardSection(
-                title = "Arm exercises",
                 exercises = listOf(
                     CondenseExercise(
                         id = "arm1",

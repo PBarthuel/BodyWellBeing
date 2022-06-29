@@ -6,6 +6,7 @@ import com.pbarthuel.bodywellbeing.viewModel.utils.CoroutineToolsProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 
 @HiltViewModel
 class ExercisesViewModel @Inject constructor(
@@ -13,11 +14,7 @@ class ExercisesViewModel @Inject constructor(
     private val exercisesRepository: ExercisesRepository
 ): ViewModel() {
 
-    val armExercises = exercisesRepository.getArmExercises().flowOn(dispatcher.io)
-    val tricepsExercises = exercisesRepository.getTricepsExercises().flowOn(dispatcher.io)
-    val backExercises = exercisesRepository.getBackExercises().flowOn(dispatcher.io)
-    val shoulderExercises = exercisesRepository.getShoulderExercises().flowOn(dispatcher.io)
-    val chestExercises = exercisesRepository.getChestExercises().flowOn(dispatcher.io)
-    val absExercises = exercisesRepository.getAbsExercises().flowOn(dispatcher.io)
-    val legExercises = exercisesRepository.getLegExercises().flowOn(dispatcher.io)
+    val exercisesGroupByType = exercisesRepository.getAllCondenseExercises().map { exercises ->
+        exercises.groupBy { it.type }
+    }.flowOn(dispatcher.io)
 }

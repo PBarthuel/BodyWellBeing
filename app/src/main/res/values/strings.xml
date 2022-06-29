@@ -45,6 +45,7 @@
     <string name="chest_exercises">Chest exercises</string>
     <string name="abs_exercises">Abs exercises</string>
     <string name="leg_exercises">Leg exercises</string>
+    <string name="error_exercises">Error type doesn\'t exist</string>
 
     <!-- Exercise Detail -->
     <string name="exercise_detail">Exercise Detail</string>

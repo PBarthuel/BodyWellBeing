@@ -17,6 +17,9 @@ interface ExercisesDao {
     @Query("SELECT * FROM ExerciseEntity WHERE id == :exerciseId")
     fun getExerciseFromId(exerciseId: String): Flow<ExerciseEntity?>
 
+    @Query("SELECT * FROM ExerciseEntity")
+    fun getAllCondenseExercises(): Flow<List<CondenseExerciseEntity>?>
+
     @Query("SELECT * FROM ExerciseEntity WHERE type == :exerciseType")
     fun getCondenseExercisesFromType(exerciseType: Int): Flow<List<CondenseExerciseEntity>?>
 

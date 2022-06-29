@@ -4,8 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.TopAppBar
@@ -36,41 +35,44 @@ fun ExerciseDetailScreen(
     onNavigationBackClicked: () -> Unit,
 ) {
     val exercise = viewModel.exercise.collectAsState(initial = null)
-    Column(modifier = Modifier
+    LazyColumn(modifier = Modifier
         .fillMaxSize()
-        .verticalScroll(rememberScrollState())
         .background(BodyWellBeingTheme.colors.actionSecondary)
     ) {
-        TopAppBar(
-            modifier = Modifier.padding(Basic1),
-            backgroundColor = Color.Transparent.copy(alpha = 0f),
-            elevation = 0.dp,
-            title = { },
-            navigationIcon = {
-                IconButton(
-                    onClick = onNavigationBackClicked
-                ) { Icon(Icons.Filled.ArrowBack, contentDescription = "Settings") }
-            },
-            actions = { }
-        )
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(vertical = VerticalMargin, horizontal = HorizontalMargin)
-        ) {
-            FavoriteButton(
-                isFavorite = exercise.value?.isFavorite ?: false,
-                onFavoriteClicked = {
-                    viewModel.modifyFavoriteState(
-                        exerciseId = exercise.value?.id ?: throw Exception("During modifyFavoriteState id is null"),
-                        isFavorite = exercise.value?.isFavorite ?: throw Exception("During modifyFavoriteState isFavorite is null")
-                    )
-                }
+        item {
+            TopAppBar(
+                modifier = Modifier.padding(Basic1),
+                backgroundColor = Color.Transparent.copy(alpha = 0f),
+                elevation = 0.dp,
+                title = { },
+                navigationIcon = {
+                    IconButton(
+                        onClick = onNavigationBackClicked
+                    ) { Icon(Icons.Filled.ArrowBack, contentDescription = "Settings") }
+                },
+                actions = { }
             )
-            Header1(modifier = Modifier
-                .align(CenterHorizontally)
-                .padding(bottom = Layout1), text = exercise.value?.name ?: "error")
-            Body1(text = exercise.value?.description ?: "error")
+        }
+        item {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(vertical = VerticalMargin, horizontal = HorizontalMargin)
+            ) {
+                FavoriteButton(
+                    isFavorite = exercise.value?.isFavorite ?: false,
+                    onFavoriteClicked = {
+                        viewModel.modifyFavoriteState(
+                            exerciseId = exercise.value?.id ?: throw Exception("During modifyFavoriteState id is null"),
+                            isFavorite = exercise.value?.isFavorite ?: throw Exception("During modifyFavoriteState isFavorite is null")
+                        )
+                    }
+                )
+                Header1(modifier = Modifier
+                    .align(CenterHorizontally)
+                    .padding(bottom = Layout1), text = exercise.value?.name ?: "error")
+                Body1(text = exercise.value?.description ?: "error")
+            }
         }
     }
 }
