@@ -10,14 +10,18 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.lifecycleScope
@@ -32,10 +36,12 @@ import com.pbarthuel.bodywellbeing.app.modules.accountCreation.AccountCreationAc
 import com.pbarthuel.bodywellbeing.app.modules.login.composeScreen.CreateAccountScreen
 import com.pbarthuel.bodywellbeing.app.modules.login.composeScreen.LoginScreen
 import com.pbarthuel.bodywellbeing.app.modules.main.MainActivity
+import com.pbarthuel.bodywellbeing.app.ui.component.button.FavoriteButton
 import com.pbarthuel.bodywellbeing.app.ui.theme.BodyWellBeingTheme
 import com.pbarthuel.bodywellbeing.viewModel.modules.login.LoginState
 import com.pbarthuel.bodywellbeing.viewModel.modules.login.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -49,6 +55,7 @@ class LoginActivity : ComponentActivity() {
 
     private lateinit var auth: FirebaseAuth
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -56,17 +63,23 @@ class LoginActivity : ComponentActivity() {
         auth = Firebase.auth
 
         setContent {
+            val navController = rememberAnimatedNavController()
             var loginButtonState by remember { mutableStateOf(false) }
             BodyWellBeingTheme {
                 ProvideWindowInsets {
-                    val navController = rememberAnimatedNavController()
                     Column(modifier = Modifier.fillMaxSize()) {
                         AnimatedNavHost(
                             navController,
-                            startDestination = LoginDestinations.login,
+                            startDestination = LoginDestinations.splashScreen,
                             enterTransition = { fadeIn(animationSpec = tween(700)) },
                             exitTransition = { fadeOut(animationSpec = tween(700)) }
                         ) {
+                            composable(route = LoginDestinations.splashScreen) {
+                                // TODO modifier le design splashScreen
+                                Box(modifier = Modifier.fillMaxSize().background(color = MaterialTheme.colors.background)) {
+                                    FavoriteButton(modifier = Modifier.align(Alignment.Center) ,isFavorite = true) {}
+                                }
+                            }
                             composable(route = LoginDestinations.login) {
                                 LoginScreen(
                                     auth = auth,
@@ -100,8 +113,8 @@ class LoginActivity : ComponentActivity() {
                                 Toast.makeText(this@LoginActivity, state.errorMessage, Toast.LENGTH_LONG).show()
                                 loginButtonState = false
                             }
-                            LoginState.Loading -> { loginButtonState = true }
-                            is LoginState.Login -> {
+                            LoginState.ButtonLoading -> { loginButtonState = true }
+                            is LoginState.Logged -> {
                                 loginButtonState = false
                                 viewModel.loginSuccess(auth)
                                 startActivity(Intent(this@LoginActivity, MainActivity::class.java))
@@ -111,7 +124,8 @@ class LoginActivity : ComponentActivity() {
                                 viewModel.loginSuccess(auth)
                                 startActivity(Intent(this@LoginActivity, AccountCreationActivity::class.java))
                             }
-                            else -> { }
+                            is LoginState.Login -> { navController.navigate(route = LoginDestinations.login) }
+                            else -> {}
                         }
                     }
                 }
@@ -121,6 +135,7 @@ class LoginActivity : ComponentActivity() {
 }
 
 object LoginDestinations {
+    const val splashScreen = "splash-screen"
     const val login = "login"
     const val createAccount = "create-account"
 }

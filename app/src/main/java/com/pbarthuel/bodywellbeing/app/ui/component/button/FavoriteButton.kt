@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -18,10 +19,11 @@ import com.pbarthuel.bodywellbeing.R
 
 @Composable
 fun FavoriteButton(
+    modifier: Modifier = Modifier,
     isFavorite: Boolean,
     onFavoriteClicked: () -> Unit
 ) {
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = modifier.wrapContentSize()) {
         val extendedSize = 60.dp
         val normalSize = 40.dp
 

@@ -18,9 +18,10 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 sealed class LoginState {
-    object Loading: LoginState()
-    data class Error(val errorMessage: String): LoginState()
     object Login: LoginState()
+    object ButtonLoading: LoginState()
+    data class Error(val errorMessage: String): LoginState()
+    object Logged: LoginState()
     object CreateAccount: LoginState()
 }
 
@@ -43,7 +44,7 @@ class LoginViewModel @Inject constructor(
             email.isEmpty() -> { _state.value = LoginState.Error("No email") }
             password.isEmpty() -> { _state.value = LoginState.Error("No password") }
             else -> {
-                _state.value = LoginState.Loading
+                _state.value = LoginState.ButtonLoading
                 auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
@@ -67,7 +68,7 @@ class LoginViewModel @Inject constructor(
     }
 
     fun createAccount(auth: FirebaseAuth, email: String, password: String, confirmedPassword: String) {
-        _state.value = LoginState.Loading
+        _state.value = LoginState.ButtonLoading
         if (password == confirmedPassword) {
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
@@ -94,7 +95,7 @@ class LoginViewModel @Inject constructor(
 
     fun loginWithGoogle(task: Task<GoogleSignInAccount>?) {
         viewModelScope.launch {
-            _state.value = LoginState.Loading
+            _state.value = LoginState.ButtonLoading
             kotlin.runCatching {
                 task?.getResult(ApiException::class.java)
             }.onSuccess { account ->
@@ -119,11 +120,7 @@ class LoginViewModel @Inject constructor(
     fun isAlreadyLog() {
         viewModelScope.launch(dispatcher.main) {
             preferenceDataStoreRepository.isUserConnected().collect {
-                when (it) {
-                    is LoginState.CreateAccount -> _state.value = LoginState.CreateAccount
-                    is LoginState.Login -> _state.value = LoginState.Login
-                    else -> _state.value = null
-                }
+                _state.value = it
             }
         }
     }
