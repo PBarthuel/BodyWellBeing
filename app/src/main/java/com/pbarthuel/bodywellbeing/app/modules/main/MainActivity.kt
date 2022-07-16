@@ -52,7 +52,7 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.pbarthuel.bodywellbeing.R
-import com.pbarthuel.bodywellbeing.app.modules.exerciseDetail.ExerciseDetailScreen
+import com.pbarthuel.bodywellbeing.app.modules.exerciseDetail.ExerciseDetailActivity
 import com.pbarthuel.bodywellbeing.app.modules.exercises.ExercisesScreen
 import com.pbarthuel.bodywellbeing.app.modules.login.LoginActivity
 import com.pbarthuel.bodywellbeing.app.modules.profile.ProfileScreen
@@ -70,6 +70,10 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalMaterialApi
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    companion object {
+        const val EXTRA_EXERCISE_ID = "exerciseId"
+    }
 
     private val viewModel by viewModels<MainViewModel>()
 
@@ -155,11 +159,10 @@ class MainActivity : ComponentActivity() {
                                         ExercisesScreen(
                                             viewModel = hiltViewModel(),
                                             onExerciseCardClicked = { exerciseId ->
-                                                kotlin.runCatching {
-                                                    viewModel.setExerciseId(exerciseId)
-                                                }.onSuccess {
-                                                    navController.navigate(Destinations.ExerciseDetail.root)
-                                                }
+                                                startActivity(
+                                                    Intent(this@MainActivity, ExerciseDetailActivity::class.java)
+                                                        .putExtra(EXTRA_EXERCISE_ID, exerciseId)
+                                                )
                                             }
                                         )
                                     }
@@ -169,21 +172,11 @@ class MainActivity : ComponentActivity() {
                                         ProfileScreen(
                                             viewModel = hiltViewModel(),
                                             onExerciseCardClicked = { exerciseId ->
-                                                kotlin.runCatching {
-                                                    viewModel.setExerciseId(exerciseId)
-                                                }.onSuccess {
-                                                    navController.navigate(Destinations.ExerciseDetail.root)
-                                                }
+                                                startActivity(
+                                                    Intent(this@MainActivity, ExerciseDetailActivity::class.java)
+                                                        .putExtra(EXTRA_EXERCISE_ID, exerciseId)
+                                                )
                                             }
-                                        )
-                                    }
-                                    composable(Destinations.ExerciseDetail.root) {
-                                        viewModel.onScreenChanged(MainScreenState.ExerciseDetail)
-                                        shouldShowBars = false
-                                        BackHandler { navController.popBackStack() }
-                                        ExerciseDetailScreen(
-                                            viewModel = hiltViewModel(),
-                                            onNavigationBackClicked = { navController.popBackStack() }
                                         )
                                     }
                                 }
@@ -233,9 +226,5 @@ object Destinations {
         object Body : MainBottomBarNavigation("body", R.string.body, Icons.Filled.AddCircle)
         object Exercises : MainBottomBarNavigation("exercises", R.string.exercises, Icons.Filled.Favorite)
         object Profile : MainBottomBarNavigation("profile", R.string.profile, Icons.Filled.Person)
-    }
-
-    object ExerciseDetail {
-        const val root = "exercise_detail"
     }
 }

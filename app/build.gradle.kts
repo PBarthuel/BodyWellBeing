@@ -10,13 +10,13 @@ plugins {
 }
 
 android {
-    compileSdk = 31
+    compileSdk = 32
     buildToolsVersion = "30.0.3"
 
     defaultConfig {
         applicationId = "com.pbarthuel.bodywellbeing"
         minSdk = 24
-        targetSdk = 31
+        targetSdk = 32
         versionCode = 1
         versionName = "1.0"
 
@@ -107,7 +107,7 @@ dependencies {
 
     // Hilt
     implementation("com.google.dagger:hilt-android:${LibVersion.hiltVersion}")
-    implementation("androidx.hilt:hilt-navigation-compose:1.0.0-rc01")
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
     kapt("com.google.dagger:hilt-compiler:${LibVersion.hiltVersion}")
 
     testImplementation("junit:junit:4.13.2")

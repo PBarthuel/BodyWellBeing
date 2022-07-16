@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pbarthuel.bodywellbeing.app.models.Exercise
 import com.pbarthuel.bodywellbeing.data.constants.ExercisesConstants
-import com.pbarthuel.bodywellbeing.domain.repositories.local.CurrentExerciseIdRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.local.dataStore.PreferenceDataStoreRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.ExercisesRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.user.UserRepository
@@ -21,7 +20,6 @@ sealed class MainScreenState {
     object Body: MainScreenState()
     object Exercises: MainScreenState()
     object Profile: MainScreenState()
-    object ExerciseDetail: MainScreenState()
     object Logout: MainScreenState()
 }
 
@@ -30,7 +28,6 @@ class MainViewModel @Inject constructor(
     private val dispatcher: CoroutineToolsProvider,
     private val preferenceDataStoreRepository: PreferenceDataStoreRepository,
     private val userRepository: UserRepository,
-    private val currentExerciseIdRepository: CurrentExerciseIdRepository,
     private val exercisesRepository: ExercisesRepository
 ) : ViewModel() {
 
@@ -51,12 +48,6 @@ class MainViewModel @Inject constructor(
             }
         }
     }
-
-    fun setExerciseId(exerciseId: String) {
-        currentExerciseIdRepository.setExerciseId(exerciseId = exerciseId)
-    }
-
-
 
     // TODO retirer ce code quand je créerai les exercises sur le backend
     // region A delete
