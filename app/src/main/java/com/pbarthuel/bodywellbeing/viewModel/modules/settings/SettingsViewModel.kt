@@ -15,6 +15,7 @@ import kotlinx.coroutines.launch
 sealed class SettingsScreenState {
     object Home: SettingsScreenState()
     object Logout: SettingsScreenState()
+    object Loading: SettingsScreenState()
 }
 
 @HiltViewModel
@@ -30,6 +31,7 @@ class SettingsViewModel @Inject constructor(
     fun logOut() {
         viewModelScope.launch(dispatcher.io) {
             kotlin.runCatching {
+                _screenState.value = SettingsScreenState.Loading
                 preferenceDataStoreRepository.clearDataStore()
                 userRepository.clearUserDb()
             }.onSuccess {

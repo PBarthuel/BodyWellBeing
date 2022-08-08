@@ -53,6 +53,7 @@ import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.pbarthuel.bodywellbeing.R
 import com.pbarthuel.bodywellbeing.app.modules.body.BodyScreen
+import com.pbarthuel.bodywellbeing.app.modules.createExercise.CreateExerciseActivity
 import com.pbarthuel.bodywellbeing.app.modules.exerciseDetail.ExerciseDetailActivity
 import com.pbarthuel.bodywellbeing.app.modules.exercises.ExercisesScreen
 import com.pbarthuel.bodywellbeing.app.modules.profile.ProfileScreen
@@ -118,6 +119,10 @@ class MainActivity : ComponentActivity() {
                                                 IconButton(
                                                     onClick = { onSettingsClicked() }
                                                 ) { Icon(Icons.Filled.Settings, contentDescription = "Settings") }
+                                            } MainScreenState.Exercises -> {
+                                                IconButton(
+                                                    onClick = { onCreateExerciseClicked() }
+                                                ) { Icon(Icons.Filled.AddCircle, contentDescription = "Create Exercise") }
                                             }
                                             else -> {}
                                         }
@@ -212,6 +217,8 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun onSettingsClicked() { startActivity(Intent(this@MainActivity, SettingsActivity::class.java)) }
+
+    private fun onCreateExerciseClicked() { startActivity(Intent(this@MainActivity, CreateExerciseActivity::class.java)) }
 }
 
 object Destinations {
