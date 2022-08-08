@@ -6,12 +6,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.pbarthuel.bodywellbeing.app.ui.component.card.ExercisesCardSection
 import com.pbarthuel.bodywellbeing.viewModel.modules.exercises.ExercisesViewModel
 
 @Composable
 fun ExercisesScreen(
-    viewModel: ExercisesViewModel,
+    viewModel: ExercisesViewModel = hiltViewModel(),
     onExerciseCardClicked: (String) -> Unit
 ) {
     val exercisesGroupByType by viewModel.exercisesGroupByType.collectAsState(mapOf())

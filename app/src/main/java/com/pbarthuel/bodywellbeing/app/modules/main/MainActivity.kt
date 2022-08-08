@@ -52,10 +52,11 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.pbarthuel.bodywellbeing.R
+import com.pbarthuel.bodywellbeing.app.modules.body.BodyScreen
 import com.pbarthuel.bodywellbeing.app.modules.exerciseDetail.ExerciseDetailActivity
 import com.pbarthuel.bodywellbeing.app.modules.exercises.ExercisesScreen
-import com.pbarthuel.bodywellbeing.app.modules.login.LoginActivity
 import com.pbarthuel.bodywellbeing.app.modules.profile.ProfileScreen
+import com.pbarthuel.bodywellbeing.app.modules.settings.SettingsActivity
 import com.pbarthuel.bodywellbeing.app.ui.component.text.Header2
 import com.pbarthuel.bodywellbeing.app.ui.theme.Basic1
 import com.pbarthuel.bodywellbeing.app.ui.theme.BodyWellBeingTheme
@@ -118,12 +119,6 @@ class MainActivity : ComponentActivity() {
                                                     onClick = { onSettingsClicked() }
                                                 ) { Icon(Icons.Filled.Settings, contentDescription = "Settings") }
                                             }
-                                            MainScreenState.Logout -> {
-                                                Intent(this@MainActivity, LoginActivity::class.java).also {
-                                                    it.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                                                    startActivity(it)
-                                                }
-                                            }
                                             else -> {}
                                         }
                                     }
@@ -146,18 +141,19 @@ class MainActivity : ComponentActivity() {
                                     composable(Destinations.MainBottomBarNavigation.Home.root) {
                                         viewModel.onScreenChanged(MainScreenState.Home)
                                         shouldShowBars = true
-                                        Box(modifier = Modifier.fillMaxSize().background(colorResource(id = R.color.teal_700))) {}
+                                        Box(modifier = Modifier
+                                            .fillMaxSize()
+                                            .background(colorResource(id = R.color.teal_700))) {}
                                     }
                                     composable(Destinations.MainBottomBarNavigation.Body.root) {
                                         viewModel.onScreenChanged(MainScreenState.Body)
                                         shouldShowBars = true
-                                        Box(modifier = Modifier.fillMaxSize().background(BodyWellBeingTheme.colors.actionSecondary)) {}
+                                        BodyScreen()
                                     }
                                     composable(Destinations.MainBottomBarNavigation.Exercises.root) {
                                         viewModel.onScreenChanged(MainScreenState.Exercises)
                                         shouldShowBars = true
                                         ExercisesScreen(
-                                            viewModel = hiltViewModel(),
                                             onExerciseCardClicked = { exerciseId ->
                                                 startActivity(
                                                     Intent(this@MainActivity, ExerciseDetailActivity::class.java)
@@ -215,9 +211,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun onSettingsClicked() {
-        viewModel.logOut() // TODO will be changed
-    }
+    private fun onSettingsClicked() { startActivity(Intent(this@MainActivity, SettingsActivity::class.java)) }
 }
 
 object Destinations {

@@ -4,9 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pbarthuel.bodywellbeing.app.models.Exercise
 import com.pbarthuel.bodywellbeing.data.constants.ExercisesConstants
-import com.pbarthuel.bodywellbeing.domain.repositories.local.dataStore.PreferenceDataStoreRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.ExercisesRepository
-import com.pbarthuel.bodywellbeing.domain.repositories.local.room.user.UserRepository
 import com.pbarthuel.bodywellbeing.viewModel.utils.CoroutineToolsProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -20,15 +18,12 @@ sealed class MainScreenState {
     object Body: MainScreenState()
     object Exercises: MainScreenState()
     object Profile: MainScreenState()
-    object Logout: MainScreenState()
 }
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val dispatcher: CoroutineToolsProvider,
-    private val preferenceDataStoreRepository: PreferenceDataStoreRepository,
-    private val userRepository: UserRepository,
-    private val exercisesRepository: ExercisesRepository
+    private val exercisesRepository: ExercisesRepository,
+    private val dispatcher: CoroutineToolsProvider
 ) : ViewModel() {
 
     private val _screenState: MutableStateFlow<MainScreenState> = MutableStateFlow(MainScreenState.Home)
@@ -36,17 +31,6 @@ class MainViewModel @Inject constructor(
 
     fun onScreenChanged(screenState: MainScreenState) {
         _screenState.value = screenState
-    }
-
-    fun logOut() {
-        viewModelScope.launch(dispatcher.io) {
-            kotlin.runCatching {
-                preferenceDataStoreRepository.clearDataStore()
-                userRepository.clearUserDb()
-            }.onSuccess {
-                _screenState.value = MainScreenState.Logout
-            }
-        }
     }
 
     // TODO retirer ce code quand je créerai les exercises sur le backend
