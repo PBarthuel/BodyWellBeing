@@ -25,6 +25,9 @@ class ExerciseCloudFirestoreRepositoryImpl @Inject constructor(
     override fun getFavoriteExercises(userId: String): List<Exercise> =
         userExerciseCloudFirestoreDao.getFavoriteExercises(userId = userId)
 
+    override fun deleteExerciseFromFavorite(userId: String, exerciseId: String) =
+        userExerciseCloudFirestoreDao.deleteExerciseFromFavorite(userId = userId, exerciseId = exerciseId)
+
     override fun createCustomExercise(userId: String, exercise: Exercise) =
         userExerciseCloudFirestoreDao.createCustomExercise(userId = userId, exercise = exercise)
 

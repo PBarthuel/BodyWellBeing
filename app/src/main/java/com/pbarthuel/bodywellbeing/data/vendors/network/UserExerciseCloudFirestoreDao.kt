@@ -42,6 +42,19 @@ class UserExerciseCloudFirestoreDao @Inject constructor() {
         return exercises
     }
 
+    fun deleteExerciseFromFavorite(userId: String, exerciseId: String) {
+        db.document(userId)
+            .collection(FAVORITE_COLLECTION)
+            .document(exerciseId)
+            .delete()
+            .addOnSuccessListener {
+                Log.d("UserExerciseCloudFirestoreDao", "deleteExerciseFromFavorite: success")
+            }
+            .addOnFailureListener {
+                Log.d("UserExerciseCloudFirestoreDao", "deleteExerciseFromFavorite: Failure" + it.message)
+            }
+    }
+
     fun createCustomExercise(userId: String, exercise: Exercise) {
         db.document(userId)
             .collection(CUSTOM_EXERCISE_COLLECTION)

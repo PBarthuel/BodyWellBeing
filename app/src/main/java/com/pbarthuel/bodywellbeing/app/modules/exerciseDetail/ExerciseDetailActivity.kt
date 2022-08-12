@@ -80,8 +80,10 @@ class ExerciseDetailActivity : ComponentActivity() {
                                     isFavorite = exercise.value?.isFavorite ?: false,
                                     onFavoriteClicked = {
                                         viewModel.modifyFavoriteState(
-                                            exerciseId = exercise.value?.id ?: throw Exception("During modifyFavoriteState id is null"),
-                                            isFavorite = exercise.value?.isFavorite ?: throw Exception("During modifyFavoriteState isFavorite is null")
+                                            exercise = exercise.value
+                                                ?: throw Exception("During modifyFavoriteState exercise is null"),
+                                            isFavorite = exercise.value?.isFavorite
+                                                ?: throw Exception("During modifyFavoriteState isFavorite is null")
                                         )
                                     }
                                 )

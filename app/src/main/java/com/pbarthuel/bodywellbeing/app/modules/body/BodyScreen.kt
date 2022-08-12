@@ -1,5 +1,6 @@
 package com.pbarthuel.bodywellbeing.app.modules.body
 
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -18,5 +19,7 @@ import com.pbarthuel.bodywellbeing.viewModel.modules.exercises.ExercisesViewMode
 fun BodyScreen(
     viewModel: ExercisesViewModel = hiltViewModel()
 ) {
+    LazyColumn(modifier = Modifier.fillMaxSize()) {
 
+    }
 }
