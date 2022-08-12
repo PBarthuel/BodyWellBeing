@@ -12,17 +12,16 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalCoroutinesApi
 class ExerciseCloudFirestoreDao @Inject constructor() {
 
-    private val db = Firebase.firestore
+    private val db = Firebase.firestore.collection("exercise")
 
     fun createExercise(exercise: Exercise) {
-        db.collection("exercise")
-            .document(exercise.id)
+        db.document(exercise.id)
             .set(exercise)
             .addOnSuccessListener {
-                Log.d("Saucisse", "createExercise: success")
+                Log.d("ExerciseCloudFirestoreDao", "createExercise: success")
             }
             .addOnFailureListener {
-                Log.d("Saucisse", "createExercise: Failure" + it.message)
+                Log.d("ExerciseCloudFirestoreDao", "createExercise: Failure" + it.message)
             }
     }
 
@@ -34,8 +33,7 @@ class ExerciseCloudFirestoreDao @Inject constructor() {
             description = "Developpé couché",
             type = ExercisesConstants.CHEST_EXERCISE_TYPE
         )
-        db.collection("exercise")
-            .document(exerciseId)
+        db.document(exerciseId)
             .get()
             .addOnSuccessListener {
                 exercise = it.toObject<Exercise>()!!

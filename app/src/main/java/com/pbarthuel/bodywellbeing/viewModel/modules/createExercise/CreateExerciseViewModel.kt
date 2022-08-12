@@ -9,11 +9,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CreateExerciseViewModel @Inject constructor(
-    private val cloudFirestoreRepository: ExerciseCloudFirestoreRepository
+    private val exerciseCloudFirestoreRepository: ExerciseCloudFirestoreRepository
 ) : ViewModel() {
 
     fun createExercise() {
-        cloudFirestoreRepository.createExercise(
+        exerciseCloudFirestoreRepository.createExercise(
             Exercise(
                 id = "developpéCouché1",
                 name = "Developpé couché",
@@ -23,6 +23,18 @@ class CreateExerciseViewModel @Inject constructor(
         )
     }
 
+    fun addExerciseToFavorite(userId: String) {
+        exerciseCloudFirestoreRepository.addExerciseToFavorite(
+            userId = userId,
+            exercise = Exercise(
+                id = "developpéCouché1",
+                name = "Developpé couché",
+                description = "Developpé couché",
+                type = ExercisesConstants.CHEST_EXERCISE_TYPE
+            )
+        )
+    }
+
     fun getExercise(exerciseId: String): Exercise =
-        cloudFirestoreRepository.getExercise(exerciseId = exerciseId)
+        exerciseCloudFirestoreRepository.getExercise(exerciseId = exerciseId)
 }

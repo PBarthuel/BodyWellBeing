@@ -7,12 +7,12 @@ import kotlinx.serialization.Serializable
 @IgnoreExtraProperties
 @Serializable
 data class Exercise(
-    val id: String,
+    val id: String = "",
     val image: String = "",
-    val name: String,
-    val description: String,
+    val name: String = "",
+    val description: String = "",
     val isFavorite: Boolean = false,
-    val type: Int
+    val type: Int = 1
 ) {
     fun toExerciseEntity(): ExerciseEntity =
         ExerciseEntity(
