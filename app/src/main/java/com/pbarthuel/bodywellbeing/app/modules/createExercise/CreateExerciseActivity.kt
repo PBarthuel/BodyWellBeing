@@ -44,7 +44,6 @@ class CreateExerciseActivity : ComponentActivity() {
                             }
                             ButtonFill(text = "Patate") {
                                 viewModel.createExercise()
-                                viewModel.addExerciseToFavorite("patate")
                             }
                         }
                     }

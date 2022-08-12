@@ -23,18 +23,6 @@ class CreateExerciseViewModel @Inject constructor(
         )
     }
 
-    fun addExerciseToFavorite(userId: String) {
-        exerciseCloudFirestoreRepository.addExerciseToFavorite(
-            userId = userId,
-            exercise = Exercise(
-                id = "developpéCouché1",
-                name = "Developpé couché",
-                description = "Developpé couché",
-                type = ExercisesConstants.CHEST_EXERCISE_TYPE
-            )
-        )
-    }
-
     fun getExercise(exerciseId: String): Exercise =
         exerciseCloudFirestoreRepository.getExercise(exerciseId = exerciseId)
 }
