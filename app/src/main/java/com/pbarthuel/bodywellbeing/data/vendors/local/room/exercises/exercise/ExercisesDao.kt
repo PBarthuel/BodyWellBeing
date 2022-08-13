@@ -1,4 +1,4 @@
-package com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises
+package com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises.exercise
 
 import androidx.room.Dao
 import androidx.room.Ignore
@@ -6,8 +6,8 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises.entities.CondenseExerciseEntity
-import com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises.entities.ExerciseEntity
+import com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises.exercise.entities.CondenseExerciseEntity
+import com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises.exercise.entities.ExerciseEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -30,9 +30,6 @@ interface ExercisesDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun createExercise(exerciseEntity: ExerciseEntity)
-
-    @Update
-    suspend fun updateExercise(exerciseEntity: ExerciseEntity)
 
     @Query("UPDATE ExerciseEntity SET is_favorite = :isFavorite WHERE id == :exerciseId")
     suspend fun updateIsFavorite(exerciseId: String, isFavorite: Boolean)

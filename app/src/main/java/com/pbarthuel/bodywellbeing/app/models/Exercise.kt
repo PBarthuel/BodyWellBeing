@@ -1,7 +1,8 @@
 package com.pbarthuel.bodywellbeing.app.models
 
 import com.google.firebase.database.IgnoreExtraProperties
-import com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises.entities.ExerciseEntity
+import com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises.customExercise.entities.CustomExerciseEntity
+import com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises.exercise.entities.ExerciseEntity
 import kotlinx.serialization.Serializable
 
 @IgnoreExtraProperties
@@ -22,5 +23,16 @@ data class Exercise(
             description = description,
             isFavorite = isFavorite,
             type = type
+        )
+
+    fun toCustomExerciseEntity(isSync: Boolean): CustomExerciseEntity =
+        CustomExerciseEntity(
+            id = id,
+            image = image,
+            name = name,
+            description = description,
+            isFavorite = isFavorite,
+            type = type,
+            isSync = isSync
         )
 }

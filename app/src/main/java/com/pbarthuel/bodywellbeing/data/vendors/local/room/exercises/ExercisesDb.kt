@@ -2,9 +2,18 @@ package com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises.entities.ExerciseEntity
+import com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises.customExercise.CustomExerciseDao
+import com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises.customExercise.entities.CustomExerciseEntity
+import com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises.exercise.ExercisesDao
+import com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises.exercise.entities.ExerciseEntity
 
-@Database(entities = [(ExerciseEntity::class)], version = 1)
-abstract class ExercisesDb: RoomDatabase() {
+@Database(
+    entities = [
+        (ExerciseEntity::class),
+        (CustomExerciseEntity::class)
+    ], version = 2
+)
+abstract class ExercisesDb : RoomDatabase() {
     abstract fun ExercisesDao(): ExercisesDao
+    abstract fun CustomExerciseDao(): CustomExerciseDao
 }

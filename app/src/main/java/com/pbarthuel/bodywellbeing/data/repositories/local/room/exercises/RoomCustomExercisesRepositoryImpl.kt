@@ -3,89 +3,86 @@ package com.pbarthuel.bodywellbeing.data.repositories.local.room.exercises
 import com.pbarthuel.bodywellbeing.app.models.CondenseExercise
 import com.pbarthuel.bodywellbeing.app.models.Exercise
 import com.pbarthuel.bodywellbeing.data.constants.ExercisesConstants
-import com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises.exercise.ExercisesDao
-import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.RoomExercisesRepository
+import com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises.customExercise.CustomExerciseDao
+import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.RoomCustomExercisesRepository
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 
 @ExperimentalCoroutinesApi
-class RoomExercisesRepositoryImpl @Inject constructor(
-    private val exercisesDao: ExercisesDao
-) : RoomExercisesRepository {
+class RoomCustomExercisesRepositoryImpl @Inject constructor(
+    private val customExerciseDao: CustomExerciseDao
+) : RoomCustomExercisesRepository {
 
     override fun getAllExercises(): Flow<List<Exercise>> =
-        exercisesDao.getAllExercises().mapLatest { exercisesEntity ->
-            exercisesEntity?.map { it.toExercise() } ?: listOf()
+        customExerciseDao.getAllExercises().mapLatest { customExercisesEntity ->
+            customExercisesEntity?.map { it.toExercise() } ?: listOf()
         }
 
     override fun getExerciseFromId(exerciseId: String): Flow<Exercise> =
-        exercisesDao.getExerciseFromId(exerciseId = exerciseId).mapLatest { exerciseEntity ->
-            exerciseEntity?.toExercise() ?: throw Exception("ExerciseId reference nothing")
+        customExerciseDao.getExerciseFromId(exerciseId = exerciseId).mapLatest { customExercisesEntity ->
+            customExercisesEntity?.toExercise() ?: throw Exception("ExerciseId reference nothing")
         }
 
     override fun getAllCondenseExercises(): Flow<List<CondenseExercise>> =
-        exercisesDao.getAllCondenseExercises().mapLatest { condenseExercisesEntity ->
-            condenseExercisesEntity?.map { it.toCondenseExercise() } ?: listOf()
+        customExerciseDao.getAllCondenseExercises().mapLatest { customExercisesEntity ->
+            customExercisesEntity?.map { it.toCondenseExercise() } ?: listOf()
         }
 
     override fun getArmExercises(): Flow<List<CondenseExercise>> =
-        exercisesDao.getCondenseExercisesFromType(ExercisesConstants.ARM_EXERCISE_TYPE)
+        customExerciseDao.getCondenseExercisesFromType(ExercisesConstants.ARM_EXERCISE_TYPE)
             .mapLatest { condenseExercisesEntity ->
                 condenseExercisesEntity?.map { it.toCondenseExercise() } ?: listOf()
             }
 
     override fun getTricepsExercises(): Flow<List<CondenseExercise>> =
-        exercisesDao.getCondenseExercisesFromType(ExercisesConstants.TRICEPS_EXERCISE_TYPE)
+        customExerciseDao.getCondenseExercisesFromType(ExercisesConstants.TRICEPS_EXERCISE_TYPE)
             .mapLatest { condenseExercisesEntity ->
                 condenseExercisesEntity?.map { it.toCondenseExercise() } ?: listOf()
             }
 
     override fun getBackExercises(): Flow<List<CondenseExercise>> =
-        exercisesDao.getCondenseExercisesFromType(ExercisesConstants.BACK_EXERCISE_TYPE)
+        customExerciseDao.getCondenseExercisesFromType(ExercisesConstants.BACK_EXERCISE_TYPE)
             .mapLatest { condenseExercisesEntity ->
                 condenseExercisesEntity?.map { it.toCondenseExercise() } ?: listOf()
             }
 
     override fun getShoulderExercises(): Flow<List<CondenseExercise>> =
-        exercisesDao.getCondenseExercisesFromType(ExercisesConstants.SHOULDER_EXERCISE_TYPE)
+        customExerciseDao.getCondenseExercisesFromType(ExercisesConstants.SHOULDER_EXERCISE_TYPE)
             .mapLatest { condenseExercisesEntity ->
                 condenseExercisesEntity?.map { it.toCondenseExercise() } ?: listOf()
             }
 
     override fun getChestExercises(): Flow<List<CondenseExercise>> =
-        exercisesDao.getCondenseExercisesFromType(ExercisesConstants.CHEST_EXERCISE_TYPE)
+        customExerciseDao.getCondenseExercisesFromType(ExercisesConstants.CHEST_EXERCISE_TYPE)
             .mapLatest { condenseExercisesEntity ->
                 condenseExercisesEntity?.map { it.toCondenseExercise() } ?: listOf()
             }
 
     override fun getAbsExercises(): Flow<List<CondenseExercise>> =
-        exercisesDao.getCondenseExercisesFromType(ExercisesConstants.ABS_EXERCISE_TYPE)
+        customExerciseDao.getCondenseExercisesFromType(ExercisesConstants.ABS_EXERCISE_TYPE)
             .mapLatest { condenseExercisesEntity ->
                 condenseExercisesEntity?.map { it.toCondenseExercise() } ?: listOf()
             }
 
     override fun getLegExercises(): Flow<List<CondenseExercise>> =
-        exercisesDao.getCondenseExercisesFromType(ExercisesConstants.LEG_EXERCISE_TYPE)
+        customExerciseDao.getCondenseExercisesFromType(ExercisesConstants.LEG_EXERCISE_TYPE)
             .mapLatest { condenseExercisesEntity ->
                 condenseExercisesEntity?.map { it.toCondenseExercise() } ?: listOf()
             }
 
     override fun getFavoritesExercises(): Flow<List<CondenseExercise>> =
-        exercisesDao.getCondenseFavoritesExercises().mapLatest { condenseExercisesEntity ->
-            condenseExercisesEntity?.map { it.toCondenseExercise() } ?: listOf()
+        customExerciseDao.getCondenseFavoritesExercises().mapLatest { condenseExercises ->
+            condenseExercises?.map { it.toCondenseExercise() } ?: listOf()
         }
 
-    override suspend fun createExercise(exercise: Exercise) =
-        exercisesDao.createExercise(exercise.toExerciseEntity())
+    override suspend fun createExercise(exercise: Exercise, isSync: Boolean) =
+        customExerciseDao.createExercise(exercise.toCustomExerciseEntity(isSync = isSync))
 
     override suspend fun updateIsFavorite(exerciseId: String, isFavorite: Boolean) =
-        exercisesDao.updateIsFavorite(
-            exerciseId = exerciseId,
-            isFavorite = isFavorite
-        )
+        customExerciseDao.updateIsFavorite(exerciseId = exerciseId, isFavorite = isFavorite)
 
-    override suspend fun clearExercisesDb() = exercisesDao.clearExercisesDb()
+    override suspend fun clearExercisesDb() =
+        customExerciseDao.clearExercisesDb()
 }

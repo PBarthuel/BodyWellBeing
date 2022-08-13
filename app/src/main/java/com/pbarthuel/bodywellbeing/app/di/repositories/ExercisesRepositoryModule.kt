@@ -1,6 +1,8 @@
 package com.pbarthuel.bodywellbeing.app.di.repositories
 
+import com.pbarthuel.bodywellbeing.data.repositories.local.room.exercises.RoomCustomExercisesRepositoryImpl
 import com.pbarthuel.bodywellbeing.data.repositories.local.room.exercises.RoomExercisesRepositoryImpl
+import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.RoomCustomExercisesRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.RoomExercisesRepository
 import dagger.Binds
 import dagger.Module
@@ -15,4 +17,7 @@ abstract class ExercisesRepositoryModule {
 
     @Binds
     abstract fun bindRoomExercisesRepository(roomExercisesRepository: RoomExercisesRepositoryImpl): RoomExercisesRepository
+
+    @Binds
+    abstract fun bindCustomRoomExercisesRepository(customRoomExercisesRepository: RoomCustomExercisesRepositoryImpl): RoomCustomExercisesRepository
 }

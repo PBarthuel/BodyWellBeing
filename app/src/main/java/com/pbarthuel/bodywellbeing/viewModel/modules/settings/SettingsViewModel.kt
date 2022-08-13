@@ -3,6 +3,7 @@ package com.pbarthuel.bodywellbeing.viewModel.modules.settings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pbarthuel.bodywellbeing.domain.repositories.local.dataStore.PreferenceDataStoreRepository
+import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.RoomCustomExercisesRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.RoomExercisesRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.user.UserRepository
 import com.pbarthuel.bodywellbeing.viewModel.modules.main.MainScreenState
@@ -23,6 +24,7 @@ sealed class SettingsScreenState {
 class SettingsViewModel @Inject constructor(
     private val preferenceDataStoreRepository: PreferenceDataStoreRepository,
     private val userRepository: UserRepository,
+    private val customExercisesRepository: RoomCustomExercisesRepository,
     private val dispatcher: CoroutineToolsProvider
 ) : ViewModel() {
 
@@ -33,6 +35,7 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch(dispatcher.io) {
             kotlin.runCatching {
                 _screenState.value = SettingsScreenState.Loading
+                customExercisesRepository.clearExercisesDb()
                 preferenceDataStoreRepository.clearDataStore()
                 userRepository.clearUserDb()
             }.onSuccess {

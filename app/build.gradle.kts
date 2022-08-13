@@ -84,6 +84,7 @@ dependencies {
     implementation("com.google.accompanist:accompanist-permissions:${LibVersion.accompanistVersion}")
     implementation("com.google.accompanist:accompanist-navigation-animation:${LibVersion.accompanistVersion}")
     implementation("com.google.accompanist:accompanist-navigation-material:${LibVersion.accompanistVersion}")
+    implementation("com.google.accompanist:accompanist-swiperefresh:${LibVersion.accompanistVersion}")
 
     // DataStore
     implementation("androidx.datastore:datastore-preferences:1.0.0")

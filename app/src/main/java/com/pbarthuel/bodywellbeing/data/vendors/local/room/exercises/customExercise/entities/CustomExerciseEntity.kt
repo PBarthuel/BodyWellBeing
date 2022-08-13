@@ -1,4 +1,4 @@
-package com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises.entities
+package com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises.customExercise.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
 
 @Entity
 @Serializable
-data class ExerciseEntity(
+data class CustomExerciseEntity(
     @PrimaryKey
     val id: String,
     @ColumnInfo(name = "image")
@@ -20,7 +20,9 @@ data class ExerciseEntity(
     @ColumnInfo(name = "is_favorite")
     val isFavorite: Boolean = false,
     @ColumnInfo(name = "type")
-    val type: Int
+    val type: Int,
+    @ColumnInfo(name = "is_sync")
+    val isSync: Boolean = false
 ) {
     fun toExercise(): Exercise =
         Exercise(

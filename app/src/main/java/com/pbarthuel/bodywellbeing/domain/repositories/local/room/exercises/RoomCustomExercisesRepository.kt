@@ -4,7 +4,7 @@ import com.pbarthuel.bodywellbeing.app.models.CondenseExercise
 import com.pbarthuel.bodywellbeing.app.models.Exercise
 import kotlinx.coroutines.flow.Flow
 
-interface RoomExercisesRepository {
+interface RoomCustomExercisesRepository {
     fun getAllExercises(): Flow<List<Exercise>>
     fun getExerciseFromId(exerciseId: String): Flow<Exercise>
     fun getAllCondenseExercises(): Flow<List<CondenseExercise>>
@@ -16,7 +16,7 @@ interface RoomExercisesRepository {
     fun getAbsExercises(): Flow<List<CondenseExercise>>
     fun getLegExercises(): Flow<List<CondenseExercise>>
     fun getFavoritesExercises(): Flow<List<CondenseExercise>>
-    suspend fun createExercise(exercise: Exercise)
+    suspend fun createExercise(exercise: Exercise, isSync: Boolean)
     suspend fun updateIsFavorite(exerciseId: String, isFavorite: Boolean)
     suspend fun clearExercisesDb()
 }

@@ -1,4 +1,4 @@
-package com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises.entities
+package com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises.exercise.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
