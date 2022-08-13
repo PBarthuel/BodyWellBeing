@@ -8,9 +8,9 @@ import com.pbarthuel.bodywellbeing.domain.repositories.local.dataStore.Preferenc
 import com.pbarthuel.bodywellbeing.domain.repositories.network.ExerciseCloudFirestoreRepository
 import com.pbarthuel.bodywellbeing.viewModel.utils.CoroutineToolsProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
-import java.util.UUID
+import java.util.*
 import javax.inject.Inject
-import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 @HiltViewModel
@@ -19,14 +19,6 @@ class CreateExerciseViewModel @Inject constructor(
     private val preferenceDataStoreRepository: PreferenceDataStoreRepository,
     private val dispatcher: CoroutineToolsProvider
 ) : ViewModel() {
-
-    private lateinit var userId: String
-
-    init {
-        viewModelScope.launch(dispatcher.io) {
-            userId = preferenceDataStoreRepository.getUserId() ?: throw Exception("userId shouldn't be null")
-        }
-    }
 
     fun createExercise() {
         exerciseCloudFirestoreRepository.createExercise(
@@ -40,14 +32,16 @@ class CreateExerciseViewModel @Inject constructor(
     }
 
     fun createCustomExercise() {
-        exerciseCloudFirestoreRepository.createCustomExercise(
-            userId = userId,
-            Exercise(
-                id = UUID.randomUUID().toString(),
-                name = "Developpé couché incliné",
-                description = "Developpé couché incliné",
-                type = ExercisesConstants.CHEST_EXERCISE_TYPE
+        viewModelScope.launch(dispatcher.io) {
+            exerciseCloudFirestoreRepository.createCustomExercise(
+                userId = preferenceDataStoreRepository.getUserId() ?: throw Exception("userId shouldn't be null"),
+                Exercise(
+                    id = UUID.randomUUID().toString(),
+                    name = "Developpé couché custom",
+                    description = "Developpé couché custom",
+                    type = ExercisesConstants.CHEST_EXERCISE_TYPE
+                )
             )
-        )
+        }
     }
 }
