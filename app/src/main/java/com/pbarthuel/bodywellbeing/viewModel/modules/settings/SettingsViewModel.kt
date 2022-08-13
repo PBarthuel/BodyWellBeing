@@ -23,7 +23,6 @@ sealed class SettingsScreenState {
 class SettingsViewModel @Inject constructor(
     private val preferenceDataStoreRepository: PreferenceDataStoreRepository,
     private val userRepository: UserRepository,
-    private val roomExercisesRepository: RoomExercisesRepository,
     private val dispatcher: CoroutineToolsProvider
 ) : ViewModel() {
 
@@ -34,7 +33,6 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch(dispatcher.io) {
             kotlin.runCatching {
                 _screenState.value = SettingsScreenState.Loading
-                roomExercisesRepository.clearExercisesDb()
                 preferenceDataStoreRepository.clearDataStore()
                 userRepository.clearUserDb()
             }.onSuccess {
