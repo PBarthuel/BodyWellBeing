@@ -9,7 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.pbarthuel.bodywellbeing.app.models.Exercise
 import com.pbarthuel.bodywellbeing.app.modules.main.MainActivity.Companion.EXTRA_EXERCISE_ID
 import com.pbarthuel.bodywellbeing.domain.repositories.local.dataStore.PreferenceDataStoreRepository
-import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.ExercisesRepository
+import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.RoomExercisesRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.network.ExerciseCloudFirestoreRepository
 import com.pbarthuel.bodywellbeing.viewModel.utils.CoroutineToolsProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,7 +26,7 @@ import kotlinx.coroutines.launch
 @ExperimentalComposeUiApi
 @HiltViewModel
 class ExerciseDetailViewModel @Inject constructor(
-    private val exercisesRepository: ExercisesRepository,
+    private val exercisesRepository: RoomExercisesRepository,
     private val exerciseCloudFirestoreRepository: ExerciseCloudFirestoreRepository,
     private val preferenceDataStoreRepository: PreferenceDataStoreRepository,
     private val dispatcher: CoroutineToolsProvider,

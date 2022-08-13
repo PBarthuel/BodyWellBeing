@@ -2,15 +2,14 @@ package com.pbarthuel.bodywellbeing.viewModel.modules.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.pbarthuel.bodywellbeing.app.models.Exercise
-import com.pbarthuel.bodywellbeing.data.constants.ExercisesConstants
-import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.ExercisesRepository
+import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.RoomExercisesRepository
+import com.pbarthuel.bodywellbeing.domain.repositories.network.ExerciseCloudFirestoreRepository
 import com.pbarthuel.bodywellbeing.viewModel.utils.CoroutineToolsProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 sealed class MainScreenState {
@@ -22,7 +21,8 @@ sealed class MainScreenState {
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val exercisesRepository: ExercisesRepository,
+    private val exerciseCloudFirestoreRepository: ExerciseCloudFirestoreRepository,
+    private val roomExercisesRepository: RoomExercisesRepository,
     private val dispatcher: CoroutineToolsProvider
 ) : ViewModel() {
 
@@ -33,81 +33,15 @@ class MainViewModel @Inject constructor(
         _screenState.value = screenState
     }
 
-    // TODO retirer ce code quand je créerai les exercises sur le backend
-    // region A delete
-    fun createExercise() {
+    fun syncExercise() {
         viewModelScope.launch(dispatcher.io) {
-            if (exercisesRepository.getAllExercises().first().isEmpty()) {
-                exercisesList().forEach {
-                    exercisesRepository.createExercise(it)
+            exerciseCloudFirestoreRepository.getAllExercises().collect { exercises ->
+                if (exercises.isNotEmpty()) {
+                    exercises.forEach { exercise ->
+                        roomExercisesRepository.createExercise(exercise)
+                    }
                 }
             }
         }
     }
-
-    private fun exercisesList(): List<Exercise> {
-        return listOf(
-            Exercise(
-                id = "developpéCouché1",
-                name = "Developpé couché",
-                description = "Developpé couché",
-                type = ExercisesConstants.CHEST_EXERCISE_TYPE
-            ),
-            Exercise(
-                id = "developpéCouché2",
-                name = "Developpé couché",
-                description = "Developpé couché",
-                type = ExercisesConstants.CHEST_EXERCISE_TYPE
-            ),
-            Exercise(
-                id = "developpéCouché3",
-                name = "Developpé couché",
-                description = "Developpé couché",
-                type = ExercisesConstants.CHEST_EXERCISE_TYPE
-            ),
-            Exercise(
-                id = "press1",
-                name = "Press",
-                description = "Press",
-                type = ExercisesConstants.LEG_EXERCISE_TYPE
-            ),
-            Exercise(
-                id = "curl1",
-                name = "Curl",
-                description = "Curl",
-                type = ExercisesConstants.ARM_EXERCISE_TYPE
-            ),
-            Exercise(
-                id = "curl2",
-                name = "Curl",
-                description = "Curl",
-                type = ExercisesConstants.ARM_EXERCISE_TYPE
-            ),
-            Exercise(
-                id = "dips1",
-                name = "Dips",
-                description = "Dips",
-                type = ExercisesConstants.TRICEPS_EXERCISE_TYPE
-            ),
-            Exercise(
-                id = "curl3",
-                name = "Curl",
-                description = "Curl",
-                type = ExercisesConstants.SHOULDER_EXERCISE_TYPE
-            ),
-            Exercise(
-                id = "curl4",
-                name = "Curl",
-                description = "Curl",
-                type = ExercisesConstants.ABS_EXERCISE_TYPE
-            ),
-            Exercise(
-                id = "curl5",
-                name = "Curl",
-                description = "Curl",
-                type = ExercisesConstants.BACK_EXERCISE_TYPE
-            )
-        )
-    }
-    //endregion
 }

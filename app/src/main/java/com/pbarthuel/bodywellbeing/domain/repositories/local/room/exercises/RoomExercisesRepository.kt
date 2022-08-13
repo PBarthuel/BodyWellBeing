@@ -2,10 +2,9 @@ package com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises
 
 import com.pbarthuel.bodywellbeing.app.models.CondenseExercise
 import com.pbarthuel.bodywellbeing.app.models.Exercise
-import com.pbarthuel.bodywellbeing.app.models.User
 import kotlinx.coroutines.flow.Flow
 
-interface ExercisesRepository {
+interface RoomExercisesRepository {
     fun getAllExercises(): Flow<List<Exercise>>
     fun getExerciseFromId(exerciseId: String): Flow<Exercise>
     fun getAllCondenseExercises(): Flow<List<CondenseExercise>>

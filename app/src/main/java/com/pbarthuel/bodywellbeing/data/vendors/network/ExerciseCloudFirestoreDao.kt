@@ -8,6 +8,10 @@ import com.pbarthuel.bodywellbeing.app.models.Exercise
 import com.pbarthuel.bodywellbeing.data.constants.ExercisesConstants
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 
 @ExperimentalCoroutinesApi
 class ExerciseCloudFirestoreDao @Inject constructor() {
@@ -25,19 +29,20 @@ class ExerciseCloudFirestoreDao @Inject constructor() {
             }
     }
 
-    // TODO passer en flow et callBackflow peut-être
-    fun getExercise(exerciseId: String): Exercise {
-        var exercise = Exercise(
-            id = "developpéCouché1",
-            name = "Developpé couché",
-            description = "Developpé couché",
-            type = ExercisesConstants.CHEST_EXERCISE_TYPE
-        )
-        db.document(exerciseId)
-            .get()
-            .addOnSuccessListener {
-                exercise = it.toObject<Exercise>()!!
+    fun getAllExercises(): Flow<List<Exercise>> = callbackFlow {
+        db.addSnapshotListener { value, error ->
+            if (error != null) {
+                Log.d("ExerciseCloudFirestoreDao", "Listen failed ")
             }
-        return exercise
+
+            if (value != null && !value.isEmpty) {
+                trySend(value.documents.map {
+                    it.toObject<Exercise>()!!
+                })
+            } else {
+                Log.d("ExerciseCloudFirestoreDao", "Fail to retrieving data ")
+            }
+        }
+        awaitClose { cancel() }
     }
 }

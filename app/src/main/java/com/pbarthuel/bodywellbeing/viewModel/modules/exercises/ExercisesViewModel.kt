@@ -1,7 +1,7 @@
 package com.pbarthuel.bodywellbeing.viewModel.modules.exercises
 
 import androidx.lifecycle.ViewModel
-import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.ExercisesRepository
+import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.RoomExercisesRepository
 import com.pbarthuel.bodywellbeing.viewModel.utils.CoroutineToolsProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.map
 @HiltViewModel
 class ExercisesViewModel @Inject constructor(
     private val dispatcher: CoroutineToolsProvider,
-    private val exercisesRepository: ExercisesRepository
+    private val exercisesRepository: RoomExercisesRepository
 ): ViewModel() {
 
     val exercisesGroupByType = exercisesRepository.getAllCondenseExercises().map { exercises ->

@@ -6,6 +6,7 @@ import com.pbarthuel.bodywellbeing.data.vendors.network.UserExerciseCloudFiresto
 import com.pbarthuel.bodywellbeing.domain.repositories.network.ExerciseCloudFirestoreRepository
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
 
 @ExperimentalCoroutinesApi
 class ExerciseCloudFirestoreRepositoryImpl @Inject constructor(
@@ -13,11 +14,11 @@ class ExerciseCloudFirestoreRepositoryImpl @Inject constructor(
     private val userExerciseCloudFirestoreDao: UserExerciseCloudFirestoreDao
 ) : ExerciseCloudFirestoreRepository {
 
+    override fun getAllExercises(): Flow<List<Exercise>> =
+        exerciseCloudFirestoreDao.getAllExercises()
+
     override fun createExercise(exercise: Exercise) =
         exerciseCloudFirestoreDao.createExercise(exercise = exercise)
-
-    override fun getExercise(exerciseId: String): Exercise =
-        exerciseCloudFirestoreDao.getExercise(exerciseId)
 
     override fun addExerciseToFavorite(userId: String, exercise: Exercise) =
         userExerciseCloudFirestoreDao.addExerciseToFavorite(userId = userId, exercise = exercise)

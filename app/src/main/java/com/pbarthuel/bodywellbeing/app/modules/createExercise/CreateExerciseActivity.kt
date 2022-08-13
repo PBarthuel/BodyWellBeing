@@ -27,23 +27,17 @@ class CreateExerciseActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            val exercise = remember { viewModel.getExercise("developpéCouché1") }
             BodyWellBeingTheme {
                 ProvideWindowInsets {
                     Scaffold(modifier = Modifier.fillMaxSize()) {
                         Column {
                             // TODO changer ça et creer des objet firebase avec des constructeurs par default
                             //  + faire des objets UI/Domain/Data
-                            ExerciseCard(exercise = CondenseExercise(
-                                exercise.id,
-                                exercise.name,
-                                isFavorite = exercise.isFavorite,
-                                exercise.type
-                            )) {
-
-                            }
-                            ButtonFill(text = "Patate") {
+                            ButtonFill(text = "CreateExercise") {
                                 viewModel.createExercise()
+                            }
+                            ButtonFill(text = "CreateCustomExercise") {
+                                viewModel.createCustomExercise()
                             }
                         }
                     }

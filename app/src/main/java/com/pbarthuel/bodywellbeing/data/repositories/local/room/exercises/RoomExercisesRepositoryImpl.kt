@@ -4,8 +4,7 @@ import com.pbarthuel.bodywellbeing.app.models.CondenseExercise
 import com.pbarthuel.bodywellbeing.app.models.Exercise
 import com.pbarthuel.bodywellbeing.data.constants.ExercisesConstants
 import com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises.ExercisesDao
-import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.ExercisesRepository
-import java.lang.Exception
+import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.RoomExercisesRepository
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -13,9 +12,9 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 
 @ExperimentalCoroutinesApi
-class ExercisesRepositoryImpl @Inject constructor(
+class RoomExercisesRepositoryImpl @Inject constructor(
     private val exercisesDao: ExercisesDao
-): ExercisesRepository {
+): RoomExercisesRepository {
 
     override fun getAllExercises(): Flow<List<Exercise>> = exercisesDao.getAllExercises().mapLatest { exercisesRequest ->
             exercisesRequest?.map { it.toExercise() } ?: listOf()

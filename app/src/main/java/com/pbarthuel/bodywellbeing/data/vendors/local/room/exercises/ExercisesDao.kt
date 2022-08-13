@@ -1,7 +1,9 @@
 package com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises
 
 import androidx.room.Dao
+import androidx.room.Ignore
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises.entities.CondenseExerciseEntity
@@ -26,7 +28,7 @@ interface ExercisesDao {
     @Query("SELECT * FROM ExerciseEntity WHERE is_favorite == 1")
     fun getCondenseFavoritesExercises(): Flow<List<CondenseExerciseEntity>?>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun createExercise(exerciseEntity: ExerciseEntity)
 
     @Update
