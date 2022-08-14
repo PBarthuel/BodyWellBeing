@@ -7,11 +7,9 @@ import com.google.firebase.ktx.Firebase
 import com.pbarthuel.bodywellbeing.app.models.Exercise
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.flow.flow
 
 @ExperimentalCoroutinesApi
 class UserExerciseCloudFirestoreDao @Inject constructor() {
