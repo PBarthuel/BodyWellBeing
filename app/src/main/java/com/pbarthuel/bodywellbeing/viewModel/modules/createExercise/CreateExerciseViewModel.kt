@@ -24,19 +24,16 @@ class CreateExerciseViewModel @Inject constructor(
     fun createExercise() {
         exerciseCloudFirestoreRepository.createExercise(
             Exercise(
-                id = "developpéCouché2",
-                name = "Developpé couché incliné",
-                description = "Developpé couché incliné",
+                id = "developpéCouché3",
+                name = "Developpé couché décliné",
+                description = "Developpé couché décliné",
                 type = ExercisesConstants.CHEST_EXERCISE_TYPE
             )
         )
     }
 
     fun createCustomExercise() {
-        // TODO ici pour créer en local l'exercise
-        // dans le sens sync
         viewModelScope.launch(dispatcher.io) {
-
             kotlin.runCatching {
                 exerciseCloudFirestoreRepository.createCustomExercise(
                     userId = preferenceDataStoreRepository.getUserId() ?: throw Exception("userId shouldn't be null"),

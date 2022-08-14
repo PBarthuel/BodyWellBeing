@@ -12,7 +12,7 @@ data class Exercise(
     val image: String = "",
     val name: String = "",
     val description: String = "",
-    val isFavorite: Boolean = false,
+    var isFavorite: Boolean = false,
     val type: Int = 1
 ) {
     fun toExerciseEntity(): ExerciseEntity =

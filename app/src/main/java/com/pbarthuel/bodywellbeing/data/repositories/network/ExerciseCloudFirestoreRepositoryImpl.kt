@@ -23,8 +23,8 @@ class ExerciseCloudFirestoreRepositoryImpl @Inject constructor(
     override fun addExerciseToFavorite(userId: String, exercise: Exercise) =
         userExerciseCloudFirestoreDao.addExerciseToFavorite(userId = userId, exercise = exercise)
 
-    override fun getFavoriteExercises(userId: String): List<Exercise> =
-        userExerciseCloudFirestoreDao.getFavoriteExercises(userId = userId)
+    override fun getAllFavoriteExercises(userId: String): Flow<List<Exercise>> =
+        userExerciseCloudFirestoreDao.getAllFavoriteExercises(userId = userId)
 
     override fun deleteExerciseFromFavorite(userId: String, exerciseId: String) =
         userExerciseCloudFirestoreDao.deleteExerciseFromFavorite(userId = userId, exerciseId = exerciseId)
@@ -32,6 +32,6 @@ class ExerciseCloudFirestoreRepositoryImpl @Inject constructor(
     override fun createCustomExercise(userId: String, exercise: Exercise) =
         userExerciseCloudFirestoreDao.createCustomExercise(userId = userId, exercise = exercise)
 
-    override fun getCustomExercises(userId: String): List<Exercise> =
-        userExerciseCloudFirestoreDao.getCustomExercises(userId = userId)
+    override fun getAllCustomExercises(userId: String): Flow<List<Exercise>> =
+        userExerciseCloudFirestoreDao.getAllCustomExercises(userId = userId)
 }

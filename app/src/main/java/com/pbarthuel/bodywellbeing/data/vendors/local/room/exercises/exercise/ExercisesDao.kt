@@ -17,7 +17,7 @@ interface ExercisesDao {
     fun getAllExercises(): Flow<List<ExerciseEntity>?>
 
     @Query("SELECT * FROM ExerciseEntity WHERE id == :exerciseId")
-    fun getExerciseFromId(exerciseId: String): Flow<ExerciseEntity?>
+    fun getExerciseFromId(exerciseId: String): Flow<ExerciseEntity>?
 
     @Query("SELECT * FROM ExerciseEntity")
     fun getAllCondenseExercises(): Flow<List<CondenseExerciseEntity>?>
@@ -33,6 +33,9 @@ interface ExercisesDao {
 
     @Query("UPDATE ExerciseEntity SET is_favorite = :isFavorite WHERE id == :exerciseId")
     suspend fun updateIsFavorite(exerciseId: String, isFavorite: Boolean)
+
+    @Query("UPDATE ExerciseEntity SET is_favorite = 0 WHERE is_favorite == 1")
+    suspend fun resetAllIsFavoriteAtLogout()
 
     @Query("DELETE FROM ExerciseEntity")
     suspend fun clearExercisesDb()

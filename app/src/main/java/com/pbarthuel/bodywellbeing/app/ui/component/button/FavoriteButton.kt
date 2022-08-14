@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -16,11 +17,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.pbarthuel.bodywellbeing.R
+import com.pbarthuel.bodywellbeing.app.models.Exercise
 
 @Composable
 fun FavoriteButton(
     modifier: Modifier = Modifier,
-    isFavorite: Boolean,
+    exercise: State<Exercise?>,
     onFavoriteClicked: () -> Unit
 ) {
     Column(modifier = modifier.wrapContentSize()) {
@@ -28,9 +30,10 @@ fun FavoriteButton(
         val normalSize = 40.dp
 
         var heartIcon by remember { mutableStateOf(R.drawable.ic_heart_grey) }
-        heartIcon = when (isFavorite) {
+        heartIcon = when (exercise.value?.isFavorite) {
             true -> R.drawable.ic_heart_red
             false -> R.drawable.ic_heart_grey
+            else -> R.drawable.ic_heart_grey
         }
 
         val selected = remember { mutableStateOf(false) }

@@ -8,10 +8,11 @@ import com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises.exercise.Ex
 import com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises.exercise.entities.ExerciseEntity
 
 @Database(
+    version = 2,
     entities = [
         (ExerciseEntity::class),
         (CustomExerciseEntity::class)
-    ], version = 2
+    ]
 )
 abstract class ExercisesDb : RoomDatabase() {
     abstract fun ExercisesDao(): ExercisesDao

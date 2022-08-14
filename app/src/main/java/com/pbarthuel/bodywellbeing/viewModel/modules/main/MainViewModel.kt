@@ -2,6 +2,8 @@ package com.pbarthuel.bodywellbeing.viewModel.modules.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.pbarthuel.bodywellbeing.domain.repositories.local.dataStore.PreferenceDataStoreRepository
+import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.RoomCustomExercisesRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.RoomExercisesRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.network.ExerciseCloudFirestoreRepository
 import com.pbarthuel.bodywellbeing.viewModel.utils.CoroutineToolsProvider
@@ -11,23 +13,36 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 sealed class MainScreenState {
-    object Home: MainScreenState()
-    object Body: MainScreenState()
-    object Exercises: MainScreenState()
-    object Profile: MainScreenState()
+    object Home : MainScreenState()
+    object Body : MainScreenState()
+    object Exercises : MainScreenState()
+    object Profile : MainScreenState()
 }
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val exerciseCloudFirestoreRepository: ExerciseCloudFirestoreRepository,
     private val roomExercisesRepository: RoomExercisesRepository,
+    private val roomCustomExercisesRepository: RoomCustomExercisesRepository,
+    private val preferenceDataStoreRepository: PreferenceDataStoreRepository,
     private val dispatcher: CoroutineToolsProvider
 ) : ViewModel() {
 
-    private val _screenState: MutableStateFlow<MainScreenState> = MutableStateFlow(MainScreenState.Home)
+    private val _screenState: MutableStateFlow<MainScreenState> =
+        MutableStateFlow(MainScreenState.Home)
     val screenState: StateFlow<MainScreenState> = _screenState
+
+    private var userId: String
+
+    init {
+        runBlocking {
+            userId = preferenceDataStoreRepository.getUserId()
+                ?: throw Exception("userId shouldn't be null")
+        }
+    }
 
     fun onScreenChanged(screenState: MainScreenState) {
         _screenState.value = screenState
@@ -38,10 +53,37 @@ class MainViewModel @Inject constructor(
             exerciseCloudFirestoreRepository.getAllExercises().collect { exercises ->
                 if (exercises.isNotEmpty()) {
                     exercises.forEach { exercise ->
+                        // TODO faire des objet special firestore sans is favorite, le mettre a null dans les entity
                         roomExercisesRepository.createExercise(exercise)
                     }
                 }
             }
+        }
+        viewModelScope.launch(dispatcher.io) {
+            exerciseCloudFirestoreRepository.getAllCustomExercises(userId = userId)
+                .collect { customExercises ->
+                    if (customExercises.isNotEmpty()) {
+                        customExercises.forEach { exercise ->
+                            roomCustomExercisesRepository.createExercise(
+                                exercise = exercise,
+                                isSync = true
+                            )
+                        }
+                    }
+                }
+        }
+        viewModelScope.launch(dispatcher.io) {
+            exerciseCloudFirestoreRepository.getAllFavoriteExercises(userId = userId)
+                .collect { favoriteExercises ->
+                    if (favoriteExercises.isNotEmpty()) {
+                        favoriteExercises.forEach { exercise ->
+                            roomExercisesRepository.updateIsFavorite(
+                                exerciseId = exercise.id,
+                                isFavorite = exercise.isFavorite
+                            )
+                        }
+                    }
+                }
         }
     }
 }

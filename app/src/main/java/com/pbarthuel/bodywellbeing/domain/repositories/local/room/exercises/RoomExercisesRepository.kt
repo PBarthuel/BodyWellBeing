@@ -18,5 +18,6 @@ interface RoomExercisesRepository {
     fun getFavoritesExercises(): Flow<List<CondenseExercise>>
     suspend fun createExercise(exercise: Exercise)
     suspend fun updateIsFavorite(exerciseId: String, isFavorite: Boolean)
+    suspend fun resetAllIsFavoriteAtLogout()
     suspend fun clearExercisesDb()
 }

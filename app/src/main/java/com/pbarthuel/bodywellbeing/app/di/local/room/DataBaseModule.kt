@@ -34,6 +34,7 @@ class DataBaseModule {
     @Singleton
     fun provideExercisesDatabase(@ApplicationContext appContext: Context): ExercisesDb {
         return Room.databaseBuilder(appContext, ExercisesDb::class.java, "Exercises")
+            .fallbackToDestructiveMigration()
             .build()
     }
 

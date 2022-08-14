@@ -6,7 +6,14 @@ import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.pbarthuel.bodywellbeing.app.models.Exercise
 import javax.inject.Inject
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.flow
 
+@ExperimentalCoroutinesApi
 class UserExerciseCloudFirestoreDao @Inject constructor() {
 
     companion object {
@@ -14,10 +21,12 @@ class UserExerciseCloudFirestoreDao @Inject constructor() {
         const val CUSTOM_EXERCISE_COLLECTION = "customExercise"
     }
 
-    private val db = Firebase.firestore.collection("userExercises")
+    private val db = Firebase.firestore
 
     fun addExerciseToFavorite(userId: String, exercise: Exercise) {
-        db.document(userId)
+        exercise.isFavorite = true
+        db.collection("userExercises")
+            .document(userId)
             .collection(FAVORITE_COLLECTION)
             .document(exercise.id)
             .set(exercise)
@@ -29,21 +38,21 @@ class UserExerciseCloudFirestoreDao @Inject constructor() {
             }
     }
 
-    fun getFavoriteExercises(userId: String): List<Exercise> {
-        val exercises = ArrayList<Exercise>()
-        db.document(userId)
+    fun getAllFavoriteExercises(userId: String): Flow<List<Exercise>> = callbackFlow {
+        db.collection("userExercises").document(userId)
             .collection(FAVORITE_COLLECTION)
             .get()
-            .addOnSuccessListener {result ->
-                for (document in result) {
-                    exercises.add(document.toObject())
-                }
+            .addOnSuccessListener { result ->
+                trySend(result.documents.map {
+                    it.toObject()!!
+                })
             }
-        return exercises
+        awaitClose { close() }
     }
 
     fun deleteExerciseFromFavorite(userId: String, exerciseId: String) {
-        db.document(userId)
+        db.collection("userExercises")
+            .document(userId)
             .collection(FAVORITE_COLLECTION)
             .document(exerciseId)
             .delete()
@@ -56,7 +65,8 @@ class UserExerciseCloudFirestoreDao @Inject constructor() {
     }
 
     fun createCustomExercise(userId: String, exercise: Exercise) {
-        db.document(userId)
+        db.collection("userExercises")
+            .document(userId)
             .collection(CUSTOM_EXERCISE_COLLECTION)
             .document(exercise.id)
             .set(exercise)
@@ -68,16 +78,16 @@ class UserExerciseCloudFirestoreDao @Inject constructor() {
             }
     }
 
-    fun getCustomExercises(userId: String): List<Exercise> {
-        val exercises = ArrayList<Exercise>()
-        db.document(userId)
+    fun getAllCustomExercises(userId: String): Flow<List<Exercise>> = callbackFlow {
+        db.collection("userExercises")
+            .document(userId)
             .collection(CUSTOM_EXERCISE_COLLECTION)
             .get()
-            .addOnSuccessListener {result ->
-                for (document in result) {
-                    exercises.add(document.toObject())
-                }
+            .addOnSuccessListener { result ->
+                trySend(result.documents.map {
+                    it.toObject<Exercise>()!!
+                })
             }
-        return exercises
+        awaitClose { close() }
     }
 }

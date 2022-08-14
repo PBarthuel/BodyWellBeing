@@ -8,6 +8,8 @@ import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.Room
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 
@@ -22,9 +24,9 @@ class RoomExercisesRepositoryImpl @Inject constructor(
         }
 
     override fun getExerciseFromId(exerciseId: String): Flow<Exercise> =
-        exercisesDao.getExerciseFromId(exerciseId = exerciseId).mapLatest { exerciseEntity ->
-            exerciseEntity?.toExercise() ?: throw Exception("ExerciseId reference nothing")
-        }
+        exercisesDao.getExerciseFromId(exerciseId = exerciseId)?.mapLatest { exerciseEntity ->
+            exerciseEntity.toExercise()
+        } ?: flow {  }
 
     override fun getAllCondenseExercises(): Flow<List<CondenseExercise>> =
         exercisesDao.getAllCondenseExercises().mapLatest { condenseExercisesEntity ->
@@ -86,6 +88,8 @@ class RoomExercisesRepositoryImpl @Inject constructor(
             exerciseId = exerciseId,
             isFavorite = isFavorite
         )
+
+    override suspend fun resetAllIsFavoriteAtLogout() = exercisesDao.resetAllIsFavoriteAtLogout()
 
     override suspend fun clearExercisesDb() = exercisesDao.clearExercisesDb()
 }

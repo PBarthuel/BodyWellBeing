@@ -26,43 +26,59 @@ import kotlinx.coroutines.launch
 @ExperimentalComposeUiApi
 @HiltViewModel
 class ExerciseDetailViewModel @Inject constructor(
-    private val exercisesRepository: RoomExercisesRepository,
+    private val roomExercisesRepository: RoomExercisesRepository,
     private val exerciseCloudFirestoreRepository: ExerciseCloudFirestoreRepository,
     private val preferenceDataStoreRepository: PreferenceDataStoreRepository,
     private val dispatcher: CoroutineToolsProvider,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val exerciseId: String? = savedStateHandle.get<String>(EXTRA_EXERCISE_ID)
+    private var exerciseId: String
     private lateinit var userId: String
 
     init {
+        exerciseId = savedStateHandle.get<String>(EXTRA_EXERCISE_ID)
+            ?: throw Exception("ExerciseId couldn't be null")
         viewModelScope.launch(dispatcher.io) {
-            userId = preferenceDataStoreRepository.getUserId() ?: throw Exception("userId shouldn't be null")
+            userId = preferenceDataStoreRepository.getUserId()
+                ?: throw Exception("userId shouldn't be null")
         }
     }
 
-    val exercise: Flow<Exercise> = exerciseId?.let {
-        exercisesRepository
-        .getExerciseFromId(exerciseId = it).flowOn(dispatcher.io)
-    } ?: flow { }
+    val exercise: Flow<Exercise> =
+        roomExercisesRepository.getExerciseFromId(exerciseId = exerciseId)
+            .flowOn(dispatcher.io)
 
     fun modifyFavoriteState(exercise: Exercise, isFavorite: Boolean) {
         viewModelScope.launch(dispatcher.io) {
-            exercisesRepository.updateIsFavorite(
-                exerciseId = exercise.id,
-                isFavorite = !isFavorite
-            )
             if (!isFavorite) {
-                exerciseCloudFirestoreRepository.addExerciseToFavorite(
-                    userId = userId,
-                    exercise = exercise
-                )
+                kotlin.runCatching {
+                    exerciseCloudFirestoreRepository.addExerciseToFavorite(
+                        userId = userId,
+                        exercise = exercise
+                    )
+                }.onSuccess {
+                    roomExercisesRepository.updateIsFavorite(
+                        exerciseId = exercise.id,
+                        isFavorite = true
+                    )
+                }.onFailure {
+                    //TODO ajouter un toast d'erreur pour dire a l'utilisateur qu'on ne peut pas ajouter de favoris hors ligne
+                }
             } else {
-                exerciseCloudFirestoreRepository.deleteExerciseFromFavorite(
-                    userId = userId,
-                    exerciseId = exercise.id
-                )
+                kotlin.runCatching {
+                    exerciseCloudFirestoreRepository.deleteExerciseFromFavorite(
+                        userId = userId,
+                        exerciseId = exercise.id
+                    )
+                }.onSuccess {
+                    roomExercisesRepository.updateIsFavorite(
+                        exerciseId = exercise.id,
+                        isFavorite = false
+                    )
+                }.onFailure {
+                    //TODO ajouter un toast d'erreur pour dire a l'utilisateur qu'on ne peut pas ajouter de favoris hors ligne
+                }
             }
         }
     }

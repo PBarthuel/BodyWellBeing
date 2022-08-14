@@ -23,6 +23,7 @@ sealed class SettingsScreenState {
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     private val preferenceDataStoreRepository: PreferenceDataStoreRepository,
+    private val roomExercisesRepository: RoomExercisesRepository,
     private val userRepository: UserRepository,
     private val customExercisesRepository: RoomCustomExercisesRepository,
     private val dispatcher: CoroutineToolsProvider
@@ -35,6 +36,7 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch(dispatcher.io) {
             kotlin.runCatching {
                 _screenState.value = SettingsScreenState.Loading
+                roomExercisesRepository.resetAllIsFavoriteAtLogout()
                 customExercisesRepository.clearExercisesDb()
                 preferenceDataStoreRepository.clearDataStore()
                 userRepository.clearUserDb()

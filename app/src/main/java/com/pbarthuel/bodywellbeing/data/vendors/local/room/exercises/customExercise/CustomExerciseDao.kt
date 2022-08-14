@@ -1,5 +1,6 @@
 package com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises.customExercise
 
+import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -9,6 +10,7 @@ import com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises.exercise.en
 import com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises.exercise.entities.ExerciseEntity
 import kotlinx.coroutines.flow.Flow
 
+@Dao
 interface CustomExerciseDao {
 
     @Query("SELECT * FROM CustomExerciseEntity")

@@ -7,8 +7,8 @@ interface ExerciseCloudFirestoreRepository {
     fun getAllExercises(): Flow<List<Exercise>>
     fun createExercise(exercise: Exercise)
     fun addExerciseToFavorite(userId: String, exercise: Exercise)
-    fun getFavoriteExercises(userId: String): List<Exercise>
+    fun getAllFavoriteExercises(userId: String): Flow<List<Exercise>>
     fun deleteExerciseFromFavorite(userId: String, exerciseId: String)
     fun createCustomExercise(userId: String, exercise: Exercise)
-    fun getCustomExercises(userId: String): List<Exercise>
+    fun getAllCustomExercises(userId: String): Flow<List<Exercise>>
 }
