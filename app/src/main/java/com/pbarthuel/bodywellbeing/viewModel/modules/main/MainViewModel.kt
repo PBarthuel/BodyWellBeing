@@ -2,6 +2,7 @@ package com.pbarthuel.bodywellbeing.viewModel.modules.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.pbarthuel.bodywellbeing.app.models.Exercise
 import com.pbarthuel.bodywellbeing.domain.repositories.local.dataStore.PreferenceDataStoreRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.RoomCustomExercisesRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.RoomExercisesRepository
@@ -53,8 +54,7 @@ class MainViewModel @Inject constructor(
             exerciseCloudFirestoreRepository.getAllExercises().collect { exercises ->
                 if (exercises.isNotEmpty()) {
                     exercises.forEach { exercise ->
-                        // TODO faire des objet special firestore sans is favorite, le mettre a null dans les entity
-                        roomExercisesRepository.createExercise(exercise)
+                         roomExercisesRepository.createExercise(exercise)
                     }
                 }
             }
@@ -77,10 +77,16 @@ class MainViewModel @Inject constructor(
                 .collect { favoriteExercises ->
                     if (favoriteExercises.isNotEmpty()) {
                         favoriteExercises.forEach { exercise ->
-                            roomExercisesRepository.updateIsFavorite(
-                                exerciseId = exercise.id,
-                                isFavorite = true
-                            )
+                            when(exercise) {
+                                is Exercise.Classic -> roomExercisesRepository.updateIsFavorite(
+                                    exerciseId = exercise.id,
+                                    isFavorite = true
+                                )
+                                is Exercise.Custom -> roomCustomExercisesRepository.updateIsFavorite(
+                                    exerciseId = exercise.id,
+                                    isFavorite = true
+                                )
+                            }
                         }
                     }
                 }

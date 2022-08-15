@@ -74,6 +74,6 @@ sealed class Exercise(
             name = name,
             description = description,
             type = type,
-            isCustom = isCustom
+            custom = isCustom
         )
 }

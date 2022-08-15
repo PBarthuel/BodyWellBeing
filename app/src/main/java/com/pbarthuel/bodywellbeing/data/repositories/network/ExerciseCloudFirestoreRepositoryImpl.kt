@@ -36,7 +36,7 @@ class ExerciseCloudFirestoreRepositoryImpl @Inject constructor(
         userExerciseCloudFirestoreDao.getAllFavoriteExercises(userId = userId)
             .mapLatest { wsExercises ->
                 wsExercises.map { wsExercise ->
-                    when(wsExercise.isCustom) {
+                    when(wsExercise.custom) {
                         false -> wsExercise.toClassicDomain()
                         true -> wsExercise.toCustomDomain()
                     }
@@ -59,7 +59,7 @@ class ExerciseCloudFirestoreRepositoryImpl @Inject constructor(
         userExerciseCloudFirestoreDao.getAllCustomExercises(userId = userId)
             .mapLatest { wsExercises ->
                 wsExercises.map { wsExercise ->
-                    when(wsExercise.isCustom) {
+                    when(wsExercise.custom) {
                         false -> wsExercise.toClassicDomain()
                         true -> wsExercise.toCustomDomain()
                     }

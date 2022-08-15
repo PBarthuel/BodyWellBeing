@@ -1,6 +1,7 @@
 package com.pbarthuel.bodywellbeing.data.model
 
 import com.google.firebase.firestore.IgnoreExtraProperties
+import com.google.firebase.firestore.PropertyName
 import kotlinx.serialization.Serializable
 import com.pbarthuel.bodywellbeing.app.models.Exercise
 
@@ -13,7 +14,7 @@ data class WsExercise(
     val name: String = "",
     val description: String = "",
     val type: Int = 1,
-    val isCustom: Boolean = false
+    val custom: Boolean = false
 ) {
     fun toClassicDomain(): Exercise =
         Exercise.Classic(
