@@ -22,6 +22,7 @@ class DataBaseModule {
     @Singleton
     fun provideUserDatabase(@ApplicationContext appContext: Context): UserDb {
         return Room.databaseBuilder(appContext, UserDb::class.java, "User")
+            .fallbackToDestructiveMigration()
             .build()
     }
 

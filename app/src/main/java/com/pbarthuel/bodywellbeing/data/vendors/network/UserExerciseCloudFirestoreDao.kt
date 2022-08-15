@@ -36,14 +36,15 @@ class UserExerciseCloudFirestoreDao @Inject constructor() {
     }
 
     fun getAllFavoriteExercises(userId: String): Flow<List<WsExercise>> = callbackFlow {
-        db.collection("userExercises").document(userId)
+        /*db.collection("userExercises")
+            .document(userId)
             .collection(FAVORITE_COLLECTION)
             .get()
             .addOnSuccessListener { result ->
                 trySend(result.documents.map {
                     it.toObject()!!
                 })
-            }
+            }*/
         awaitClose { close() }
     }
 
@@ -76,7 +77,7 @@ class UserExerciseCloudFirestoreDao @Inject constructor() {
     }
 
     fun getAllCustomExercises(userId: String): Flow<List<WsExercise>> = callbackFlow {
-        db.collection("userExercises")
+        /*db.collection("userExercises")
             .document(userId)
             .collection(CUSTOM_EXERCISE_COLLECTION)
             .get()
@@ -84,7 +85,7 @@ class UserExerciseCloudFirestoreDao @Inject constructor() {
                 trySend(result.documents.map {
                     it.toObject()!!
                 })
-            }
+            }*/
         awaitClose { close() }
     }
 }

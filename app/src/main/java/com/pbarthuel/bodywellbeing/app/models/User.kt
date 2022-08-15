@@ -1,6 +1,7 @@
 package com.pbarthuel.bodywellbeing.app.models
 
 import com.google.firebase.database.IgnoreExtraProperties
+import com.google.firebase.database.PropertyName
 import com.pbarthuel.bodywellbeing.data.vendors.local.room.user.entities.UserEntity
 import kotlinx.serialization.Serializable
 
@@ -14,10 +15,11 @@ data class User(
     val age: Int = 0,
     val height: Int = 0,
     val weight: Double = 0.0,
-    val alreadyCreated: Boolean = true
+    val alreadyCreated: Boolean = true,
+    val admin: Boolean = false
 ) {
-    fun toUserEntity(): UserEntity {
-        return UserEntity(
+    fun toUserEntity(): UserEntity =
+        UserEntity(
             uid = uid,
             email = email,
             firstName = firstName,
@@ -25,7 +27,7 @@ data class User(
             age = age,
             height = height,
             weight = weight,
-            alreadyCreated = alreadyCreated
+            alreadyCreated = alreadyCreated,
+            isAdmin = admin
         )
-    }
 }

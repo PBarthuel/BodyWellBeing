@@ -24,7 +24,9 @@ data class UserEntity(
     @ColumnInfo(name = "weight")
     val weight: Double = 0.0,
     @ColumnInfo(name = "already_created")
-    val alreadyCreated: Boolean = true
+    val alreadyCreated: Boolean = true,
+    @ColumnInfo(name = "is_admin")
+    val isAdmin: Boolean = false
 ) {
     fun toUser(): User =
         User(
@@ -35,6 +37,7 @@ data class UserEntity(
             age = age,
             height = height,
             weight = weight,
-            alreadyCreated = alreadyCreated
+            alreadyCreated = alreadyCreated,
+            admin = isAdmin
         )
 }

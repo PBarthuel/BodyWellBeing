@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.View
 import android.view.animation.AnticipateInterpolator
 import android.view.animation.OvershootInterpolator
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -154,13 +153,8 @@ class LoginActivity : ComponentActivity() {
             LaunchedEffect(key1 = "", block = {
                 lifecycleScope.launch {
                     viewModel.state.collect {
-                        when (val state = it) {
+                        when (it) {
                             is LoginState.Error -> {
-                                Toast.makeText(
-                                    this@LoginActivity,
-                                    state.errorMessage,
-                                    Toast.LENGTH_LONG
-                                ).show()
                                 loginButtonState = false
                             }
                             LoginState.ButtonLoading -> {

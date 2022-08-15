@@ -53,7 +53,8 @@ class LoginViewModel @Inject constructor(
                             task.result.user?.let { fireBaseUser ->
                                 viewModelScope.launch(dispatcher.io) {
                                     realTimeDatabaseRepository.checkIfUserAlreadyExist(
-                                        fireBaseUser.uid, fireBaseUser.email ?: throw Exception("email is null")
+                                        userId = fireBaseUser.uid,
+                                        email = fireBaseUser.email ?: throw Exception("email is null")
                                     )
                                 }
                             }
@@ -102,11 +103,10 @@ class LoginViewModel @Inject constructor(
                 if (account == null) {
                     _state.value = LoginState.Error("Something went wrong (google)")
                 } else {
-                    viewModelScope.launch(dispatcher.io) {
-                        realTimeDatabaseRepository.checkIfUserAlreadyExist(
-                            account.id ?: throw Exception("uid is null"), account.email ?: throw Exception("email is null")
-                        )
-                    }
+                    realTimeDatabaseRepository.checkIfUserAlreadyExist(
+                       userId =  account.id ?: throw Exception("uid is null"),
+                        email = account.email ?: throw Exception("email is null")
+                    )
                 }
             }.onFailure { _state.value = LoginState.Error("Something went wrong (google)") }
         }
