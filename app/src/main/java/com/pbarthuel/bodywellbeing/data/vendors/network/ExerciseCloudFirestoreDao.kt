@@ -5,6 +5,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.pbarthuel.bodywellbeing.app.models.Exercise
+import com.pbarthuel.bodywellbeing.data.model.WsExercise
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.cancel
@@ -17,7 +18,7 @@ class ExerciseCloudFirestoreDao @Inject constructor() {
 
     private val db = Firebase.firestore.collection("exercise")
 
-    fun createExercise(exercise: Exercise) {
+    fun createExercise(exercise: WsExercise) {
         db.document(exercise.id)
             .set(exercise)
             .addOnSuccessListener {
@@ -28,7 +29,7 @@ class ExerciseCloudFirestoreDao @Inject constructor() {
             }
     }
 
-    fun getAllExercises(): Flow<List<Exercise>> = callbackFlow {
+    fun getAllExercises(): Flow<List<WsExercise>> = callbackFlow {
         db.addSnapshotListener { value, error ->
             if (error != null) {
                 Log.d("ExerciseCloudFirestoreDao", "Listen failed ")
@@ -36,7 +37,7 @@ class ExerciseCloudFirestoreDao @Inject constructor() {
 
             if (value != null && !value.isEmpty) {
                 trySend(value.documents.map {
-                    it.toObject<Exercise>()!!
+                    it.toObject<WsExercise>()!!
                 })
             } else {
                 Log.d("ExerciseCloudFirestoreDao", "Fail to retrieving data ")

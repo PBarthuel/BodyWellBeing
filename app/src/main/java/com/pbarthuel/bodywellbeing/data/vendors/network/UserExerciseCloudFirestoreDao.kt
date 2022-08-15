@@ -4,7 +4,7 @@ import android.util.Log
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
-import com.pbarthuel.bodywellbeing.app.models.Exercise
+import com.pbarthuel.bodywellbeing.data.model.WsExercise
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
@@ -21,8 +21,7 @@ class UserExerciseCloudFirestoreDao @Inject constructor() {
 
     private val db = Firebase.firestore
 
-    fun addExerciseToFavorite(userId: String, exercise: Exercise) {
-        exercise.isFavorite = true
+    fun addExerciseToFavorite(userId: String, exercise: WsExercise) {
         db.collection("userExercises")
             .document(userId)
             .collection(FAVORITE_COLLECTION)
@@ -36,7 +35,7 @@ class UserExerciseCloudFirestoreDao @Inject constructor() {
             }
     }
 
-    fun getAllFavoriteExercises(userId: String): Flow<List<Exercise>> = callbackFlow {
+    fun getAllFavoriteExercises(userId: String): Flow<List<WsExercise>> = callbackFlow {
         db.collection("userExercises").document(userId)
             .collection(FAVORITE_COLLECTION)
             .get()
@@ -62,7 +61,7 @@ class UserExerciseCloudFirestoreDao @Inject constructor() {
             }
     }
 
-    fun createCustomExercise(userId: String, exercise: Exercise) {
+    fun createCustomExercise(userId: String, exercise: WsExercise) {
         db.collection("userExercises")
             .document(userId)
             .collection(CUSTOM_EXERCISE_COLLECTION)
@@ -76,14 +75,14 @@ class UserExerciseCloudFirestoreDao @Inject constructor() {
             }
     }
 
-    fun getAllCustomExercises(userId: String): Flow<List<Exercise>> = callbackFlow {
+    fun getAllCustomExercises(userId: String): Flow<List<WsExercise>> = callbackFlow {
         db.collection("userExercises")
             .document(userId)
             .collection(CUSTOM_EXERCISE_COLLECTION)
             .get()
             .addOnSuccessListener { result ->
                 trySend(result.documents.map {
-                    it.toObject<Exercise>()!!
+                    it.toObject()!!
                 })
             }
         awaitClose { close() }

@@ -7,6 +7,7 @@ import com.pbarthuel.bodywellbeing.domain.repositories.network.ExerciseCloudFire
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.mapLatest
 
 @ExperimentalCoroutinesApi
 class ExerciseCloudFirestoreRepositoryImpl @Inject constructor(
@@ -15,23 +16,40 @@ class ExerciseCloudFirestoreRepositoryImpl @Inject constructor(
 ) : ExerciseCloudFirestoreRepository {
 
     override fun getAllExercises(): Flow<List<Exercise>> =
-        exerciseCloudFirestoreDao.getAllExercises()
+        exerciseCloudFirestoreDao.getAllExercises().mapLatest { wsExercises ->
+            wsExercises.map { wsExercise -> wsExercise.toDomain() }
+        }
 
     override fun createExercise(exercise: Exercise) =
-        exerciseCloudFirestoreDao.createExercise(exercise = exercise)
+        exerciseCloudFirestoreDao.createExercise(exercise = exercise.toWs())
 
     override fun addExerciseToFavorite(userId: String, exercise: Exercise) =
-        userExerciseCloudFirestoreDao.addExerciseToFavorite(userId = userId, exercise = exercise)
+        userExerciseCloudFirestoreDao.addExerciseToFavorite(
+            userId = userId,
+            exercise = exercise.toWs()
+        )
 
     override fun getAllFavoriteExercises(userId: String): Flow<List<Exercise>> =
         userExerciseCloudFirestoreDao.getAllFavoriteExercises(userId = userId)
+            .mapLatest { wsExercises ->
+                wsExercises.map { wsExercise -> wsExercise.toDomain() }
+            }
 
     override fun deleteExerciseFromFavorite(userId: String, exerciseId: String) =
-        userExerciseCloudFirestoreDao.deleteExerciseFromFavorite(userId = userId, exerciseId = exerciseId)
+        userExerciseCloudFirestoreDao.deleteExerciseFromFavorite(
+            userId = userId,
+            exerciseId = exerciseId
+        )
 
     override fun createCustomExercise(userId: String, exercise: Exercise) =
-        userExerciseCloudFirestoreDao.createCustomExercise(userId = userId, exercise = exercise)
+        userExerciseCloudFirestoreDao.createCustomExercise(
+            userId = userId,
+            exercise = exercise.toWs()
+        )
 
     override fun getAllCustomExercises(userId: String): Flow<List<Exercise>> =
         userExerciseCloudFirestoreDao.getAllCustomExercises(userId = userId)
+            .mapLatest { wsExercises ->
+                wsExercises.map { wsExercise -> wsExercise.toDomain() }
+            }
 }

@@ -79,7 +79,7 @@ class MainViewModel @Inject constructor(
                         favoriteExercises.forEach { exercise ->
                             roomExercisesRepository.updateIsFavorite(
                                 exerciseId = exercise.id,
-                                isFavorite = exercise.isFavorite
+                                isFavorite = true
                             )
                         }
                     }
