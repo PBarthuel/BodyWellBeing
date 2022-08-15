@@ -27,54 +27,54 @@ class RoomCustomExercisesRepositoryImpl @Inject constructor(
 
     override fun getAllCondenseExercises(): Flow<List<CondenseExercise>> =
         customExerciseDao.getAllCondenseExercises().mapLatest { customExercisesEntity ->
-            customExercisesEntity?.map { it.toCondenseExercise() } ?: listOf()
+            customExercisesEntity?.map { it.toCustomCondenseExercise() } ?: listOf()
         }
 
     override fun getArmExercises(): Flow<List<CondenseExercise>> =
         customExerciseDao.getCondenseExercisesFromType(ExercisesConstants.ARM_EXERCISE_TYPE)
             .mapLatest { condenseExercisesEntity ->
-                condenseExercisesEntity?.map { it.toCondenseExercise() } ?: listOf()
+                condenseExercisesEntity?.map { it.toCustomCondenseExercise() } ?: listOf()
             }
 
     override fun getTricepsExercises(): Flow<List<CondenseExercise>> =
         customExerciseDao.getCondenseExercisesFromType(ExercisesConstants.TRICEPS_EXERCISE_TYPE)
             .mapLatest { condenseExercisesEntity ->
-                condenseExercisesEntity?.map { it.toCondenseExercise() } ?: listOf()
+                condenseExercisesEntity?.map { it.toCustomCondenseExercise() } ?: listOf()
             }
 
     override fun getBackExercises(): Flow<List<CondenseExercise>> =
         customExerciseDao.getCondenseExercisesFromType(ExercisesConstants.BACK_EXERCISE_TYPE)
             .mapLatest { condenseExercisesEntity ->
-                condenseExercisesEntity?.map { it.toCondenseExercise() } ?: listOf()
+                condenseExercisesEntity?.map { it.toCustomCondenseExercise() } ?: listOf()
             }
 
     override fun getShoulderExercises(): Flow<List<CondenseExercise>> =
         customExerciseDao.getCondenseExercisesFromType(ExercisesConstants.SHOULDER_EXERCISE_TYPE)
             .mapLatest { condenseExercisesEntity ->
-                condenseExercisesEntity?.map { it.toCondenseExercise() } ?: listOf()
+                condenseExercisesEntity?.map { it.toCustomCondenseExercise() } ?: listOf()
             }
 
     override fun getChestExercises(): Flow<List<CondenseExercise>> =
         customExerciseDao.getCondenseExercisesFromType(ExercisesConstants.CHEST_EXERCISE_TYPE)
             .mapLatest { condenseExercisesEntity ->
-                condenseExercisesEntity?.map { it.toCondenseExercise() } ?: listOf()
+                condenseExercisesEntity?.map { it.toCustomCondenseExercise() } ?: listOf()
             }
 
     override fun getAbsExercises(): Flow<List<CondenseExercise>> =
         customExerciseDao.getCondenseExercisesFromType(ExercisesConstants.ABS_EXERCISE_TYPE)
             .mapLatest { condenseExercisesEntity ->
-                condenseExercisesEntity?.map { it.toCondenseExercise() } ?: listOf()
+                condenseExercisesEntity?.map { it.toCustomCondenseExercise() } ?: listOf()
             }
 
     override fun getLegExercises(): Flow<List<CondenseExercise>> =
         customExerciseDao.getCondenseExercisesFromType(ExercisesConstants.LEG_EXERCISE_TYPE)
             .mapLatest { condenseExercisesEntity ->
-                condenseExercisesEntity?.map { it.toCondenseExercise() } ?: listOf()
+                condenseExercisesEntity?.map { it.toCustomCondenseExercise() } ?: listOf()
             }
 
     override fun getFavoritesExercises(): Flow<List<CondenseExercise>> =
         customExerciseDao.getCondenseFavoritesExercises().mapLatest { condenseExercises ->
-            condenseExercises?.map { it.toCondenseExercise() } ?: listOf()
+            condenseExercises?.map { it.toCustomCondenseExercise() } ?: listOf()
         }
 
     override suspend fun createExercise(exercise: Exercise, isSync: Boolean) =

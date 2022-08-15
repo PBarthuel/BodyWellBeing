@@ -20,7 +20,7 @@ import com.pbarthuel.bodywellbeing.data.constants.ExercisesConstants
 @Composable
 fun ExercisesCardSection(
     exercises: List<CondenseExercise>,
-    onCardClicked: (String) -> Unit
+    onCardClicked: (CondenseExercise) -> Unit
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Header3(
@@ -31,12 +31,12 @@ fun ExercisesCardSection(
             false -> exercises.forEach { exercise ->
                 ExerciseCard(
                     exercise = exercise,
-                    onCardClicked = { onCardClicked(exercise.id) }
+                    onCardClicked = { onCardClicked(exercise) }
                 )
             }
             true -> {
                 ExerciseCard(
-                    exercise = CondenseExercise(
+                    exercise = CondenseExercise.Classic(
                         id = "O",
                         name = stringResource(id = R.string.empty_exercises_description),
                         isFavorite = false,
@@ -52,7 +52,7 @@ fun ExercisesCardSection(
 @Composable
 fun FavoriteExercisesCardSection(
     exercises: List<CondenseExercise>,
-    onCardClicked: (String) -> Unit,
+    onCardClicked: (CondenseExercise) -> Unit,
     onNoFavoriteExerciseCardClicked: () -> Unit
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
@@ -64,12 +64,12 @@ fun FavoriteExercisesCardSection(
             false -> exercises.forEach { exercise ->
                 ExerciseCard(
                     exercise = exercise,
-                    onCardClicked = { onCardClicked(exercise.id) }
+                    onCardClicked = { onCardClicked(exercise) }
                 )
             }
             true -> {
                 ExerciseCard(
-                    exercise = CondenseExercise(
+                    exercise = CondenseExercise.Classic(
                         id = "O",
                         name = stringResource(id = R.string.empty_favorites_exercises_description),
                         isFavorite = false,
@@ -90,12 +90,12 @@ fun PreviewExercisesCardSection() {
             ExercisesCardSection(exercises = listOf(), onCardClicked = {})
             ExercisesCardSection(
                 exercises = listOf(
-                    CondenseExercise(
+                    CondenseExercise.Classic(
                         id = "arm1",
                         name = "Arm",
                         type = ExercisesConstants.ARM_EXERCISE_TYPE
                     ),
-                    CondenseExercise(
+                    CondenseExercise.Classic(
                         id = "arm1",
                         name = "Arm",
                         type = ExercisesConstants.ARM_EXERCISE_TYPE
@@ -115,12 +115,12 @@ fun PreviewFavoriteExercisesCardSection() {
             FavoriteExercisesCardSection(exercises = listOf(), onCardClicked = {}, onNoFavoriteExerciseCardClicked = {})
             FavoriteExercisesCardSection(
                 exercises = listOf(
-                    CondenseExercise(
+                    CondenseExercise.Classic(
                         id = "arm1",
                         name = "Arm",
                         type = ExercisesConstants.ARM_EXERCISE_TYPE
                     ),
-                    CondenseExercise(
+                    CondenseExercise.Classic(
                         id = "arm1",
                         name = "Arm",
                         type = ExercisesConstants.ARM_EXERCISE_TYPE

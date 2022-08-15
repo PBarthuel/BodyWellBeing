@@ -23,7 +23,7 @@ class CreateExerciseViewModel @Inject constructor(
 
     fun createExercise() {
         exerciseCloudFirestoreRepository.createExercise(
-            Exercise(
+            Exercise.Classic(
                 id = "developpéCouché3",
                 name = "Developpé couché décliné",
                 description = "Developpé couché décliné",
@@ -37,7 +37,7 @@ class CreateExerciseViewModel @Inject constructor(
             kotlin.runCatching {
                 exerciseCloudFirestoreRepository.createCustomExercise(
                     userId = preferenceDataStoreRepository.getUserId() ?: throw Exception("userId shouldn't be null"),
-                    Exercise(
+                    Exercise.Custom(
                         id = UUID.randomUUID().toString(),
                         name = "Developpé couché custom",
                         description = "Developpé couché custom",
@@ -46,7 +46,7 @@ class CreateExerciseViewModel @Inject constructor(
                 )
             }.onSuccess {
                 customExercisesRepository.createExercise(
-                    Exercise(
+                    Exercise.Custom(
                         id = UUID.randomUUID().toString(),
                         name = "Developpé couché custom",
                         description = "Developpé couché custom",
@@ -56,7 +56,7 @@ class CreateExerciseViewModel @Inject constructor(
                 )
             }.onFailure {
                 customExercisesRepository.createExercise(
-                    Exercise(
+                    Exercise.Custom(
                         id = UUID.randomUUID().toString(),
                         name = "Developpé couché custom",
                         description = "Developpé couché custom",

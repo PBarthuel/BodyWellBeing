@@ -17,8 +17,6 @@ class ExercisesViewModel @Inject constructor(
     private val roomCustomExercisesRepository: RoomCustomExercisesRepository
 ): ViewModel() {
 
-
-
     val exercisesGroupByType = combine(
         roomExercisesRepository.getAllCondenseExercises(),
         roomCustomExercisesRepository.getAllCondenseExercises()

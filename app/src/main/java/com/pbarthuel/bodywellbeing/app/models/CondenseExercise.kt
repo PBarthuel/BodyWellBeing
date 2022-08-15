@@ -3,12 +3,35 @@ package com.pbarthuel.bodywellbeing.app.models
 import com.pbarthuel.bodywellbeing.R
 import com.pbarthuel.bodywellbeing.data.constants.ExercisesConstants
 
-data class CondenseExercise(
-    val id: String,
-    val name: String,
-    val isFavorite: Boolean = false,
-    val type: Int
+sealed class CondenseExercise(
+    open val id: String,
+    open val name: String,
+    open val isFavorite: Boolean = false,
+    open val type: Int
 ) {
+    data class Classic(
+        override val id: String,
+        override val name: String,
+        override val isFavorite: Boolean = false,
+        override val type: Int
+    ) : CondenseExercise(
+        id = id,
+        name = name,
+        isFavorite = isFavorite,
+        type = type
+    )
+
+    data class Custom(
+        override val id: String,
+        override val name: String,
+        override val isFavorite: Boolean= false,
+        override val type: Int
+    ) : CondenseExercise(
+        id = id,
+        name = name,
+        isFavorite = isFavorite,
+        type = type
+    )
 
     fun getTitleFromType() =
         when(type) {

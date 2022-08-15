@@ -17,40 +17,34 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.lifecycleScope
 import com.google.accompanist.insets.ProvideWindowInsets
-import com.pbarthuel.bodywellbeing.app.models.Exercise
 import com.pbarthuel.bodywellbeing.app.ui.component.button.FavoriteButton
 import com.pbarthuel.bodywellbeing.app.ui.component.text.Body1
 import com.pbarthuel.bodywellbeing.app.ui.component.text.Header1
+import com.pbarthuel.bodywellbeing.app.ui.component.text.Header3
 import com.pbarthuel.bodywellbeing.app.ui.theme.Basic1
 import com.pbarthuel.bodywellbeing.app.ui.theme.BodyWellBeingTheme
 import com.pbarthuel.bodywellbeing.app.ui.theme.HorizontalMargin
 import com.pbarthuel.bodywellbeing.app.ui.theme.Layout1
 import com.pbarthuel.bodywellbeing.app.ui.theme.VerticalMargin
-import com.pbarthuel.bodywellbeing.viewModel.modules.exerciseDetail.ExerciseDetailViewModel
+import com.pbarthuel.bodywellbeing.viewModel.modules.exerciseDetail.CustomExerciseDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.Exception
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 
 @ExperimentalCoroutinesApi
 @ExperimentalComposeUiApi
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi
 @AndroidEntryPoint
-class ExerciseDetailActivity : ComponentActivity() {
+class CustomExerciseDetailActivity : ComponentActivity() {
 
-    private val viewModel by viewModels<ExerciseDetailViewModel>()
+    private val viewModel by viewModels<CustomExerciseDetailViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,7 +67,7 @@ class ExerciseDetailActivity : ComponentActivity() {
                                     navigationIcon = {
                                         IconButton(
                                             onClick = { finish() }
-                                        ) { Icon(Icons.Filled.ArrowBack, contentDescription = "Settings") }
+                                        ) { Icon(Icons.Filled.ArrowBack, contentDescription = "back") }
                                     },
                                     actions = { }
                                 )
@@ -87,6 +81,7 @@ class ExerciseDetailActivity : ComponentActivity() {
                                             horizontal = HorizontalMargin
                                         )
                                 ) {
+                                    Header3(text = "Custom")
                                     FavoriteButton(
                                         exercise = exercise,
                                         onFavoriteClicked = {

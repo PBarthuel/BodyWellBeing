@@ -17,8 +17,16 @@ data class CondenseExerciseEntity(
     @ColumnInfo(name = "type")
     val type: Int
 ) {
-    fun toCondenseExercise(): CondenseExercise =
-        CondenseExercise(
+    fun toClassicCondenseExercise(): CondenseExercise =
+        CondenseExercise.Classic(
+            id = id,
+            name = name,
+            isFavorite = isFavorite,
+            type = type
+        )
+
+    fun toCustomCondenseExercise(): CondenseExercise =
+        CondenseExercise.Custom(
             id = id,
             name = name,
             isFavorite = isFavorite,

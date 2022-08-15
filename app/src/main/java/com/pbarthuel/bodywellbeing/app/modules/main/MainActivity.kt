@@ -52,9 +52,11 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.pbarthuel.bodywellbeing.R
+import com.pbarthuel.bodywellbeing.app.models.CondenseExercise
 import com.pbarthuel.bodywellbeing.app.modules.body.BodyScreen
 import com.pbarthuel.bodywellbeing.app.modules.createExercise.CreateExerciseActivity
-import com.pbarthuel.bodywellbeing.app.modules.exerciseDetail.ExerciseDetailActivity
+import com.pbarthuel.bodywellbeing.app.modules.exerciseDetail.ClassicExerciseDetailActivity
+import com.pbarthuel.bodywellbeing.app.modules.exerciseDetail.CustomExerciseDetailActivity
 import com.pbarthuel.bodywellbeing.app.modules.exercises.ExercisesScreen
 import com.pbarthuel.bodywellbeing.app.modules.profile.ProfileScreen
 import com.pbarthuel.bodywellbeing.app.modules.settings.SettingsActivity
@@ -159,11 +161,8 @@ class MainActivity : ComponentActivity() {
                                         viewModel.onScreenChanged(MainScreenState.Exercises)
                                         shouldShowBars = true
                                         ExercisesScreen(
-                                            onExerciseCardClicked = { exerciseId ->
-                                                startActivity(
-                                                    Intent(this@MainActivity, ExerciseDetailActivity::class.java)
-                                                        .putExtra(EXTRA_EXERCISE_ID, exerciseId)
-                                                )
+                                            onExerciseCardClicked = { exercise ->
+                                                onExerciseCardClicked(condenseExercise = exercise)
                                             }
                                         )
                                     }
@@ -172,11 +171,8 @@ class MainActivity : ComponentActivity() {
                                         shouldShowBars = true
                                         ProfileScreen(
                                             viewModel = hiltViewModel(),
-                                            onExerciseCardClicked = { exerciseId ->
-                                                startActivity(
-                                                    Intent(this@MainActivity, ExerciseDetailActivity::class.java)
-                                                        .putExtra(EXTRA_EXERCISE_ID, exerciseId)
-                                                )
+                                            onExerciseCardClicked = { exercise ->
+                                                onExerciseCardClicked(condenseExercise = exercise)
                                             }
                                         )
                                     }
@@ -213,6 +209,19 @@ class MainActivity : ComponentActivity() {
                     }
                 }
             }
+        }
+    }
+
+    private fun onExerciseCardClicked(condenseExercise: CondenseExercise) {
+        when(condenseExercise) {
+            is CondenseExercise.Classic -> startActivity(
+                Intent(this@MainActivity, ClassicExerciseDetailActivity::class.java)
+                    .putExtra(EXTRA_EXERCISE_ID, condenseExercise.id)
+            )
+            is CondenseExercise.Custom -> startActivity(
+                Intent(this@MainActivity, CustomExerciseDetailActivity::class.java)
+                    .putExtra(EXTRA_EXERCISE_ID, condenseExercise.id)
+            )
         }
     }
 

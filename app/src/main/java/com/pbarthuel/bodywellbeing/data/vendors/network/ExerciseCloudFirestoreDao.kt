@@ -4,7 +4,6 @@ import android.util.Log
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
-import com.pbarthuel.bodywellbeing.app.models.Exercise
 import com.pbarthuel.bodywellbeing.data.model.WsExercise
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi

@@ -17,22 +17,30 @@ class ExerciseCloudFirestoreRepositoryImpl @Inject constructor(
 
     override fun getAllExercises(): Flow<List<Exercise>> =
         exerciseCloudFirestoreDao.getAllExercises().mapLatest { wsExercises ->
-            wsExercises.map { wsExercise -> wsExercise.toDomain() }
+            wsExercises.map { wsExercise -> wsExercise.toClassicDomain() }
         }
 
     override fun createExercise(exercise: Exercise) =
-        exerciseCloudFirestoreDao.createExercise(exercise = exercise.toWs())
+        exerciseCloudFirestoreDao.createExercise(exercise = exercise.toWs(isCustom = false))
 
     override fun addExerciseToFavorite(userId: String, exercise: Exercise) =
         userExerciseCloudFirestoreDao.addExerciseToFavorite(
             userId = userId,
-            exercise = exercise.toWs()
+            exercise = when(exercise) {
+                is Exercise.Classic -> exercise.toWs(isCustom = false)
+                is Exercise.Custom -> exercise.toWs(isCustom = true)
+            }
         )
 
     override fun getAllFavoriteExercises(userId: String): Flow<List<Exercise>> =
         userExerciseCloudFirestoreDao.getAllFavoriteExercises(userId = userId)
             .mapLatest { wsExercises ->
-                wsExercises.map { wsExercise -> wsExercise.toDomain() }
+                wsExercises.map { wsExercise ->
+                    when(wsExercise.isCustom) {
+                        false -> wsExercise.toClassicDomain()
+                        true -> wsExercise.toCustomDomain()
+                    }
+                }
             }
 
     override fun deleteExerciseFromFavorite(userId: String, exerciseId: String) =
@@ -44,12 +52,17 @@ class ExerciseCloudFirestoreRepositoryImpl @Inject constructor(
     override fun createCustomExercise(userId: String, exercise: Exercise) =
         userExerciseCloudFirestoreDao.createCustomExercise(
             userId = userId,
-            exercise = exercise.toWs()
+            exercise = exercise.toWs(isCustom = true)
         )
 
     override fun getAllCustomExercises(userId: String): Flow<List<Exercise>> =
         userExerciseCloudFirestoreDao.getAllCustomExercises(userId = userId)
             .mapLatest { wsExercises ->
-                wsExercises.map { wsExercise -> wsExercise.toDomain() }
+                wsExercises.map { wsExercise ->
+                    when(wsExercise.isCustom) {
+                        false -> wsExercise.toClassicDomain()
+                        true -> wsExercise.toCustomDomain()
+                    }
+                }
             }
 }

@@ -23,7 +23,7 @@ data class ExerciseEntity(
     val type: Int
 ) {
     fun toExercise(): Exercise =
-        Exercise(
+        Exercise.Classic(
             id = id,
             image = image,
             name = name,

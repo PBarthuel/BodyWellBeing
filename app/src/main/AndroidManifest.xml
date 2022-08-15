@@ -39,7 +39,13 @@
 
         <!-- ExerciseDetail -->
         <activity
-            android:name=".app.modules.exerciseDetail.ExerciseDetailActivity"
+            android:name=".app.modules.exerciseDetail.ClassicExerciseDetailActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".app.modules.exerciseDetail.CustomExerciseDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"
             tools:ignore="LockedOrientationActivity" />

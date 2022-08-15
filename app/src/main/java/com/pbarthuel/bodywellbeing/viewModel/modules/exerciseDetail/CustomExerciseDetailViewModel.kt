@@ -9,14 +9,13 @@ import androidx.lifecycle.viewModelScope
 import com.pbarthuel.bodywellbeing.app.models.Exercise
 import com.pbarthuel.bodywellbeing.app.modules.main.MainActivity.Companion.EXTRA_EXERCISE_ID
 import com.pbarthuel.bodywellbeing.domain.repositories.local.dataStore.PreferenceDataStoreRepository
-import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.RoomExercisesRepository
+import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.RoomCustomExercisesRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.network.ExerciseCloudFirestoreRepository
 import com.pbarthuel.bodywellbeing.viewModel.utils.CoroutineToolsProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 
@@ -25,8 +24,8 @@ import kotlinx.coroutines.launch
 @ExperimentalAnimationApi
 @ExperimentalComposeUiApi
 @HiltViewModel
-class ExerciseDetailViewModel @Inject constructor(
-    private val roomExercisesRepository: RoomExercisesRepository,
+class CustomExerciseDetailViewModel @Inject constructor(
+    private val roomCustomExercisesRepository: RoomCustomExercisesRepository,
     private val exerciseCloudFirestoreRepository: ExerciseCloudFirestoreRepository,
     private val preferenceDataStoreRepository: PreferenceDataStoreRepository,
     private val dispatcher: CoroutineToolsProvider,
@@ -46,7 +45,7 @@ class ExerciseDetailViewModel @Inject constructor(
     }
 
     val exercise: Flow<Exercise> =
-        roomExercisesRepository.getExerciseFromId(exerciseId = exerciseId)
+        roomCustomExercisesRepository.getExerciseFromId(exerciseId = exerciseId)
             .flowOn(dispatcher.io)
 
     fun modifyFavoriteState(exercise: Exercise, isFavorite: Boolean) {
@@ -58,7 +57,7 @@ class ExerciseDetailViewModel @Inject constructor(
                         exercise = exercise
                     )
                 }.onSuccess {
-                    roomExercisesRepository.updateIsFavorite(
+                    roomCustomExercisesRepository.updateIsFavorite(
                         exerciseId = exercise.id,
                         isFavorite = true
                     )
@@ -72,7 +71,7 @@ class ExerciseDetailViewModel @Inject constructor(
                         exerciseId = exercise.id
                     )
                 }.onSuccess {
-                    roomExercisesRepository.updateIsFavorite(
+                    roomCustomExercisesRepository.updateIsFavorite(
                         exerciseId = exercise.id,
                         isFavorite = false
                     )

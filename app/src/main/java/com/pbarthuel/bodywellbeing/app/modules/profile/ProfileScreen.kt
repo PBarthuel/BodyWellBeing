@@ -10,6 +10,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import com.pbarthuel.bodywellbeing.R
+import com.pbarthuel.bodywellbeing.app.models.CondenseExercise
 import com.pbarthuel.bodywellbeing.app.models.User
 import com.pbarthuel.bodywellbeing.app.ui.component.card.FavoriteExercisesCardSection
 import com.pbarthuel.bodywellbeing.app.ui.component.card.ProfileDetailCard
@@ -19,7 +20,7 @@ import com.pbarthuel.bodywellbeing.viewModel.modules.profile.ProfileScreenViewMo
 @Composable
 fun ProfileScreen(
     viewModel: ProfileScreenViewModel,
-    onExerciseCardClicked: (String) -> Unit
+    onExerciseCardClicked: (CondenseExercise) -> Unit
 ) {
     val user by viewModel.user.collectAsState(initial = User())
     val favoritesExercises by viewModel.favoritesExercises.collectAsState(initial = listOf())
@@ -36,7 +37,7 @@ fun ProfileScreen(
         )
         FavoriteExercisesCardSection(
             exercises = favoritesExercises,
-            onCardClicked = { exerciseId -> onExerciseCardClicked(exerciseId) },
+            onCardClicked = { exercise -> onExerciseCardClicked(exercise) },
             onNoFavoriteExerciseCardClicked = {
                 // TODO redirection vers l'écran des exercices
             }

@@ -25,7 +25,7 @@ data class CustomExerciseEntity(
     val isSync: Boolean = false
 ) {
     fun toExercise(): Exercise =
-        Exercise(
+        Exercise.Custom(
             id = id,
             image = image,
             name = name,

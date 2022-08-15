@@ -12,10 +12,20 @@ data class WsExercise(
     val image: String = "",
     val name: String = "",
     val description: String = "",
-    val type: Int = 1
+    val type: Int = 1,
+    val isCustom: Boolean = false
 ) {
-    fun toDomain(): Exercise =
-        Exercise(
+    fun toClassicDomain(): Exercise =
+        Exercise.Classic(
+            id = id,
+            image = image,
+            name = name,
+            description = description,
+            type = type
+        )
+
+    fun toCustomDomain(): Exercise.Custom =
+        Exercise.Custom(
             id = id,
             image = image,
             name = name,

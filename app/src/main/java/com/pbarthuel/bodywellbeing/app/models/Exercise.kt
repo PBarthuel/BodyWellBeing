@@ -6,14 +6,46 @@ import com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises.exercise.en
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Exercise(
-    val id: String,
-    val image: String = "",
-    val name: String,
-    val description: String,
-    var isFavorite: Boolean = false,
-    val type: Int
+sealed class Exercise(
+    open val id: String,
+    open val image: String = "",
+    open val name: String,
+    open val description: String,
+    open var isFavorite: Boolean = false,
+    open val type: Int
 ) {
+    data class Classic(
+        override val id: String,
+        override val image: String = "",
+        override val name: String,
+        override val description: String,
+        override var isFavorite: Boolean = false,
+        override val type: Int
+    ) : Exercise(
+        id = id,
+        image = image,
+        name = name,
+        description = description,
+        isFavorite = isFavorite,
+        type = type
+    )
+
+    data class Custom(
+        override val id: String,
+        override val image: String = "",
+        override val name: String,
+        override val description: String,
+        override var isFavorite: Boolean = false,
+        override val type: Int
+    ) : Exercise(
+        id = id,
+        image = image,
+        name = name,
+        description = description,
+        isFavorite = isFavorite,
+        type = type
+    )
+
     fun toExerciseEntity(): ExerciseEntity =
         ExerciseEntity(
             id = id,
@@ -35,12 +67,13 @@ data class Exercise(
             isSync = isSync
         )
 
-    fun toWs(): WsExercise =
+    fun toWs(isCustom: Boolean): WsExercise =
         WsExercise(
             id = id,
             image = image,
             name = name,
             description = description,
-            type = type
+            type = type,
+            isCustom = isCustom
         )
 }

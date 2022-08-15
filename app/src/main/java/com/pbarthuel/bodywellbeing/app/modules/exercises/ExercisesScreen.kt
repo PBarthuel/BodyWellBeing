@@ -7,13 +7,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.pbarthuel.bodywellbeing.app.models.CondenseExercise
 import com.pbarthuel.bodywellbeing.app.ui.component.card.ExercisesCardSection
 import com.pbarthuel.bodywellbeing.viewModel.modules.exercises.ExercisesViewModel
 
 @Composable
 fun ExercisesScreen(
     viewModel: ExercisesViewModel = hiltViewModel(),
-    onExerciseCardClicked: (String) -> Unit
+    onExerciseCardClicked: (CondenseExercise) -> Unit
 ) {
     val exercisesGroupByType by viewModel.exercisesGroupByType.collectAsState(mapOf())
     LazyColumn(modifier = Modifier.fillMaxSize()) {
@@ -21,7 +22,9 @@ fun ExercisesScreen(
             item {
                 ExercisesCardSection(
                     exercises = exercises,
-                    onCardClicked = { exerciseId -> onExerciseCardClicked(exerciseId) }
+                    onCardClicked = { exercise ->
+                        onExerciseCardClicked(exercise)
+                    }
                 )
             }
         }
