@@ -5,8 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.pbarthuel.bodywellbeing.domain.repositories.local.dataStore.PreferenceDataStoreRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.RoomCustomExercisesRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.RoomExercisesRepository
-import com.pbarthuel.bodywellbeing.domain.repositories.local.room.user.UserRepository
-import com.pbarthuel.bodywellbeing.viewModel.modules.main.MainScreenState
+import com.pbarthuel.bodywellbeing.domain.repositories.local.room.user.RoomUserRepository
 import com.pbarthuel.bodywellbeing.viewModel.utils.CoroutineToolsProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -24,7 +23,7 @@ sealed class SettingsScreenState {
 class SettingsViewModel @Inject constructor(
     private val preferenceDataStoreRepository: PreferenceDataStoreRepository,
     private val roomExercisesRepository: RoomExercisesRepository,
-    private val userRepository: UserRepository,
+    private val roomUserRepository: RoomUserRepository,
     private val customExercisesRepository: RoomCustomExercisesRepository,
     private val dispatcher: CoroutineToolsProvider
 ) : ViewModel() {
@@ -39,7 +38,7 @@ class SettingsViewModel @Inject constructor(
                 roomExercisesRepository.resetAllIsFavoriteAtLogout()
                 customExercisesRepository.clearExercisesDb()
                 preferenceDataStoreRepository.clearDataStore()
-                userRepository.clearUserDb()
+                roomUserRepository.clearUserDb()
             }.onSuccess {
                 _screenState.value = SettingsScreenState.Logout
             }

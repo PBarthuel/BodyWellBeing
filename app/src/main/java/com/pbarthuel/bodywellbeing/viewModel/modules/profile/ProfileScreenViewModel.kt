@@ -5,7 +5,7 @@ import com.pbarthuel.bodywellbeing.app.models.CondenseExercise
 import com.pbarthuel.bodywellbeing.app.models.User
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.RoomCustomExercisesRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.RoomExercisesRepository
-import com.pbarthuel.bodywellbeing.domain.repositories.local.room.user.UserRepository
+import com.pbarthuel.bodywellbeing.domain.repositories.local.room.user.RoomUserRepository
 import com.pbarthuel.bodywellbeing.viewModel.utils.CoroutineToolsProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -16,12 +16,12 @@ import kotlinx.coroutines.flow.flowOn
 @HiltViewModel
 class ProfileScreenViewModel @Inject constructor(
     private val dispatcher: CoroutineToolsProvider,
-    private val userRepository: UserRepository,
+    private val roomUserRepository: RoomUserRepository,
     private val roomExercisesRepository: RoomExercisesRepository,
     private val roomCustomExercisesRepository: RoomCustomExercisesRepository
 ) : ViewModel() {
 
-    val user: Flow<User> = userRepository.getUser().flowOn(dispatcher.io)
+    val user: Flow<User> = roomUserRepository.getUser().flowOn(dispatcher.io)
 
     val favoritesExercises: Flow<List<CondenseExercise>> = combine(
         roomExercisesRepository.getFavoritesExercises(),

@@ -1,7 +1,7 @@
 package com.pbarthuel.bodywellbeing.app.di.repositories
 
-import com.pbarthuel.bodywellbeing.data.repositories.local.room.user.UserRepositoryImpl
-import com.pbarthuel.bodywellbeing.domain.repositories.local.room.user.UserRepository
+import com.pbarthuel.bodywellbeing.data.repositories.local.room.user.RoomUserRepositoryImpl
+import com.pbarthuel.bodywellbeing.domain.repositories.local.room.user.RoomUserRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -12,5 +12,5 @@ import dagger.hilt.android.components.ViewModelComponent
 abstract class UserRepositoryModule {
 
     @Binds
-    abstract fun bindUserRepository(userRepository: UserRepositoryImpl): UserRepository
+    abstract fun bindRoomUserRepository(roomUserRepository: RoomUserRepositoryImpl): RoomUserRepository
 }

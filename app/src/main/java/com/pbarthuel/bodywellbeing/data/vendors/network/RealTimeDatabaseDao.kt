@@ -4,7 +4,7 @@ import android.util.Log
 import com.google.firebase.database.FirebaseDatabase
 import com.pbarthuel.bodywellbeing.app.models.User
 import com.pbarthuel.bodywellbeing.domain.repositories.local.dataStore.PreferenceDataStoreRepository
-import com.pbarthuel.bodywellbeing.domain.repositories.local.room.user.UserRepository
+import com.pbarthuel.bodywellbeing.domain.repositories.local.room.user.RoomUserRepository
 import com.pbarthuel.bodywellbeing.viewModel.utils.CoroutineToolsProvider
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -14,7 +14,7 @@ import kotlinx.coroutines.runBlocking
 class RealTimeDatabaseDao @Inject constructor(
     private val dispatcher: CoroutineToolsProvider,
     private val preferenceDataStoreRepository: PreferenceDataStoreRepository,
-    private val userRepository: UserRepository
+    private val roomUserRepository: RoomUserRepository
 ) {
 
     private val db = FirebaseDatabase
@@ -37,7 +37,7 @@ class RealTimeDatabaseDao @Inject constructor(
                                         userId = userId,
                                         isAlreadyCreated = userNotNull.alreadyCreated
                                     )
-                                    userRepository.createUser(userNotNull)
+                                    roomUserRepository.createUser(userNotNull)
                                 }
                             }
                         }.onFailure { throw Exception("User not deserialized") }

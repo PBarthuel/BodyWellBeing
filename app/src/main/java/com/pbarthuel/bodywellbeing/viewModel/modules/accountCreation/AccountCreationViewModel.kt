@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pbarthuel.bodywellbeing.app.models.User
 import com.pbarthuel.bodywellbeing.domain.repositories.local.dataStore.PreferenceDataStoreRepository
-import com.pbarthuel.bodywellbeing.domain.repositories.local.room.user.UserRepository
+import com.pbarthuel.bodywellbeing.domain.repositories.local.room.user.RoomUserRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.network.RealTimeDatabaseRepository
 import com.pbarthuel.bodywellbeing.viewModel.utils.CoroutineToolsProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +19,7 @@ class AccountCreationViewModel @Inject constructor(
     private val dispatcher: CoroutineToolsProvider,
     private val realTimeDatabaseRepository: RealTimeDatabaseRepository,
     private val preferenceDataStoreRepository: PreferenceDataStoreRepository,
-    private val userRepository: UserRepository
+    private val roomUserRepository: RoomUserRepository
 ) : ViewModel() {
 
     var firstName: MutableState<String> = mutableStateOf("")
@@ -31,13 +31,13 @@ class AccountCreationViewModel @Inject constructor(
     fun logOut() {
         viewModelScope.launch(dispatcher.io) {
             preferenceDataStoreRepository.clearDataStore()
-            userRepository.clearUserDb()
+            roomUserRepository.clearUserDb()
         }
     }
 
     fun createUser() {
         viewModelScope.launch(dispatcher.io) {
-            userRepository.getUser().first().let {
+            roomUserRepository.getUser().first().let {
                 realTimeDatabaseRepository.updateUserFromAccountCreation(
                     User(
                         uid = it.uid,
@@ -50,7 +50,7 @@ class AccountCreationViewModel @Inject constructor(
                         alreadyCreated = true
                     )
                 )
-                userRepository.updateUser(
+                roomUserRepository.updateUser(
                     User(
                         uid = it.uid,
                         email = it.email,
