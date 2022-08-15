@@ -1,7 +1,6 @@
 package com.pbarthuel.bodywellbeing.data.constants
 
 object ExercisesConstants {
-
     const val ARM_EXERCISE_TYPE: Int = 1
     const val TRICEPS_EXERCISE_TYPE: Int = 2
     const val BACK_EXERCISE_TYPE: Int = 3

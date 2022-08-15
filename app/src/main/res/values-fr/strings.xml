@@ -50,4 +50,7 @@
     <!-- Exercise Detail -->
     <string name="exercise_detail">Detail de l\'exercice</string>
 
+    <!-- Exercise Creation -->
+    <string name="exercise_type">Type d\'exercise</string>
+
 </resources>
