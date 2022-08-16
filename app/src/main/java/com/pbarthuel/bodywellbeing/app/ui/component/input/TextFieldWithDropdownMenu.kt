@@ -31,6 +31,7 @@ import com.pbarthuel.bodywellbeing.app.ui.theme.LocalSecondaryTextColor
 
 @Composable
 fun TextFieldWithDropdownMenu(
+    modifier: Modifier = Modifier,
     items: List<DropdownMenuItem>,
     onItemSelected: (Int) -> Unit
 ) {
@@ -40,7 +41,7 @@ fun TextFieldWithDropdownMenu(
     var text by remember {
         mutableStateOf(context.getString(R.string.exercise_type))
     }
-    Column(modifier = Modifier.wrapContentSize()) {
+    Column(modifier = modifier.wrapContentSize()) {
         Box(modifier = Modifier
             .fillMaxWidth()
             .clickable {

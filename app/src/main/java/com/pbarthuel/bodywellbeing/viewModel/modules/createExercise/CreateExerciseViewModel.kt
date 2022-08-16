@@ -1,19 +1,19 @@
 package com.pbarthuel.bodywellbeing.viewModel.modules.createExercise
 
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pbarthuel.bodywellbeing.app.models.Exercise
-import com.pbarthuel.bodywellbeing.data.constants.ExercisesConstants
 import com.pbarthuel.bodywellbeing.domain.repositories.local.dataStore.PreferenceDataStoreRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.RoomCustomExercisesRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.user.RoomUserRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.network.ExerciseCloudFirestoreRepository
 import com.pbarthuel.bodywellbeing.viewModel.utils.CoroutineToolsProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
-import java.util.UUID
+import java.util.*
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 
@@ -26,48 +26,62 @@ class CreateExerciseViewModel @Inject constructor(
     private val dispatcher: CoroutineToolsProvider
 ) : ViewModel() {
 
+    var name: MutableState<String> = mutableStateOf("")
+    var exerciseType: MutableState<Int?> = mutableStateOf(null)
+    var imageUrl: MutableState<String> = mutableStateOf("")
+    var description: MutableState<String> = mutableStateOf("")
+
     fun isUserAdmin(): Flow<Boolean?> = roomUserRepository.isUserAdmin().flowOn(dispatcher.io)
 
-    fun createExercise() {
-        exerciseCloudFirestoreRepository.createExercise(
-            Exercise.Classic(
-                id = "developpéCouché3",
-                name = "Developpé couché décliné",
-                description = "Developpé couché décliné",
-                type = ExercisesConstants.CHEST_EXERCISE_TYPE
+    fun createExercise(isCreateClassicExercise: Boolean) {
+        if (isCreateClassicExercise) {
+            exerciseCloudFirestoreRepository.createExercise(
+                Exercise.Classic(
+                    id = UUID.randomUUID().toString(),
+                    name = name.value,
+                    type = exerciseType.value ?: throw Exception(""),
+                    image = imageUrl.value,
+                    description = description.value
+                )
             )
-        )
+        } else {
+            createCustomExercise()
+        }
     }
 
-    fun createCustomExercise() {
+    private fun createCustomExercise() {
         viewModelScope.launch(dispatcher.io) {
+            val exerciseId = UUID.randomUUID().toString()
             kotlin.runCatching {
                 exerciseCloudFirestoreRepository.createCustomExercise(
                     userId = preferenceDataStoreRepository.getUserId() ?: throw Exception("userId shouldn't be null"),
                     Exercise.Custom(
-                        id = UUID.randomUUID().toString(),
-                        name = "Developpé couché custom",
-                        description = "Developpé couché custom",
-                        type = ExercisesConstants.CHEST_EXERCISE_TYPE
+                        id = exerciseId,
+                        name = name.value,
+                        type = exerciseType.value ?: throw Exception(""),
+                        image = imageUrl.value,
+                        description = description.value
                     )
                 )
             }.onSuccess {
                 customExercisesRepository.createExercise(
                     Exercise.Custom(
-                        id = UUID.randomUUID().toString(),
-                        name = "Developpé couché custom",
-                        description = "Developpé couché custom",
-                        type = ExercisesConstants.CHEST_EXERCISE_TYPE
+                        id = exerciseId,
+                        name = name.value,
+                        type = exerciseType.value ?: throw Exception(""),
+                        image = imageUrl.value,
+                        description = description.value
                     ),
                     isSync = true
                 )
             }.onFailure {
                 customExercisesRepository.createExercise(
                     Exercise.Custom(
-                        id = UUID.randomUUID().toString(),
-                        name = "Developpé couché custom",
-                        description = "Developpé couché custom",
-                        type = ExercisesConstants.CHEST_EXERCISE_TYPE
+                        id = exerciseId,
+                        name = name.value,
+                        type = exerciseType.value ?: throw Exception(""),
+                        image = imageUrl.value,
+                        description = description.value
                     ),
                     isSync = false
                 )

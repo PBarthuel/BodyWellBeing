@@ -58,7 +58,7 @@ fun LoginScreen(
                         .fillMaxWidth()
                         .padding(start = HorizontalMargin, end = HorizontalMargin, bottom = Layout1),
                     label = stringResource(id = R.string.mail),
-                    type = InputFieldType.Text,
+                    type = InputFieldType.Email,
                     text = emailText,
                     placeHolder = stringResource(id = R.string.mail_placeholder),
                     onValueChange = {

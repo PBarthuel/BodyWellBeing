@@ -72,6 +72,7 @@ class MainViewModel @Inject constructor(
                     }
                 }
         }
+        // TODO a la première connection la synchro bu a voir pourquoi
         viewModelScope.launch(dispatcher.io) {
             exerciseCloudFirestoreRepository.getAllFavoriteExercises(userId = userId)
                 .collect { favoriteExercises ->
