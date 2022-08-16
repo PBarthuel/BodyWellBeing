@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.animation.AnticipateInterpolator
 import android.view.animation.OvershootInterpolator
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -155,6 +156,11 @@ class LoginActivity : ComponentActivity() {
                     viewModel.state.collect {
                         when (it) {
                             is LoginState.Error -> {
+                                Toast.makeText(
+                                    this@LoginActivity,
+                                    it.errorMessage,
+                                    Toast.LENGTH_SHORT
+                                ).show()
                                 loginButtonState = false
                             }
                             LoginState.ButtonLoading -> {

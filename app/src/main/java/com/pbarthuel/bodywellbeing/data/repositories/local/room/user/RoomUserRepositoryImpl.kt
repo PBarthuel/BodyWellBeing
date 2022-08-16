@@ -6,13 +6,20 @@ import com.pbarthuel.bodywellbeing.domain.repositories.local.room.user.RoomUserR
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.single
 
 class RoomUserRepositoryImpl @Inject constructor(
     private val userDao: UserDao
 ): RoomUserRepository {
 
     override fun getUser(): Flow<User> =
-        userDao.getUser().map { it?.toUser() ?: User() }
+        userDao.getUser().map { it.toUser() }
+
+    override suspend fun getUserSuspend(): User =
+        userDao.getUserSuspend().toUser()
+
+    override fun isUserAdmin(): Flow<Boolean> =
+        userDao.getUser().map { it.isAdmin }
 
     override suspend fun createUser(user: User) =
         userDao.createUser(user.toUserEntity())

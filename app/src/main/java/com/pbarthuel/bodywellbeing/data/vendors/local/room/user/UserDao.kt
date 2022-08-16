@@ -11,7 +11,10 @@ import kotlinx.coroutines.flow.Flow
 interface UserDao {
 
     @Query("SELECT * FROM UserEntity")
-    fun getUser(): Flow<UserEntity?>
+    fun getUser(): Flow<UserEntity>
+
+    @Query("SELECT * FROM UserEntity")
+    suspend fun getUserSuspend(): UserEntity
 
     @Insert
     suspend fun createUser(userEntity: UserEntity)

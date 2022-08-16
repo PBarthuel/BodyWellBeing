@@ -6,11 +6,15 @@ import com.pbarthuel.bodywellbeing.app.models.Exercise
 import com.pbarthuel.bodywellbeing.data.constants.ExercisesConstants
 import com.pbarthuel.bodywellbeing.domain.repositories.local.dataStore.PreferenceDataStoreRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.RoomCustomExercisesRepository
+import com.pbarthuel.bodywellbeing.domain.repositories.local.room.user.RoomUserRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.network.ExerciseCloudFirestoreRepository
 import com.pbarthuel.bodywellbeing.viewModel.utils.CoroutineToolsProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.util.UUID
 import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 
 @HiltViewModel
@@ -18,8 +22,11 @@ class CreateExerciseViewModel @Inject constructor(
     private val exerciseCloudFirestoreRepository: ExerciseCloudFirestoreRepository,
     private val customExercisesRepository: RoomCustomExercisesRepository,
     private val preferenceDataStoreRepository: PreferenceDataStoreRepository,
+    private val roomUserRepository: RoomUserRepository,
     private val dispatcher: CoroutineToolsProvider
 ) : ViewModel() {
+
+    fun isUserAdmin(): Flow<Boolean?> = roomUserRepository.isUserAdmin().flowOn(dispatcher.io)
 
     fun createExercise() {
         exerciseCloudFirestoreRepository.createExercise(

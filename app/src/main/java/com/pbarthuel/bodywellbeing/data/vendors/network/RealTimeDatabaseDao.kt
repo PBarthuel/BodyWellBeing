@@ -47,8 +47,13 @@ class RealTimeDatabaseDao @Inject constructor(
                             /**
                              * User doesn't already exist so you create a user on RealTimeDatabase
                              * And you save his UserId and his creation state in prefDatastore
+                             * And you save the userId and Email in local Room UserDb
                              */
                             db.child(userId).setValue(User(uid = userId, email = email, alreadyCreated = false))
+                            roomUserRepository.createUser(user = User(
+                                uid = userId,
+                                email = email
+                            ))
                             preferenceDataStoreRepository.saveToDataStore(userId = userId, isAlreadyCreated = false)
                         }
                     }.onFailure { throw Exception("createUserForFirstTime Fail") }

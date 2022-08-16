@@ -17,6 +17,7 @@ import com.pbarthuel.bodywellbeing.R
 import com.pbarthuel.bodywellbeing.app.ui.component.button.ButtonFill
 import com.pbarthuel.bodywellbeing.app.ui.component.input.DropdownMenuItem
 import com.pbarthuel.bodywellbeing.app.ui.component.input.TextFieldWithDropdownMenu
+import com.pbarthuel.bodywellbeing.app.ui.component.text.Header3
 import com.pbarthuel.bodywellbeing.app.ui.theme.BodyWellBeingTheme
 import com.pbarthuel.bodywellbeing.app.ui.theme.HorizontalMargin
 import com.pbarthuel.bodywellbeing.data.constants.ExercisesConstants
@@ -34,6 +35,7 @@ class CreateExerciseActivity : ComponentActivity() {
         setContent {
             BodyWellBeingTheme {
                 ProvideWindowInsets {
+                    val isUserAdmin = viewModel.isUserAdmin().collectAsState(initial = false)
                     Scaffold(modifier = Modifier.fillMaxSize()) {
                         val items = listOf(
                             DropdownMenuItem(ExercisesConstants.ARM_EXERCISE_TYPE, stringResource(id = R.string.arm_exercises)),
@@ -44,7 +46,14 @@ class CreateExerciseActivity : ComponentActivity() {
                             DropdownMenuItem(ExercisesConstants.ABS_EXERCISE_TYPE, stringResource(id = R.string.abs_exercises)),
                             DropdownMenuItem(ExercisesConstants.LEG_EXERCISE_TYPE, stringResource(id = R.string.leg_exercises)),
                         )
-                        LazyColumn(modifier = Modifier.fillMaxSize().padding(HorizontalMargin)) {
+                        LazyColumn(modifier = Modifier
+                            .fillMaxSize()
+                            .padding(HorizontalMargin)) {
+                            if (isUserAdmin.value == true) {
+                                item {
+                                    Header3(text = "admin")
+                                }
+                            }
                             item {
                                 TextFieldWithDropdownMenu(items = items) { exerciseType ->
 
