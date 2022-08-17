@@ -28,6 +28,8 @@ internal object AliasToken {
     val statusUndefined = ThemedColor(light = GlobalToken.grey400, dark = GlobalToken.grey800)
     val dividerPrimary = ThemedColor(light = GlobalToken.grey200, dark = GlobalToken.grey800)
     val theme = ThemedColor(light = GlobalToken.sky400, dark = GlobalToken.sky400)
+    val gradient1 = ThemedColor(light =  GlobalToken.red600, dark = GlobalToken.red500)
+    val gradient2 = ThemedColor(light = GlobalToken.yellow400, dark = GlobalToken.yellow300)
 }
 
 private object GlobalToken {

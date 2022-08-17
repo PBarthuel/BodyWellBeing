@@ -30,7 +30,6 @@ import com.pbarthuel.bodywellbeing.app.ui.component.input.TextFieldWithDropdownM
 import com.pbarthuel.bodywellbeing.app.ui.component.text.Body1
 import com.pbarthuel.bodywellbeing.app.ui.theme.BodyWellBeingTheme
 import com.pbarthuel.bodywellbeing.app.ui.theme.HorizontalMargin
-import com.pbarthuel.bodywellbeing.app.ui.theme.Layout1
 import com.pbarthuel.bodywellbeing.app.ui.theme.VerticalMargin
 import com.pbarthuel.bodywellbeing.data.constants.ExercisesConstants
 import com.pbarthuel.bodywellbeing.viewModel.modules.createExercise.CreateExerciseViewModel
