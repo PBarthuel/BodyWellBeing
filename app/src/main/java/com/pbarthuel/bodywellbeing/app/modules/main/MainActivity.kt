@@ -1,10 +1,15 @@
 package com.pbarthuel.bodywellbeing.app.modules.main
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
@@ -12,7 +17,6 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -31,6 +35,7 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -40,9 +45,9 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -64,6 +69,7 @@ import com.pbarthuel.bodywellbeing.app.modules.settings.SettingsActivity
 import com.pbarthuel.bodywellbeing.app.ui.component.text.Header2
 import com.pbarthuel.bodywellbeing.app.ui.theme.Basic1
 import com.pbarthuel.bodywellbeing.app.ui.theme.BodyWellBeingTheme
+import com.pbarthuel.bodywellbeing.app.ui.theme.openFromRight
 import com.pbarthuel.bodywellbeing.viewModel.modules.main.MainScreenState
 import com.pbarthuel.bodywellbeing.viewModel.modules.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -82,17 +88,22 @@ class MainActivity : ComponentActivity() {
 
     private val viewModel by viewModels<MainViewModel>()
 
+    private val activityTrackPermissionState: MutableState<Boolean> = mutableStateOf(false)
+    private val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean -> activityTrackPermissionState.value = isGranted }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         viewModel.syncExercise()
+        checkActivityTackPermissionStatus()
 
         setContent {
             BodyWellBeingTheme {
                 ProvideWindowInsets {
-                    BackHandler {
-
-                    }
+                    BackHandler { }
                     val navController = rememberAnimatedNavController()
                     val bottomNavigationItems = listOf(
                         Destinations.MainBottomBarNavigation.Home,
@@ -119,13 +130,20 @@ class MainActivity : ComponentActivity() {
                                     actions = {
                                         when (screenState.value) {
                                             MainScreenState.Profile -> {
-                                                IconButton(
-                                                    onClick = { onSettingsClicked() }
-                                                ) { Icon(Icons.Filled.Settings, contentDescription = "Settings") }
-                                            } MainScreenState.Exercises -> {
-                                                IconButton(
-                                                    onClick = { onCreateExerciseClicked() }
-                                                ) { Icon(Icons.Filled.AddCircle, contentDescription = "Create Exercise") }
+                                                IconButton(onClick = { onSettingsClicked() }) {
+                                                    Icon(
+                                                        Icons.Filled.Settings,
+                                                        contentDescription = "Settings"
+                                                    )
+                                                }
+                                            }
+                                            MainScreenState.Exercises -> {
+                                                IconButton(onClick = { onCreateExerciseClicked() }) {
+                                                    Icon(
+                                                        Icons.Filled.AddCircle,
+                                                        contentDescription = "Create Exercise"
+                                                    )
+                                                }
                                             }
                                             else -> {}
                                         }
@@ -143,13 +161,18 @@ class MainActivity : ComponentActivity() {
                                 AnimatedNavHost(
                                     navController,
                                     startDestination = Destinations.MainBottomBarNavigation.Home.root,
-                                    enterTransition = { fadeIn(animationSpec = tween(700)) },
-                                    exitTransition = { fadeOut(animationSpec = tween(700)) }
+                                    enterTransition = { openFromRight() },
+                                    exitTransition = { fadeOut(animationSpec = tween(300)) },
+                                    popEnterTransition = { openFromRight() },
+                                    popExitTransition = { fadeOut(animationSpec = tween(300)) }
                                 ) {
                                     composable(Destinations.MainBottomBarNavigation.Home.root) {
                                         viewModel.onScreenChanged(MainScreenState.Home)
                                         shouldShowBars = true
-                                        HomeScreen()
+                                        HomeScreen(
+                                            activityTrackPermissionState = activityTrackPermissionState,
+                                            onStepGaugeClick = { onStepGaugeClicked() }
+                                        )
                                     }
                                     composable(Destinations.MainBottomBarNavigation.Body.root) {
                                         viewModel.onScreenChanged(MainScreenState.Body)
@@ -211,8 +234,21 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        checkActivityTackPermissionStatus()
+
+
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        checkActivityTackPermissionStatus()
+    }
+
     private fun onExerciseCardClicked(condenseExercise: CondenseExercise) {
-        when(condenseExercise) {
+        when (condenseExercise) {
             is CondenseExercise.Classic -> startActivity(
                 Intent(this@MainActivity, ClassicExerciseDetailActivity::class.java)
                     .putExtra(EXTRA_EXERCISE_ID, condenseExercise.id)
@@ -224,16 +260,55 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun onSettingsClicked() { startActivity(Intent(this@MainActivity, SettingsActivity::class.java)) }
+    private fun onSettingsClicked() {
+        startActivity(Intent(this@MainActivity, SettingsActivity::class.java))
+    }
 
-    private fun onCreateExerciseClicked() { startActivity(Intent(this@MainActivity, CreateExerciseActivity::class.java)) }
+    private fun onCreateExerciseClicked() {
+        startActivity(Intent(this@MainActivity, CreateExerciseActivity::class.java))
+    }
+
+    private fun checkActivityTackPermissionStatus() {
+        activityTrackPermissionState.value = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            when (PackageManager.PERMISSION_GRANTED) {
+                ContextCompat.checkSelfPermission(
+                    this@MainActivity,
+                    Manifest.permission.ACTIVITY_RECOGNITION
+                ) -> true
+                else -> false
+            }
+        } else { true }
+    }
+
+    private fun onStepGaugeClicked() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            when {
+                ContextCompat.checkSelfPermission(
+                    this@MainActivity,
+                    Manifest.permission.ACTIVITY_RECOGNITION
+                ) == PackageManager.PERMISSION_GRANTED -> {
+                    Toast.makeText(this@MainActivity, "Already granted", Toast.LENGTH_SHORT).show()
+                }
+                shouldShowRequestPermissionRationale(Manifest.permission.ACTIVITY_RECOGNITION) -> {
+                    Toast.makeText(this@MainActivity, "show rational", Toast.LENGTH_SHORT).show()
+                }
+                else -> { requestPermissionLauncher.launch(Manifest.permission.ACTIVITY_RECOGNITION) }
+            }
+        }
+    }
 }
 
 object Destinations {
-    sealed class MainBottomBarNavigation(val root: String, @StringRes val resourceId: Int, val icon: ImageVector) {
+    sealed class MainBottomBarNavigation(
+        val root: String,
+        @StringRes val resourceId: Int,
+        val icon: ImageVector
+    ) {
         object Home : MainBottomBarNavigation("home", R.string.home, Icons.Filled.Home)
         object Body : MainBottomBarNavigation("body", R.string.body, Icons.Filled.AddCircle)
-        object Exercises : MainBottomBarNavigation("exercises", R.string.exercises, Icons.Filled.Favorite)
+        object Exercises :
+            MainBottomBarNavigation("exercises", R.string.exercises, Icons.Filled.Favorite)
+
         object Profile : MainBottomBarNavigation("profile", R.string.profile, Icons.Filled.Person)
     }
 }
