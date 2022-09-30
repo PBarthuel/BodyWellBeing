@@ -7,12 +7,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import com.pbarthuel.bodywellbeing.app.models.program.ProgramPreview
+import com.pbarthuel.bodywellbeing.app.models.program.ProgramState
 import com.pbarthuel.bodywellbeing.app.ui.component.StepGoalGauge
+import com.pbarthuel.bodywellbeing.app.ui.component.card.ProgramCard
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HomeScreen(
     activityTrackPermissionState: State<Boolean>,
@@ -39,6 +44,16 @@ fun HomeScreen(
                     title = if (activityTrackPermissionState.value) "Cool" else "Click here to grant permission",
                     animate = true
                 )
+                ProgramCard(
+                    programPreview = ProgramPreview(
+                        programId = 1,
+                        thumbnail = "https://www.spirulinefrance.fr/wp-content/uploads/2020/09/importance-du-sport-sante.png",
+                        title = "Saucisse",
+                        state = ProgramState.STARTED
+                    )
+                ) {
+
+                }
             }
         }
     }

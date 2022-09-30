@@ -112,6 +112,9 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.8.1")
     implementation("com.google.code.gson:gson:2.8.6")
 
+    // Coil
+    implementation("io.coil-kt:coil-compose:2.2.0")
+
     // Hilt
     implementation("com.google.dagger:hilt-android:${LibVersion.hiltVersion}")
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
