@@ -30,6 +30,8 @@ internal object AliasToken {
     val theme = ThemedColor(light = GlobalToken.sky400, dark = GlobalToken.sky400)
     val gradient1 = ThemedColor(light =  GlobalToken.red600, dark = GlobalToken.red500)
     val gradient2 = ThemedColor(light = GlobalToken.yellow400, dark = GlobalToken.yellow300)
+    val surfaceChecked = ThemedColor(light = GlobalToken.grey200, dark = GlobalToken.grey900)
+    val surfaceUnchecked = ThemedColor(light = GlobalToken.grey50, dark = GlobalToken.grey800)
 }
 
 private object GlobalToken {

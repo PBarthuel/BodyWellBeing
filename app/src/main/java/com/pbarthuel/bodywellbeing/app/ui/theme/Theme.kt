@@ -27,7 +27,9 @@ private val LightColorPalette = BodyWellBeingColorPalette(
     statusUndefined = AliasToken.statusUndefined.light,
     divider = AliasToken.dividerPrimary.light,
     gradient1 = AliasToken.gradient1.light,
-    gradient2 = AliasToken.gradient2.light
+    gradient2 = AliasToken.gradient2.light,
+    surfaceChecked = AliasToken.surfaceChecked.light,
+    surfaceUnchecked = AliasToken.surfaceUnchecked.light
 )
 
 private val DarkColorPalette = BodyWellBeingColorPalette(
@@ -45,7 +47,9 @@ private val DarkColorPalette = BodyWellBeingColorPalette(
     statusUndefined = AliasToken.statusUndefined.dark,
     divider = AliasToken.dividerPrimary.dark,
     gradient1 = AliasToken.gradient1.dark,
-    gradient2 = AliasToken.gradient2.dark
+    gradient2 = AliasToken.gradient2.dark,
+    surfaceChecked = AliasToken.surfaceChecked.dark,
+    surfaceUnchecked = AliasToken.surfaceUnchecked.dark
 )
 
 private val MaterialLightPalette = lightColors(
@@ -150,7 +154,9 @@ class BodyWellBeingColorPalette(
     statusUndefined: Color,
     divider: Color,
     gradient1: Color,
-    gradient2: Color
+    gradient2: Color,
+    surfaceChecked: Color,
+    surfaceUnchecked: Color
 ) {
     var textPrimary by mutableStateOf(textPrimary)
         private set
@@ -182,6 +188,10 @@ class BodyWellBeingColorPalette(
         private set
     var gradient2 by mutableStateOf(gradient2)
         private set
+    var surfaceChecked by mutableStateOf(surfaceChecked)
+        private set
+    var surfaceUnchecked by mutableStateOf(surfaceUnchecked)
+        private set
 
     fun update(other: BodyWellBeingColorPalette) {
         textPrimary = other.textPrimary
@@ -199,6 +209,8 @@ class BodyWellBeingColorPalette(
         divider = other.divider
         gradient1 = other.gradient1
         gradient2 = other.gradient2
+        surfaceChecked = other.surfaceChecked
+        surfaceUnchecked = other.surfaceUnchecked
     }
 }
 

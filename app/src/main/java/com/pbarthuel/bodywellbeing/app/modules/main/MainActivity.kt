@@ -108,7 +108,7 @@ class MainActivity : ComponentActivity() {
                     val bottomNavigationItems = listOf(
                         Destinations.MainBottomBarNavigation.Home,
                         Destinations.MainBottomBarNavigation.Body,
-                        Destinations.MainBottomBarNavigation.Exercises,
+                        Destinations.MainBottomBarNavigation.Infos,
                         Destinations.MainBottomBarNavigation.Profile
                     )
                     val screenState = viewModel.screenState.collectAsState()
@@ -179,7 +179,7 @@ class MainActivity : ComponentActivity() {
                                         shouldShowBars = true
                                         BodyScreen()
                                     }
-                                    composable(Destinations.MainBottomBarNavigation.Exercises.root) {
+                                    composable(Destinations.MainBottomBarNavigation.Infos.root) {
                                         viewModel.onScreenChanged(MainScreenState.Exercises)
                                         shouldShowBars = true
                                         ExercisesScreen(
@@ -306,8 +306,7 @@ object Destinations {
     ) {
         object Home : MainBottomBarNavigation("home", R.string.home, Icons.Filled.Home)
         object Body : MainBottomBarNavigation("body", R.string.body, Icons.Filled.AddCircle)
-        object Exercises :
-            MainBottomBarNavigation("exercises", R.string.exercises, Icons.Filled.Favorite)
+        object Infos : MainBottomBarNavigation("infos", R.string.infos, Icons.Filled.Favorite)
 
         object Profile : MainBottomBarNavigation("profile", R.string.profile, Icons.Filled.Person)
     }

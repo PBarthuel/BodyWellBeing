@@ -86,16 +86,6 @@ fun HomeScreenWithEnrolledProgram(
                     title = if (activityTrackPermissionState.value) "Cool" else "Click here to grant permission",
                     animate = true
                 )
-                ProgramCard(
-                    programPreview = ProgramPreview(
-                        programId = 1,
-                        thumbnail = "https://www.spirulinefrance.fr/wp-content/uploads/2020/09/importance-du-sport-sante.png",
-                        title = "Saucisse",
-                        state = ProgramState.STARTED
-                    )
-                ) {
-
-                }
             }
         }
     }
