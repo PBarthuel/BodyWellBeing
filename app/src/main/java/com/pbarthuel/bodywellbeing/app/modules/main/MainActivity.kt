@@ -62,7 +62,7 @@ import com.pbarthuel.bodywellbeing.app.modules.body.BodyScreen
 import com.pbarthuel.bodywellbeing.app.modules.createExercise.CreateExerciseActivity
 import com.pbarthuel.bodywellbeing.app.modules.exerciseDetail.ClassicExerciseDetailActivity
 import com.pbarthuel.bodywellbeing.app.modules.exerciseDetail.CustomExerciseDetailActivity
-import com.pbarthuel.bodywellbeing.app.modules.exercises.ExercisesScreen
+import com.pbarthuel.bodywellbeing.app.modules.infos.InfosScreen
 import com.pbarthuel.bodywellbeing.app.modules.home.HomeScreenWithEnrolledProgram
 import com.pbarthuel.bodywellbeing.app.modules.profile.ProfileScreen
 import com.pbarthuel.bodywellbeing.app.modules.settings.SettingsActivity
@@ -182,7 +182,7 @@ class MainActivity : ComponentActivity() {
                                     composable(Destinations.MainBottomBarNavigation.Infos.root) {
                                         viewModel.onScreenChanged(MainScreenState.Exercises)
                                         shouldShowBars = true
-                                        ExercisesScreen(
+                                        InfosScreen(
                                             onExerciseCardClicked = { exercise ->
                                                 onExerciseCardClicked(condenseExercise = exercise)
                                             }

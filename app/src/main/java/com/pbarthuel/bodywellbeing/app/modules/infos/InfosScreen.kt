@@ -1,17 +1,13 @@
-package com.pbarthuel.bodywellbeing.app.modules.exercises
+package com.pbarthuel.bodywellbeing.app.modules.infos
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -26,7 +22,6 @@ import com.pbarthuel.bodywellbeing.app.ui.component.SegmentedControl
 import com.pbarthuel.bodywellbeing.app.ui.component.StepGoalGauge
 import com.pbarthuel.bodywellbeing.app.ui.component.card.ExercisesCardSection
 import com.pbarthuel.bodywellbeing.app.ui.theme.Basic3
-import com.pbarthuel.bodywellbeing.app.ui.theme.BodyWellBeingTheme
 import com.pbarthuel.bodywellbeing.viewModel.modules.exercises.ExercisesViewModel
 
 private const val EXERCISE_INDEX = 0
@@ -34,7 +29,7 @@ private const val ARTICLE_INDEX = 1
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ExercisesScreen(
+fun InfosScreen(
     viewModel: ExercisesViewModel = hiltViewModel(),
     onExerciseCardClicked: (CondenseExercise) -> Unit
 ) {
