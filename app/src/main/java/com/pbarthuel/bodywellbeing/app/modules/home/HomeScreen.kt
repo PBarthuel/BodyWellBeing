@@ -19,7 +19,49 @@ import com.pbarthuel.bodywellbeing.app.ui.component.card.ProgramCard
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun HomeScreen(
+fun HomeScreenWithoutEnrolledProgram(
+    activityTrackPermissionState: State<Boolean>,
+    onStepGaugeClick: () -> Unit
+) {
+    LazyColumn(modifier = Modifier.fillMaxSize()) {
+        item {
+            Column(modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()) {
+                StepGoalGauge(
+                    modifier = Modifier
+                        .align(CenterHorizontally)
+                        .clickable(
+                            interactionSource = MutableInteractionSource(),
+                            indication = null
+                        ) {
+                            if (!activityTrackPermissionState.value) {
+                                onStepGaugeClick()
+                            }
+                        },
+                    progress = 0.7f,
+                    textInside = if (activityTrackPermissionState.value) "Cool" else "",
+                    title = if (activityTrackPermissionState.value) "Cool" else "Click here to grant permission",
+                    animate = true
+                )
+                ProgramCard(
+                    programPreview = ProgramPreview(
+                        programId = 1,
+                        thumbnail = "https://www.spirulinefrance.fr/wp-content/uploads/2020/09/importance-du-sport-sante.png",
+                        title = "Saucisse",
+                        state = ProgramState.STARTED
+                    )
+                ) {
+
+                }
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun HomeScreenWithEnrolledProgram(
     activityTrackPermissionState: State<Boolean>,
     onStepGaugeClick: () -> Unit
 ) {

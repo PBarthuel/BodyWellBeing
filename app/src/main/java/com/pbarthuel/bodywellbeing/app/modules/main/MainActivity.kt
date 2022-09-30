@@ -63,7 +63,7 @@ import com.pbarthuel.bodywellbeing.app.modules.createExercise.CreateExerciseActi
 import com.pbarthuel.bodywellbeing.app.modules.exerciseDetail.ClassicExerciseDetailActivity
 import com.pbarthuel.bodywellbeing.app.modules.exerciseDetail.CustomExerciseDetailActivity
 import com.pbarthuel.bodywellbeing.app.modules.exercises.ExercisesScreen
-import com.pbarthuel.bodywellbeing.app.modules.home.HomeScreen
+import com.pbarthuel.bodywellbeing.app.modules.home.HomeScreenWithEnrolledProgram
 import com.pbarthuel.bodywellbeing.app.modules.profile.ProfileScreen
 import com.pbarthuel.bodywellbeing.app.modules.settings.SettingsActivity
 import com.pbarthuel.bodywellbeing.app.ui.component.text.Header2
@@ -169,7 +169,7 @@ class MainActivity : ComponentActivity() {
                                     composable(Destinations.MainBottomBarNavigation.Home.root) {
                                         viewModel.onScreenChanged(MainScreenState.Home)
                                         shouldShowBars = true
-                                        HomeScreen(
+                                        HomeScreenWithEnrolledProgram(
                                             activityTrackPermissionState = activityTrackPermissionState,
                                             onStepGaugeClick = { onStepGaugeClicked() }
                                         )
