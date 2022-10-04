@@ -8,8 +8,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import com.pbarthuel.bodywellbeing.R
-import com.pbarthuel.bodywellbeing.app.models.CondenseExercise
-import com.pbarthuel.bodywellbeing.app.models.User
+import com.pbarthuel.bodywellbeing.app.model.CondenseExercise
+import com.pbarthuel.bodywellbeing.app.model.User
 import com.pbarthuel.bodywellbeing.app.ui.component.card.FavoriteExercisesCardSection
 import com.pbarthuel.bodywellbeing.app.ui.component.card.ProfileDetailCard
 import com.pbarthuel.bodywellbeing.app.ui.theme.VerticalMargin

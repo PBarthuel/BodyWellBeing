@@ -1,8 +1,8 @@
 package com.pbarthuel.bodywellbeing.viewModel.modules.profile
 
 import androidx.lifecycle.ViewModel
-import com.pbarthuel.bodywellbeing.app.models.CondenseExercise
-import com.pbarthuel.bodywellbeing.app.models.User
+import com.pbarthuel.bodywellbeing.app.model.CondenseExercise
+import com.pbarthuel.bodywellbeing.app.model.User
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.RoomCustomExercisesRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.RoomExercisesRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.user.RoomUserRepository

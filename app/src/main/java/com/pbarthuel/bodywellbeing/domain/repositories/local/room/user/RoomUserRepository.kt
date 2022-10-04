@@ -1,6 +1,6 @@
 package com.pbarthuel.bodywellbeing.domain.repositories.local.room.user
 
-import com.pbarthuel.bodywellbeing.app.models.User
+import com.pbarthuel.bodywellbeing.app.model.User
 import kotlinx.coroutines.flow.Flow
 
 interface RoomUserRepository {

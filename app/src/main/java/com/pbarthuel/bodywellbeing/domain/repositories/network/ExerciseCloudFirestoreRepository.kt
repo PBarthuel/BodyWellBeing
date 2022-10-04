@@ -1,6 +1,6 @@
 package com.pbarthuel.bodywellbeing.domain.repositories.network
 
-import com.pbarthuel.bodywellbeing.app.models.Exercise
+import com.pbarthuel.bodywellbeing.app.model.Exercise
 import kotlinx.coroutines.flow.Flow
 
 interface ExerciseCloudFirestoreRepository {

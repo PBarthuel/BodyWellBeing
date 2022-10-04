@@ -1,7 +1,6 @@
-package com.pbarthuel.bodywellbeing.app.models
+package com.pbarthuel.bodywellbeing.app.model
 
 import com.google.firebase.database.IgnoreExtraProperties
-import com.google.firebase.database.PropertyName
 import com.pbarthuel.bodywellbeing.data.vendors.local.room.user.entities.UserEntity
 import kotlinx.serialization.Serializable
 

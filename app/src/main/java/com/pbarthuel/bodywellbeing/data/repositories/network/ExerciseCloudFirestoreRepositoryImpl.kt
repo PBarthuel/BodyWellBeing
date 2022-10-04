@@ -1,6 +1,6 @@
 package com.pbarthuel.bodywellbeing.data.repositories.network
 
-import com.pbarthuel.bodywellbeing.app.models.Exercise
+import com.pbarthuel.bodywellbeing.app.model.Exercise
 import com.pbarthuel.bodywellbeing.data.vendors.network.ExerciseCloudFirestoreDao
 import com.pbarthuel.bodywellbeing.data.vendors.network.UserExerciseCloudFirestoreDao
 import com.pbarthuel.bodywellbeing.domain.repositories.network.ExerciseCloudFirestoreRepository

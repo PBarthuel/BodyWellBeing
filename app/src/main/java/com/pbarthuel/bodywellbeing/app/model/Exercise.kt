@@ -1,4 +1,4 @@
-package com.pbarthuel.bodywellbeing.app.models
+package com.pbarthuel.bodywellbeing.app.model
 
 import com.pbarthuel.bodywellbeing.data.model.WsExercise
 import com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises.customExercise.entities.CustomExerciseEntity

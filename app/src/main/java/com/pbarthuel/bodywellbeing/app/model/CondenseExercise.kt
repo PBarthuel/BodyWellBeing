@@ -1,4 +1,4 @@
-package com.pbarthuel.bodywellbeing.app.models
+package com.pbarthuel.bodywellbeing.app.model
 
 import com.pbarthuel.bodywellbeing.R
 import com.pbarthuel.bodywellbeing.data.constants.ExercisesConstants

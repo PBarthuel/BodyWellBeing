@@ -1,6 +1,6 @@
 package com.pbarthuel.bodywellbeing.data.repositories.network
 
-import com.pbarthuel.bodywellbeing.app.models.User
+import com.pbarthuel.bodywellbeing.app.model.User
 import com.pbarthuel.bodywellbeing.data.vendors.network.RealTimeDatabaseDao
 import com.pbarthuel.bodywellbeing.domain.repositories.network.RealTimeDatabaseRepository
 import javax.inject.Inject

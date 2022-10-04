@@ -1,6 +1,6 @@
-package com.pbarthuel.bodywellbeing.app.models.task
+package com.pbarthuel.bodywellbeing.app.model.task
 
-import com.pbarthuel.bodywellbeing.app.models.Exercise
+import com.pbarthuel.bodywellbeing.app.model.Exercise
 import kotlinx.serialization.Serializable
 
 @Serializable

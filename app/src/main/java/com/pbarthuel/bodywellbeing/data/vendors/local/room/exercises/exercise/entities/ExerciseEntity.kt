@@ -3,7 +3,7 @@ package com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises.exercise.e
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.pbarthuel.bodywellbeing.app.models.Exercise
+import com.pbarthuel.bodywellbeing.app.model.Exercise
 import kotlinx.serialization.Serializable
 
 @Entity

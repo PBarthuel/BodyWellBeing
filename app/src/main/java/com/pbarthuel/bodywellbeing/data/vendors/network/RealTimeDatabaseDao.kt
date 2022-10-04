@@ -2,7 +2,7 @@ package com.pbarthuel.bodywellbeing.data.vendors.network
 
 import android.util.Log
 import com.google.firebase.database.FirebaseDatabase
-import com.pbarthuel.bodywellbeing.app.models.User
+import com.pbarthuel.bodywellbeing.app.model.User
 import com.pbarthuel.bodywellbeing.domain.repositories.local.dataStore.PreferenceDataStoreRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.user.RoomUserRepository
 import com.pbarthuel.bodywellbeing.viewModel.utils.CoroutineToolsProvider

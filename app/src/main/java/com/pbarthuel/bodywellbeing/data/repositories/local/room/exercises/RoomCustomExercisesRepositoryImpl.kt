@@ -1,7 +1,7 @@
 package com.pbarthuel.bodywellbeing.data.repositories.local.room.exercises
 
-import com.pbarthuel.bodywellbeing.app.models.CondenseExercise
-import com.pbarthuel.bodywellbeing.app.models.Exercise
+import com.pbarthuel.bodywellbeing.app.model.CondenseExercise
+import com.pbarthuel.bodywellbeing.app.model.Exercise
 import com.pbarthuel.bodywellbeing.data.constants.ExercisesConstants
 import com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises.customExercise.CustomExerciseDao
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.RoomCustomExercisesRepository

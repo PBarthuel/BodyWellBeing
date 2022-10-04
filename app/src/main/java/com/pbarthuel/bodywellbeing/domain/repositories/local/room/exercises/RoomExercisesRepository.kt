@@ -1,7 +1,7 @@
 package com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises
 
-import com.pbarthuel.bodywellbeing.app.models.CondenseExercise
-import com.pbarthuel.bodywellbeing.app.models.Exercise
+import com.pbarthuel.bodywellbeing.app.model.CondenseExercise
+import com.pbarthuel.bodywellbeing.app.model.Exercise
 import kotlinx.coroutines.flow.Flow
 
 interface RoomExercisesRepository {

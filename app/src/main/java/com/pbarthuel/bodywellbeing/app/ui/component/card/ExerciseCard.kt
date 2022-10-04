@@ -16,7 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.pbarthuel.bodywellbeing.R
-import com.pbarthuel.bodywellbeing.app.models.CondenseExercise
+import com.pbarthuel.bodywellbeing.app.model.CondenseExercise
 import com.pbarthuel.bodywellbeing.app.ui.component.text.Body1
 import com.pbarthuel.bodywellbeing.app.ui.theme.Basic2
 import com.pbarthuel.bodywellbeing.app.ui.theme.Basic3

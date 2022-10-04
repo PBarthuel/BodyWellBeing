@@ -5,6 +5,8 @@ import androidx.room.Room
 import com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises.exercise.ExercisesDao
 import com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises.ExercisesDb
 import com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises.customExercise.CustomExerciseDao
+import com.pbarthuel.bodywellbeing.data.vendors.local.room.programs.ProgramsDb
+import com.pbarthuel.bodywellbeing.data.vendors.local.room.programs.program.ProgramsDao
 import com.pbarthuel.bodywellbeing.data.vendors.local.room.user.UserDao
 import com.pbarthuel.bodywellbeing.data.vendors.local.room.user.UserDb
 import dagger.Module
@@ -47,5 +49,18 @@ class DataBaseModule {
     @Provides
     fun provideCustomExercisesDao(exercisesDb: ExercisesDb): CustomExerciseDao {
         return exercisesDb.CustomExerciseDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideProgramsDatabase(@ApplicationContext appContext: Context): ProgramsDb {
+        return Room.databaseBuilder(appContext, ProgramsDb::class.java, "Programs")
+            .fallbackToDestructiveMigration()
+            .build()
+    }
+
+    @Provides
+    fun provideProgramsDao(programsDb: ProgramsDb): ProgramsDao {
+        return programsDb.ProgramsDao()
     }
 }

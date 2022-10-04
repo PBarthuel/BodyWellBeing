@@ -1,0 +1,18 @@
+package com.pbarthuel.bodywellbeing.data.vendors.local.room.programs.program
+
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import com.pbarthuel.bodywellbeing.data.vendors.local.room.programs.program.entities.ProgramEntity
+import kotlinx.coroutines.flow.Flow
+
+@Dao
+interface ProgramsDao {
+
+    @Query("SELECT * FROM ExerciseEntity")
+    fun getAllPrograms(): Flow<List<ProgramEntity>?>
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun createProgram(programEntity: ProgramEntity)
+}

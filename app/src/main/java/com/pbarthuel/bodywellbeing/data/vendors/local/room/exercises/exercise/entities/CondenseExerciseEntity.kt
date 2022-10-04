@@ -2,7 +2,7 @@ package com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises.exercise.e
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import com.pbarthuel.bodywellbeing.app.models.CondenseExercise
+import com.pbarthuel.bodywellbeing.app.model.CondenseExercise
 import kotlinx.serialization.Serializable
 
 @Entity

@@ -17,11 +17,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.pbarthuel.bodywellbeing.app.models.CondenseExercise
+import com.pbarthuel.bodywellbeing.app.model.CondenseExercise
 import com.pbarthuel.bodywellbeing.app.ui.component.SegmentedControl
 import com.pbarthuel.bodywellbeing.app.ui.component.StepGoalGauge
 import com.pbarthuel.bodywellbeing.app.ui.component.card.ExercisesCardSection
-import com.pbarthuel.bodywellbeing.app.ui.theme.Basic3
+import com.pbarthuel.bodywellbeing.app.ui.theme.VerticalMargin
 import com.pbarthuel.bodywellbeing.viewModel.modules.exercises.ExercisesViewModel
 
 private const val EXERCISE_INDEX = 0
@@ -37,7 +37,7 @@ fun InfosScreen(
     var selectedSection by remember { mutableStateOf(EXERCISE_INDEX) }
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(Basic3)
+        verticalArrangement = Arrangement.spacedBy(VerticalMargin)
     ) {
         stickyHeader {
             SegmentedControl(
@@ -70,9 +70,7 @@ fun InfosScreen(
                                 .clickable(
                                     interactionSource = MutableInteractionSource(),
                                     indication = null
-                                ) {
-
-                                },
+                                ) {},
                             progress = 0.7f,
                             textInside = "",
                             title = "Click here to grant permission",

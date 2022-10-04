@@ -1,24 +1,20 @@
 package com.pbarthuel.bodywellbeing.viewModel.modules.main
 
-import android.Manifest
-import android.content.pm.PackageManager
-import android.os.Build
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.pbarthuel.bodywellbeing.app.models.Exercise
+import com.pbarthuel.bodywellbeing.app.model.Exercise
+import com.pbarthuel.bodywellbeing.data.vendors.local.room.programs.program.entities.ProgramEntity
 import com.pbarthuel.bodywellbeing.domain.repositories.local.dataStore.PreferenceDataStoreRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.RoomCustomExercisesRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.RoomExercisesRepository
+import com.pbarthuel.bodywellbeing.domain.repositories.local.room.programs.RoomProgramsRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.network.ExerciseCloudFirestoreRepository
+import com.pbarthuel.bodywellbeing.domain.repositories.network.ProgramCloudFirestoreRepository
 import com.pbarthuel.bodywellbeing.viewModel.utils.CoroutineToolsProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
@@ -32,8 +28,10 @@ sealed class MainScreenState {
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val exerciseCloudFirestoreRepository: ExerciseCloudFirestoreRepository,
+    private val programCloudFirestoreRepository: ProgramCloudFirestoreRepository,
     private val roomExercisesRepository: RoomExercisesRepository,
     private val roomCustomExercisesRepository: RoomCustomExercisesRepository,
+    private val roomProgramsRepository: RoomProgramsRepository,
     private val preferenceDataStoreRepository: PreferenceDataStoreRepository,
     private val dispatcher: CoroutineToolsProvider
 ) : ViewModel() {
@@ -60,7 +58,7 @@ class MainViewModel @Inject constructor(
             exerciseCloudFirestoreRepository.getAllExercises().collect { exercises ->
                 if (exercises.isNotEmpty()) {
                     exercises.forEach { exercise ->
-                         roomExercisesRepository.createExercise(exercise)
+                        roomExercisesRepository.createExercise(exercise)
                     }
                 }
             }
@@ -84,7 +82,7 @@ class MainViewModel @Inject constructor(
                 .collect { favoriteExercises ->
                     if (favoriteExercises.isNotEmpty()) {
                         favoriteExercises.forEach { exercise ->
-                            when(exercise) {
+                            when (exercise) {
                                 is Exercise.Classic -> roomExercisesRepository.updateIsFavorite(
                                     exerciseId = exercise.id,
                                     isFavorite = true
@@ -95,6 +93,17 @@ class MainViewModel @Inject constructor(
                                 )
                             }
                         }
+                    }
+                }
+        }
+    }
+
+    fun syncProgram() {
+        viewModelScope.launch(dispatcher.io) {
+            programCloudFirestoreRepository.getAllPrograms()
+                .collect { programs ->
+                    if (programs.isNotEmpty()) {
+                        programs.forEach { program -> roomProgramsRepository.createProgram(program) }
                     }
                 }
         }

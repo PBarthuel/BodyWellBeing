@@ -1,9 +1,8 @@
 package com.pbarthuel.bodywellbeing.data.model
 
 import com.google.firebase.firestore.IgnoreExtraProperties
-import com.google.firebase.firestore.PropertyName
 import kotlinx.serialization.Serializable
-import com.pbarthuel.bodywellbeing.app.models.Exercise
+import com.pbarthuel.bodywellbeing.app.model.Exercise
 
 @Serializable
 @IgnoreExtraProperties

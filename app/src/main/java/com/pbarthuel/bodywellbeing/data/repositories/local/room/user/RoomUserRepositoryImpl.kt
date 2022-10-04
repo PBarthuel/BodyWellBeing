@@ -1,12 +1,11 @@
 package com.pbarthuel.bodywellbeing.data.repositories.local.room.user
 
-import com.pbarthuel.bodywellbeing.app.models.User
+import com.pbarthuel.bodywellbeing.app.model.User
 import com.pbarthuel.bodywellbeing.data.vendors.local.room.user.UserDao
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.user.RoomUserRepository
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.single
 
 class RoomUserRepositoryImpl @Inject constructor(
     private val userDao: UserDao

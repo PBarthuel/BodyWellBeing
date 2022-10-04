@@ -57,13 +57,13 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.pbarthuel.bodywellbeing.R
-import com.pbarthuel.bodywellbeing.app.models.CondenseExercise
+import com.pbarthuel.bodywellbeing.app.model.CondenseExercise
 import com.pbarthuel.bodywellbeing.app.modules.body.BodyScreen
 import com.pbarthuel.bodywellbeing.app.modules.createExercise.CreateExerciseActivity
 import com.pbarthuel.bodywellbeing.app.modules.exerciseDetail.ClassicExerciseDetailActivity
 import com.pbarthuel.bodywellbeing.app.modules.exerciseDetail.CustomExerciseDetailActivity
 import com.pbarthuel.bodywellbeing.app.modules.infos.InfosScreen
-import com.pbarthuel.bodywellbeing.app.modules.home.HomeScreenWithEnrolledProgram
+import com.pbarthuel.bodywellbeing.app.modules.home.HomeScreenWithoutEnrolledProgram
 import com.pbarthuel.bodywellbeing.app.modules.profile.ProfileScreen
 import com.pbarthuel.bodywellbeing.app.modules.settings.SettingsActivity
 import com.pbarthuel.bodywellbeing.app.ui.component.text.Header2
@@ -169,7 +169,7 @@ class MainActivity : ComponentActivity() {
                                     composable(Destinations.MainBottomBarNavigation.Home.root) {
                                         viewModel.onScreenChanged(MainScreenState.Home)
                                         shouldShowBars = true
-                                        HomeScreenWithEnrolledProgram(
+                                        HomeScreenWithoutEnrolledProgram(
                                             activityTrackPermissionState = activityTrackPermissionState,
                                             onStepGaugeClick = { onStepGaugeClicked() }
                                         )
