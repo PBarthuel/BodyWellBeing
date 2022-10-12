@@ -30,7 +30,7 @@ class RoomProgramsRepositoryImpl@Inject constructor(
             wsDay.tasks.forEach { wsTask ->
                 tasksDao.createTask(
                     TaskEntity(
-                        localId = "0",
+                        localId = 0,
                         id = wsTask.id,
                         dayIndex = wsDay.dayIndex,
                         thumbnail = wsTask.thumbnail,

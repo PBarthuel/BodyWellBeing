@@ -10,7 +10,7 @@ import kotlinx.serialization.Serializable
 data class TaskEntity(
     @ColumnInfo(name = "localId")
     @PrimaryKey(autoGenerate = true)
-    val localId: String,
+    val localId: Int,
     @ColumnInfo(name = "id")
     val id: String,
     @ColumnInfo(name = "dayIndex")

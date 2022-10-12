@@ -5,6 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class WsDay(
-    @SerializedName("dayIndex") val dayIndex: Int,
-    @SerializedName("tasks") val tasks: List<WsTask>
+    @SerializedName("dayIndex") val dayIndex: Int = 0,
+    @SerializedName("tasks") val tasks: List<WsTask> = listOf()
 )

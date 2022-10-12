@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface TasksDao {
 
-    @Query("SELECT * FROM ExerciseEntity")
+    @Query("SELECT * FROM TaskEntity")
     fun getAllTasks(): Flow<List<TaskEntity>?>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)

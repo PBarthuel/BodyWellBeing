@@ -69,34 +69,29 @@ fun HomeScreenWithoutEnrolledProgram(
 
 val programs = listOf(
     ProgramPreview(
-        programId = 1,
+        programId = "1",
         thumbnail = "https://www.spirulinefrance.fr/wp-content/uploads/2020/09/importance-du-sport-sante.png",
-        title = "Saucisse",
-        state = ProgramState.STARTED
+        title = "Saucisse"
     ),
     ProgramPreview(
-        programId = 1,
+        programId = "1",
         thumbnail = "https://www.spirulinefrance.fr/wp-content/uploads/2020/09/importance-du-sport-sante.png",
-        title = "Saucisse",
-        state = ProgramState.STARTED
+        title = "Saucisse"
     ),
     ProgramPreview(
-        programId = 1,
+        programId = "1",
         thumbnail = "https://www.spirulinefrance.fr/wp-content/uploads/2020/09/importance-du-sport-sante.png",
-        title = "Saucisse",
-        state = ProgramState.STARTED
+        title = "Saucisse"
     ),
     ProgramPreview(
-        programId = 1,
+        programId = "1",
         thumbnail = "https://www.spirulinefrance.fr/wp-content/uploads/2020/09/importance-du-sport-sante.png",
-        title = "Saucisse",
-        state = ProgramState.STARTED
+        title = "Saucisse"
     ),
     ProgramPreview(
-        programId = 1,
+        programId = "1",
         thumbnail = "https://www.spirulinefrance.fr/wp-content/uploads/2020/09/importance-du-sport-sante.png",
-        title = "Saucisse",
-        state = ProgramState.STARTED
+        title = "Saucisse"
     )
 )
 

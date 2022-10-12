@@ -7,6 +7,7 @@ import com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises.ExercisesDb
 import com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises.customExercise.CustomExerciseDao
 import com.pbarthuel.bodywellbeing.data.vendors.local.room.programs.ProgramsDb
 import com.pbarthuel.bodywellbeing.data.vendors.local.room.programs.program.ProgramsDao
+import com.pbarthuel.bodywellbeing.data.vendors.local.room.programs.program.TasksDao
 import com.pbarthuel.bodywellbeing.data.vendors.local.room.user.UserDao
 import com.pbarthuel.bodywellbeing.data.vendors.local.room.user.UserDb
 import dagger.Module
@@ -62,5 +63,10 @@ class DataBaseModule {
     @Provides
     fun provideProgramsDao(programsDb: ProgramsDb): ProgramsDao {
         return programsDb.ProgramsDao()
+    }
+
+    @Provides
+    fun provideTasksDao(programsDb: ProgramsDb): TasksDao {
+        return programsDb.TasksDao()
     }
 }

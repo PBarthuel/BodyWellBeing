@@ -98,6 +98,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         viewModel.syncExercise()
+        viewModel.syncProgram()
         checkActivityTackPermissionStatus()
 
         setContent {
@@ -112,6 +113,7 @@ class MainActivity : ComponentActivity() {
                         Destinations.MainBottomBarNavigation.Profile
                     )
                     val screenState = viewModel.screenState.collectAsState()
+                    val isUserAdmin = viewModel.isUserAdmin().collectAsState(initial = false)
                     var topBarTitle by remember { mutableStateOf(getString(R.string.home)) }
                     var shouldShowBars by remember { mutableStateOf(true) }
                     Scaffold(
@@ -129,6 +131,16 @@ class MainActivity : ComponentActivity() {
                                     title = { Header2(text = topBarTitle) },
                                     actions = {
                                         when (screenState.value) {
+                                            MainScreenState.Home -> {
+                                                if (isUserAdmin.value == true) {
+                                                    IconButton(onClick = { viewModel.createProgram() }) {
+                                                        Icon(
+                                                            Icons.Filled.AddCircle,
+                                                            contentDescription = "Create Program"
+                                                        )
+                                                    }
+                                                }
+                                            }
                                             MainScreenState.Profile -> {
                                                 IconButton(onClick = { onSettingsClicked() }) {
                                                     Icon(
