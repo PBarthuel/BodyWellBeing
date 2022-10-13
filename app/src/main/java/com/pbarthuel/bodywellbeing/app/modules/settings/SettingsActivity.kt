@@ -5,17 +5,14 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.pbarthuel.bodywellbeing.app.modules.login.LoginActivity
@@ -26,9 +23,6 @@ import com.pbarthuel.bodywellbeing.viewModel.modules.settings.SettingsScreenStat
 import com.pbarthuel.bodywellbeing.viewModel.modules.settings.SettingsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-@ExperimentalMaterialApi
-@ExperimentalAnimationApi
-@ExperimentalComposeUiApi
 @AndroidEntryPoint
 class SettingsActivity : ComponentActivity() {
 

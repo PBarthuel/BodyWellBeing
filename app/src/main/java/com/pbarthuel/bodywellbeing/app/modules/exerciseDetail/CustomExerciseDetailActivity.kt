@@ -37,10 +37,6 @@ import com.pbarthuel.bodywellbeing.viewModel.modules.exerciseDetail.CustomExerci
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-@ExperimentalCoroutinesApi
-@ExperimentalComposeUiApi
-@ExperimentalAnimationApi
-@ExperimentalMaterialApi
 @AndroidEntryPoint
 class CustomExerciseDetailActivity : ComponentActivity() {
 

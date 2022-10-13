@@ -1,5 +1,6 @@
 package com.pbarthuel.bodywellbeing.data.repositories.local.room.exercises
 
+import com.pbarthuel.bodywellbeing.app.model.program.ProgramOverview
 import com.pbarthuel.bodywellbeing.app.model.program.ProgramPreview
 import com.pbarthuel.bodywellbeing.data.model.program.WsProgram
 import com.pbarthuel.bodywellbeing.data.vendors.local.room.programs.program.ProgramsDao
@@ -18,6 +19,12 @@ class RoomProgramsRepositoryImpl@Inject constructor(
     override fun getAllProgramsPreviews(): Flow<List<ProgramPreview>?> =
         programsDao.getAllPrograms().mapLatest { programs ->
             programs?.map { program -> program.toProgramPreview() }
+        }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    override fun getProgramOverview(programId: String): Flow<ProgramOverview?> =
+        programsDao.getProgramFromId(programId = programId).mapLatest { program ->
+            program?.toProgramOverview()
         }
 
     override suspend fun createProgram(program: WsProgram) {

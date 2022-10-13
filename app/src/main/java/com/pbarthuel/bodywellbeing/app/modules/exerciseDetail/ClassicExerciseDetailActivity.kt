@@ -37,10 +37,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Exception
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-@ExperimentalCoroutinesApi
-@ExperimentalComposeUiApi
-@ExperimentalAnimationApi
-@ExperimentalMaterialApi
 @AndroidEntryPoint
 class ClassicExerciseDetailActivity : ComponentActivity() {
 

@@ -23,7 +23,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
@@ -41,7 +40,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -62,8 +60,8 @@ import com.pbarthuel.bodywellbeing.app.modules.body.BodyScreen
 import com.pbarthuel.bodywellbeing.app.modules.createExercise.CreateExerciseActivity
 import com.pbarthuel.bodywellbeing.app.modules.exerciseDetail.ClassicExerciseDetailActivity
 import com.pbarthuel.bodywellbeing.app.modules.exerciseDetail.CustomExerciseDetailActivity
-import com.pbarthuel.bodywellbeing.app.modules.infos.InfosScreen
 import com.pbarthuel.bodywellbeing.app.modules.home.HomeScreenWithoutEnrolledProgram
+import com.pbarthuel.bodywellbeing.app.modules.infos.InfosScreen
 import com.pbarthuel.bodywellbeing.app.modules.profile.ProfileScreen
 import com.pbarthuel.bodywellbeing.app.modules.settings.SettingsActivity
 import com.pbarthuel.bodywellbeing.app.ui.component.text.Header2
@@ -73,17 +71,13 @@ import com.pbarthuel.bodywellbeing.app.ui.theme.openFromRight
 import com.pbarthuel.bodywellbeing.viewModel.modules.main.MainScreenState
 import com.pbarthuel.bodywellbeing.viewModel.modules.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-@ExperimentalCoroutinesApi
-@ExperimentalComposeUiApi
-@ExperimentalAnimationApi
-@ExperimentalMaterialApi
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     companion object {
         const val EXTRA_EXERCISE_ID = "exerciseId"
+        const val EXTRA_PROGRAM_ID = "programId"
     }
 
     private val viewModel by viewModels<MainViewModel>()
@@ -94,6 +88,7 @@ class MainActivity : ComponentActivity() {
             ActivityResultContracts.RequestPermission()
         ) { isGranted: Boolean -> activityTrackPermissionState.value = isGranted }
 
+    @OptIn(ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

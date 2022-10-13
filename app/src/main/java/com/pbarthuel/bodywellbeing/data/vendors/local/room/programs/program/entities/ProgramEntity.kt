@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.pbarthuel.bodywellbeing.app.model.Exercise
+import com.pbarthuel.bodywellbeing.app.model.program.ProgramOverview
 import com.pbarthuel.bodywellbeing.app.model.program.ProgramPreview
 import kotlinx.serialization.Serializable
 
@@ -24,5 +25,13 @@ data class ProgramEntity(
             programId = id,
             thumbnail = thumbnail,
             title = title
+        )
+
+    fun toProgramOverview(): ProgramOverview =
+        ProgramOverview(
+            programId = id,
+            thumbnail = thumbnail,
+            title = title,
+            description = description
         )
 }

@@ -55,9 +55,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-@ExperimentalComposeUiApi
-@ExperimentalAnimationApi
-@ExperimentalMaterialApi
 @AndroidEntryPoint
 class LoginActivity : ComponentActivity() {
 
@@ -65,7 +62,9 @@ class LoginActivity : ComponentActivity() {
 
     private lateinit var auth: FirebaseAuth
 
-    @OptIn(ExperimentalCoroutinesApi::class)
+    @OptIn(ExperimentalCoroutinesApi::class, ExperimentalAnimationApi::class, ExperimentalComposeUiApi::class,
+        ExperimentalMaterialApi::class
+    )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

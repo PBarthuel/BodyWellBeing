@@ -1,8 +1,5 @@
 package com.pbarthuel.bodywellbeing.viewModel.modules.exerciseDetail
 
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,15 +11,10 @@ import com.pbarthuel.bodywellbeing.domain.repositories.network.ExerciseCloudFire
 import com.pbarthuel.bodywellbeing.viewModel.utils.CoroutineToolsProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 
-@ExperimentalCoroutinesApi
-@ExperimentalMaterialApi
-@ExperimentalAnimationApi
-@ExperimentalComposeUiApi
 @HiltViewModel
 class ClassicExerciseDetailViewModel @Inject constructor(
     private val roomExercisesRepository: RoomExercisesRepository,
