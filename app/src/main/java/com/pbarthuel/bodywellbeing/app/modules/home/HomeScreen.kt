@@ -13,21 +13,26 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.pbarthuel.bodywellbeing.app.model.program.ProgramPreview
 import com.pbarthuel.bodywellbeing.app.ui.component.StepGoalGauge
 import com.pbarthuel.bodywellbeing.app.ui.component.card.ProgramCard
 import com.pbarthuel.bodywellbeing.app.ui.component.text.Header3
 import com.pbarthuel.bodywellbeing.app.ui.theme.HorizontalMargin
 import com.pbarthuel.bodywellbeing.app.ui.theme.VerticalMargin
+import com.pbarthuel.bodywellbeing.viewModel.modules.home.HomeViewModel
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HomeScreenWithoutEnrolledProgram(
+    viewModel: HomeViewModel = hiltViewModel(),
     activityTrackPermissionState: State<Boolean>,
     onStepGaugeClick: () -> Unit
 ) {
+    val programsPreviews = viewModel.programsPreviews.collectAsState(initial = listOf())
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -57,10 +62,8 @@ fun HomeScreenWithoutEnrolledProgram(
             }
         }
         item { Header3(text = "Programs") }
-        items(programs) { item ->
-            ProgramCard(
-                programPreview = item
-            ) {
+        items(programsPreviews.value ?: listOf()) { item ->
+            ProgramCard(programPreview = item) {
 
             }
         }
@@ -95,6 +98,7 @@ val programs = listOf(
     )
 )
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HomeScreenWithEnrolledProgram(
     activityTrackPermissionState: State<Boolean>,

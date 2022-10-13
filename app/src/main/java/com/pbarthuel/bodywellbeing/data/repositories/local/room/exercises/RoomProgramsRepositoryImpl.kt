@@ -1,21 +1,24 @@
 package com.pbarthuel.bodywellbeing.data.repositories.local.room.exercises
 
+import com.pbarthuel.bodywellbeing.app.model.program.ProgramPreview
 import com.pbarthuel.bodywellbeing.data.model.program.WsProgram
 import com.pbarthuel.bodywellbeing.data.vendors.local.room.programs.program.ProgramsDao
-import com.pbarthuel.bodywellbeing.data.vendors.local.room.programs.program.TasksDao
 import com.pbarthuel.bodywellbeing.data.vendors.local.room.programs.program.entities.ProgramEntity
-import com.pbarthuel.bodywellbeing.data.vendors.local.room.programs.program.entities.TaskEntity
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.programs.RoomProgramsRepository
 import javax.inject.Inject
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.mapLatest
 
 class RoomProgramsRepositoryImpl@Inject constructor(
-    private val programsDao: ProgramsDao,
-    private val tasksDao: TasksDao
+    private val programsDao: ProgramsDao
 ) : RoomProgramsRepository {
 
-    override fun getAllPrograms(): Flow<List<ProgramEntity>?> =
-        programsDao.getAllPrograms()
+    @OptIn(ExperimentalCoroutinesApi::class)
+    override fun getAllProgramsPreviews(): Flow<List<ProgramPreview>?> =
+        programsDao.getAllPrograms().mapLatest { programs ->
+            programs?.map { program -> program.toProgramPreview() }
+        }
 
     override suspend fun createProgram(program: WsProgram) {
         programsDao.createProgram(
@@ -26,19 +29,5 @@ class RoomProgramsRepositoryImpl@Inject constructor(
                 description = program.description
             )
         )
-        program.days.forEach { wsDay ->
-            wsDay.tasks.forEach { wsTask ->
-                tasksDao.createTask(
-                    TaskEntity(
-                        localId = 0,
-                        id = wsTask.id,
-                        dayIndex = wsDay.dayIndex,
-                        thumbnail = wsTask.thumbnail,
-                        title = wsTask.title,
-                        type = wsTask.type
-                    )
-                )
-            }
-        }
     }
 }

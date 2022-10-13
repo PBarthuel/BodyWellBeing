@@ -9,15 +9,11 @@
       "tasks": [
         {
           "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee",
-          "thumbnail": "https://saucisse.com",
-          "type": "article",
-          "title": "first task"
+          "type": "article"
         },
         {
           "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee",
-          "thumbnail": "https://saucisse.com",
-          "type": "exercises",
-          "title": "second task"
+          "type": "exercises"
         }
       ]
     },
@@ -26,15 +22,11 @@
       "tasks": [
         {
           "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee",
-          "thumbnail": "https://saucisse.com",
-          "type": "article",
-          "title": "first task"
+          "type": "article"
         },
         {
           "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee",
-          "thumbnail": "https://saucisse.com",
-          "type": "exercises",
-          "title": "second task"
+          "type": "exercises"
         }
       ]
     },
@@ -43,15 +35,11 @@
       "tasks": [
         {
           "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee",
-          "thumbnail": "https://saucisse.com",
-          "type": "article",
-          "title": "first task"
+          "type": "article"
         },
         {
           "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee",
-          "thumbnail": "https://saucisse.com",
-          "type": "exercises",
-          "title": "second task"
+          "type": "exercises"
         }
       ]
     },
@@ -60,15 +48,11 @@
       "tasks": [
         {
           "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee",
-          "thumbnail": "https://saucisse.com",
-          "type": "article",
-          "title": "first task"
+          "type": "article"
         },
         {
           "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee",
-          "thumbnail": "https://saucisse.com",
-          "type": "exercises",
-          "title": "second task"
+          "type": "exercises"
         }
       ]
     },
@@ -77,15 +61,11 @@
       "tasks": [
         {
           "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee",
-          "thumbnail": "https://saucisse.com",
-          "type": "article",
-          "title": "first task"
+          "type": "article"
         },
         {
           "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee",
-          "thumbnail": "https://saucisse.com",
-          "type": "exercises",
-          "title": "second task"
+          "type": "exercises"
         }
       ]
     },
@@ -94,15 +74,11 @@
       "tasks": [
         {
           "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee",
-          "thumbnail": "https://saucisse.com",
-          "type": "article",
-          "title": "first task"
+          "type": "article"
         },
         {
           "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee",
-          "thumbnail": "https://saucisse.com",
-          "type": "exercises",
-          "title": "second task"
+          "type": "exercises"
         }
       ]
     },
@@ -111,15 +87,11 @@
       "tasks": [
         {
           "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee",
-          "thumbnail": "https://saucisse.com",
-          "type": "article",
-          "title": "first task"
+          "type": "article"
         },
         {
           "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee",
-          "thumbnail": "https://saucisse.com",
-          "type": "exercises",
-          "title": "second task"
+          "type": "exercises"
         }
       ]
     }

@@ -15,10 +15,6 @@ data class TaskEntity(
     val id: String,
     @ColumnInfo(name = "dayIndex")
     val dayIndex: Int,
-    @ColumnInfo(name = "thumbnail")
-    val thumbnail: String,
-    @ColumnInfo(name = "title")
-    val title: String,
     @ColumnInfo(name = "type")
     val type: String
 )
