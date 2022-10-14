@@ -7,10 +7,8 @@ import com.pbarthuel.bodywellbeing.domain.repositories.local.dataStore.Preferenc
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.user.RoomUserRepository
 import com.pbarthuel.bodywellbeing.viewModel.utils.CoroutineToolsProvider
 import javax.inject.Inject
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 
-@ExperimentalCoroutinesApi
 class RealTimeDatabaseDao @Inject constructor(
     private val dispatcher: CoroutineToolsProvider,
     private val preferenceDataStoreRepository: PreferenceDataStoreRepository,

@@ -8,10 +8,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
 
 @HiltViewModel
-class ExercisesViewModel @Inject constructor(
+class InfossViewModel @Inject constructor(
     private val dispatcher: CoroutineToolsProvider,
     private val roomExercisesRepository: RoomExercisesRepository,
     private val roomCustomExercisesRepository: RoomCustomExercisesRepository

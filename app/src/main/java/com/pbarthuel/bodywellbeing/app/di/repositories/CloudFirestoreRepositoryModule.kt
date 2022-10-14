@@ -1,7 +1,9 @@
 package com.pbarthuel.bodywellbeing.app.di.repositories
 
+import com.pbarthuel.bodywellbeing.data.repositories.network.ArticleCloudFirestoreRepositoryImpl
 import com.pbarthuel.bodywellbeing.data.repositories.network.ExerciseCloudFirestoreRepositoryImpl
 import com.pbarthuel.bodywellbeing.data.repositories.network.ProgramCloudFirestoreRepositoryImpl
+import com.pbarthuel.bodywellbeing.domain.repositories.network.ArticleCloudFirestoreRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.network.ExerciseCloudFirestoreRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.network.ProgramCloudFirestoreRepository
 import dagger.Binds
@@ -20,4 +22,7 @@ abstract class CloudFirestoreRepositoryModule {
 
     @Binds
     abstract fun bindProgramCloudFirestoreRepository(programCloudFirestoreRepository: ProgramCloudFirestoreRepositoryImpl): ProgramCloudFirestoreRepository
+
+    @Binds
+    abstract fun bindArticleCloudFirestoreRepository(articleCloudFirestoreRepository: ArticleCloudFirestoreRepositoryImpl): ArticleCloudFirestoreRepository
 }

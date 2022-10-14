@@ -22,7 +22,7 @@ import com.pbarthuel.bodywellbeing.app.ui.component.SegmentedControl
 import com.pbarthuel.bodywellbeing.app.ui.component.StepGoalGauge
 import com.pbarthuel.bodywellbeing.app.ui.component.card.ExercisesCardSection
 import com.pbarthuel.bodywellbeing.app.ui.theme.VerticalMargin
-import com.pbarthuel.bodywellbeing.viewModel.modules.exercises.ExercisesViewModel
+import com.pbarthuel.bodywellbeing.viewModel.modules.exercises.InfossViewModel
 
 private const val EXERCISE_INDEX = 0
 private const val ARTICLE_INDEX = 1
@@ -30,7 +30,7 @@ private const val ARTICLE_INDEX = 1
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun InfosScreen(
-    viewModel: ExercisesViewModel = hiltViewModel(),
+    viewModel: InfossViewModel = hiltViewModel(),
     onExerciseCardClicked: (CondenseExercise) -> Unit
 ) {
     val exercisesGroupByType by viewModel.exercisesGroupByType.collectAsState(mapOf())

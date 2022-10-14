@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pbarthuel.bodywellbeing.R
 import com.pbarthuel.bodywellbeing.app.model.Exercise
+import com.pbarthuel.bodywellbeing.app.model.article.Article
+import com.pbarthuel.bodywellbeing.app.model.article.ArticleSection
 import com.pbarthuel.bodywellbeing.data.model.program.WsProgram
 import com.pbarthuel.bodywellbeing.data.vendors.local.room.programs.program.entities.ProgramEntity
 import com.pbarthuel.bodywellbeing.domain.repositories.local.dataStore.PreferenceDataStoreRepository
@@ -11,6 +13,7 @@ import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.Room
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.RoomExercisesRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.programs.RoomProgramsRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.user.RoomUserRepository
+import com.pbarthuel.bodywellbeing.domain.repositories.network.ArticleCloudFirestoreRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.network.ExerciseCloudFirestoreRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.network.ProgramCloudFirestoreRepository
 import com.pbarthuel.bodywellbeing.viewModel.utils.CoroutineToolsProvider
@@ -36,6 +39,7 @@ sealed class MainScreenState {
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val exerciseCloudFirestoreRepository: ExerciseCloudFirestoreRepository,
+    private val articleCloudFirestoreRepository: ArticleCloudFirestoreRepository,
     private val programCloudFirestoreRepository: ProgramCloudFirestoreRepository,
     private val roomExercisesRepository: RoomExercisesRepository,
     private val roomCustomExercisesRepository: RoomCustomExercisesRepository,
@@ -109,12 +113,6 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    @OptIn(ExperimentalSerializationApi::class)
-    fun createProgram() {
-        val program = Json.decodeFromString<WsProgram>("""{ "id": "3", "title": "First Program", "thumbnail": "https://st.depositphotos.com/1146092/4777/i/950/depositphotos_47770061-stock-photo-cool-dog.jpg", "description": "This is a description, This is a description, This is a description, This is a description !", "days": [ { "dayIndex": 1, "tasks": [ { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "article" }, { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "exercises" } ] }, { "dayIndex": 3, "tasks": [ { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "article" }, { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "exercises" } ] }, { "dayIndex": 5, "tasks": [ { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "article" }, { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "exercises" } ] }, { "dayIndex": 7, "tasks": [ { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "article" }, { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "exercises" } ] }, { "dayIndex": 9, "tasks": [ { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "article" }, { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "exercises" } ] }, { "dayIndex": 11, "tasks": [ { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "article" }, { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "exercises" } ] }, { "dayIndex": 13, "tasks": [ { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "article" }, { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "exercises" } ] } ] }""")
-        programCloudFirestoreRepository.createProgram(program)
-    }
-
     fun syncProgram() {
         viewModelScope.launch(dispatcher.io) {
             programCloudFirestoreRepository.getAllPrograms()
@@ -124,5 +122,44 @@ class MainViewModel @Inject constructor(
                     }
                 }
         }
+    }
+
+    fun syncArticle() {
+        viewModelScope.launch(dispatcher.io) {
+            articleCloudFirestoreRepository.getAllArticles()
+                .collect { articles ->
+                    if (articles.isNotEmpty()) {
+                        articles.forEach {
+                            
+                        }
+                    }
+                }
+        }
+    }
+
+    @OptIn(ExperimentalSerializationApi::class)
+    fun createProgram() {
+        val program = Json.decodeFromString<WsProgram>("""{ "id": "3", "title": "First Program", "thumbnail": "https://st.depositphotos.com/1146092/4777/i/950/depositphotos_47770061-stock-photo-cool-dog.jpg", "description": "This is a description, This is a description, This is a description, This is a description !", "days": [ { "dayIndex": 1, "tasks": [ { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "article" }, { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "exercises" } ] }, { "dayIndex": 3, "tasks": [ { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "article" }, { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "exercises" } ] }, { "dayIndex": 5, "tasks": [ { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "article" }, { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "exercises" } ] }, { "dayIndex": 7, "tasks": [ { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "article" }, { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "exercises" } ] }, { "dayIndex": 9, "tasks": [ { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "article" }, { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "exercises" } ] }, { "dayIndex": 11, "tasks": [ { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "article" }, { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "exercises" } ] }, { "dayIndex": 13, "tasks": [ { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "article" }, { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "exercises" } ] } ] }""")
+        programCloudFirestoreRepository.createProgram(program)
+    }
+
+    fun createArticle() {
+        articleCloudFirestoreRepository.createArticle(
+            Article(
+                id = "1",
+                title = "This is the first article !",
+                thumbnail = "https://wallpaperaccess.com/full/154009.jpg",
+                sections = listOf(
+                    ArticleSection(
+                        title = "First section.",
+                        description = "This is a description to test the code, This is a description to test the code, This is a description to test the code, This is a description to test the code, This is a description to test the code, This is a description to test the code, This is a description to test the code, This is a description to test the code, This is a description to test the code, This is a description to test the code, This is a description to test the code, This is a description to test the code, This is a description to test the code, This is a description to test the code !"
+                    ),
+                    ArticleSection(
+                        title = "Second section.",
+                        description = "This is a description to test the code, This is a description to test the code, This is a description to test the code, This is a description to test the code, This is a description to test the code, This is a description to test the code, This is a description to test the code, This is a description to test the code, This is a description to test the code, This is a description to test the code, This is a description to test the code, This is a description to test the code, This is a description to test the code, This is a description to test the code !"
+                    )
+                )
+            )
+        )
     }
 }
