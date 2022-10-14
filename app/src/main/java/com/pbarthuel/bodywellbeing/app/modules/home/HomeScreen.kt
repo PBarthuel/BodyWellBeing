@@ -1,6 +1,5 @@
 package com.pbarthuel.bodywellbeing.app.modules.home
 
-import android.content.Intent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -19,12 +18,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.pbarthuel.bodywellbeing.app.model.program.ProgramOverview
 import com.pbarthuel.bodywellbeing.app.model.program.ProgramPreview
-import com.pbarthuel.bodywellbeing.app.modules.main.MainActivity
-import com.pbarthuel.bodywellbeing.app.modules.programOverview.ProgramOverviewActivity
 import com.pbarthuel.bodywellbeing.app.ui.component.StepGoalGauge
 import com.pbarthuel.bodywellbeing.app.ui.component.card.ProgramCard
 import com.pbarthuel.bodywellbeing.app.ui.component.text.Header3
@@ -38,10 +33,10 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 fun HomeScreenWithoutEnrolledProgram(
     viewModel: HomeViewModel = hiltViewModel(),
     activityTrackPermissionState: State<Boolean>,
+    onProgramCardClicked: (ProgramPreview) -> Unit,
     onStepGaugeClick: () -> Unit
 ) {
     val programsPreviews = viewModel.programsPreviews.collectAsState(initial = listOf())
-    val context = LocalContext.current
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -73,10 +68,7 @@ fun HomeScreenWithoutEnrolledProgram(
         item { Header3(text = "Programs") }
         items(programsPreviews.value ?: listOf()) { item ->
             ProgramCard(programPreview = item) {
-                context.startActivity(
-                    Intent(context, ProgramOverviewActivity::class.java)
-                        .putExtra(MainActivity.EXTRA_PROGRAM_ID, item.programId)
-                )
+                onProgramCardClicked(item)
             }
         }
     }

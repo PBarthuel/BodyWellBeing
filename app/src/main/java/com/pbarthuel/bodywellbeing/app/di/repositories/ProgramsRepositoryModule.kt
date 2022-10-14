@@ -1,6 +1,6 @@
 package com.pbarthuel.bodywellbeing.app.di.repositories
 
-import com.pbarthuel.bodywellbeing.data.repositories.local.room.exercises.RoomProgramsRepositoryImpl
+import com.pbarthuel.bodywellbeing.data.repositories.local.room.programs.RoomProgramsRepositoryImpl
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.programs.RoomProgramsRepository
 import dagger.Binds
 import dagger.Module

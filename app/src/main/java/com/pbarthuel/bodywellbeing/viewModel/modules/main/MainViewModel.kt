@@ -2,13 +2,12 @@ package com.pbarthuel.bodywellbeing.viewModel.modules.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.pbarthuel.bodywellbeing.R
 import com.pbarthuel.bodywellbeing.app.model.Exercise
 import com.pbarthuel.bodywellbeing.app.model.article.Article
 import com.pbarthuel.bodywellbeing.app.model.article.ArticleSection
 import com.pbarthuel.bodywellbeing.data.model.program.WsProgram
-import com.pbarthuel.bodywellbeing.data.vendors.local.room.programs.program.entities.ProgramEntity
 import com.pbarthuel.bodywellbeing.domain.repositories.local.dataStore.PreferenceDataStoreRepository
+import com.pbarthuel.bodywellbeing.domain.repositories.local.room.articles.RoomArticlesRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.RoomCustomExercisesRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.RoomExercisesRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.programs.RoomProgramsRepository
@@ -43,6 +42,7 @@ class MainViewModel @Inject constructor(
     private val programCloudFirestoreRepository: ProgramCloudFirestoreRepository,
     private val roomExercisesRepository: RoomExercisesRepository,
     private val roomCustomExercisesRepository: RoomCustomExercisesRepository,
+    private val roomArticlesRepository: RoomArticlesRepository,
     private val roomProgramsRepository: RoomProgramsRepository,
     private val roomUserRepository: RoomUserRepository,
     private val preferenceDataStoreRepository: PreferenceDataStoreRepository,
@@ -130,7 +130,7 @@ class MainViewModel @Inject constructor(
                 .collect { articles ->
                     if (articles.isNotEmpty()) {
                         articles.forEach {
-                            
+                            roomArticlesRepository.createArticle(it)
                         }
                     }
                 }
@@ -146,7 +146,7 @@ class MainViewModel @Inject constructor(
     fun createArticle() {
         articleCloudFirestoreRepository.createArticle(
             Article(
-                id = "1",
+                id = "2",
                 title = "This is the first article !",
                 thumbnail = "https://wallpaperaccess.com/full/154009.jpg",
                 sections = listOf(

@@ -1,4 +1,4 @@
-package com.pbarthuel.bodywellbeing.data.repositories.local.room.exercises
+package com.pbarthuel.bodywellbeing.data.repositories.local.room.programs
 
 import com.pbarthuel.bodywellbeing.app.model.program.ProgramOverview
 import com.pbarthuel.bodywellbeing.app.model.program.ProgramPreview

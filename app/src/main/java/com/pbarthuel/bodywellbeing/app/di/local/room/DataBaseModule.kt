@@ -2,6 +2,8 @@ package com.pbarthuel.bodywellbeing.app.di.local.room
 
 import android.content.Context
 import androidx.room.Room
+import com.pbarthuel.bodywellbeing.data.vendors.local.room.article.ArticleDao
+import com.pbarthuel.bodywellbeing.data.vendors.local.room.article.ArticlesDb
 import com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises.exercise.ExercisesDao
 import com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises.ExercisesDb
 import com.pbarthuel.bodywellbeing.data.vendors.local.room.exercises.customExercise.CustomExerciseDao
@@ -68,5 +70,18 @@ class DataBaseModule {
     @Provides
     fun provideTasksDao(programsDb: ProgramsDb): TasksDao {
         return programsDb.TasksDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideArticlesDatabase(@ApplicationContext appContext: Context): ArticlesDb {
+        return Room.databaseBuilder(appContext, ArticlesDb::class.java, "Articles")
+            .fallbackToDestructiveMigration()
+            .build()
+    }
+
+    @Provides
+    fun provideArticlesDao(articleDb: ArticlesDb): ArticleDao {
+        return articleDb.ArticleDao()
     }
 }

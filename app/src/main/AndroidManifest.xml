@@ -48,6 +48,13 @@
             android:windowSoftInputMode="adjustResize"
             tools:ignore="LockedOrientationActivity" />
 
+        <!-- ArticleDetail -->
+        <activity
+            android:name=".app.modules.articleDetail.ArticleDetailActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+
         <activity
             android:name=".app.modules.exerciseDetail.CustomExerciseDetailActivity"
             android:screenOrientation="portrait"

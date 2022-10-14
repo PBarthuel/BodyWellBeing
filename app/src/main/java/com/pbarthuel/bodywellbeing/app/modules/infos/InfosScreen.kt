@@ -2,8 +2,6 @@ package com.pbarthuel.bodywellbeing.app.modules.infos
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,15 +12,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.pbarthuel.bodywellbeing.app.model.CondenseExercise
+import com.pbarthuel.bodywellbeing.app.model.article.Article
 import com.pbarthuel.bodywellbeing.app.ui.component.SegmentedControl
-import com.pbarthuel.bodywellbeing.app.ui.component.StepGoalGauge
+import com.pbarthuel.bodywellbeing.app.ui.component.card.ArticleCard
 import com.pbarthuel.bodywellbeing.app.ui.component.card.ExercisesCardSection
 import com.pbarthuel.bodywellbeing.app.ui.theme.VerticalMargin
-import com.pbarthuel.bodywellbeing.viewModel.modules.exercises.InfossViewModel
+import com.pbarthuel.bodywellbeing.viewModel.modules.exercises.InfosViewModel
 
 private const val EXERCISE_INDEX = 0
 private const val ARTICLE_INDEX = 1
@@ -30,10 +28,12 @@ private const val ARTICLE_INDEX = 1
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun InfosScreen(
-    viewModel: InfossViewModel = hiltViewModel(),
-    onExerciseCardClicked: (CondenseExercise) -> Unit
+    viewModel: InfosViewModel = hiltViewModel(),
+    onExerciseCardClicked: (CondenseExercise) -> Unit,
+    onArticleCardClicked: (Article) -> Unit,
 ) {
     val exercisesGroupByType by viewModel.exercisesGroupByType.collectAsState(mapOf())
+    val articles by viewModel.articles.collectAsState(listOf())
     var selectedSection by remember { mutableStateOf(EXERCISE_INDEX) }
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -64,18 +64,11 @@ fun InfosScreen(
                         }
                     }
                     ARTICLE_INDEX -> Column {
-                        StepGoalGauge(
-                            modifier = Modifier
-                                .align(Alignment.CenterHorizontally)
-                                .clickable(
-                                    interactionSource = MutableInteractionSource(),
-                                    indication = null
-                                ) {},
-                            progress = 0.7f,
-                            textInside = "",
-                            title = "Click here to grant permission",
-                            animate = true
-                        )
+                        articles.forEach {
+                            ArticleCard(article = it) {
+                                onArticleCardClicked(it)
+                            }
+                        }
                     }
                 }
             }
