@@ -1,5 +1,6 @@
 package com.pbarthuel.bodywellbeing.app.modules.home
 
+import androidx.compose.animation.Crossfade
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -28,10 +29,60 @@ import com.pbarthuel.bodywellbeing.app.ui.theme.VerticalMargin
 import com.pbarthuel.bodywellbeing.viewModel.modules.home.HomeViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-@OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class, ExperimentalAnimationApi::class, ExperimentalCoroutinesApi::class)
+@Composable
+fun HomeScreen(
+    viewModel: HomeViewModel = hiltViewModel(),
+    activityTrackPermissionState: State<Boolean>,
+    onProgramCardClicked: (ProgramPreview) -> Unit,
+    onStepGaugeClick: () -> Unit
+) {
+    //Crossfade(targetState = true) {
+        HomeScreenWithEnrolledProgram(activityTrackPermissionState = activityTrackPermissionState) {
+
+        }
+        HomeScreenWithoutEnrolledProgram(
+            viewModel = viewModel,
+            activityTrackPermissionState = activityTrackPermissionState,
+            onProgramCardClicked = onProgramCardClicked
+        ) {
+
+        }
+   // }
+
+}
+
+val programs = listOf(
+    ProgramPreview(
+        programId = "1",
+        thumbnail = "https://www.spirulinefrance.fr/wp-content/uploads/2020/09/importance-du-sport-sante.png",
+        title = "Saucisse"
+    ),
+    ProgramPreview(
+        programId = "1",
+        thumbnail = "https://www.spirulinefrance.fr/wp-content/uploads/2020/09/importance-du-sport-sante.png",
+        title = "Saucisse"
+    ),
+    ProgramPreview(
+        programId = "1",
+        thumbnail = "https://www.spirulinefrance.fr/wp-content/uploads/2020/09/importance-du-sport-sante.png",
+        title = "Saucisse"
+    ),
+    ProgramPreview(
+        programId = "1",
+        thumbnail = "https://www.spirulinefrance.fr/wp-content/uploads/2020/09/importance-du-sport-sante.png",
+        title = "Saucisse"
+    ),
+    ProgramPreview(
+        programId = "1",
+        thumbnail = "https://www.spirulinefrance.fr/wp-content/uploads/2020/09/importance-du-sport-sante.png",
+        title = "Saucisse"
+    )
+)
+
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HomeScreenWithoutEnrolledProgram(
-    viewModel: HomeViewModel = hiltViewModel(),
+    viewModel: HomeViewModel,
     activityTrackPermissionState: State<Boolean>,
     onProgramCardClicked: (ProgramPreview) -> Unit,
     onStepGaugeClick: () -> Unit
@@ -73,34 +124,6 @@ fun HomeScreenWithoutEnrolledProgram(
         }
     }
 }
-
-val programs = listOf(
-    ProgramPreview(
-        programId = "1",
-        thumbnail = "https://www.spirulinefrance.fr/wp-content/uploads/2020/09/importance-du-sport-sante.png",
-        title = "Saucisse"
-    ),
-    ProgramPreview(
-        programId = "1",
-        thumbnail = "https://www.spirulinefrance.fr/wp-content/uploads/2020/09/importance-du-sport-sante.png",
-        title = "Saucisse"
-    ),
-    ProgramPreview(
-        programId = "1",
-        thumbnail = "https://www.spirulinefrance.fr/wp-content/uploads/2020/09/importance-du-sport-sante.png",
-        title = "Saucisse"
-    ),
-    ProgramPreview(
-        programId = "1",
-        thumbnail = "https://www.spirulinefrance.fr/wp-content/uploads/2020/09/importance-du-sport-sante.png",
-        title = "Saucisse"
-    ),
-    ProgramPreview(
-        programId = "1",
-        thumbnail = "https://www.spirulinefrance.fr/wp-content/uploads/2020/09/importance-du-sport-sante.png",
-        title = "Saucisse"
-    )
-)
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable

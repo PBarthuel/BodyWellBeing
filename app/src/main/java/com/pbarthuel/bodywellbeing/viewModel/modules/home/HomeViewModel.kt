@@ -11,8 +11,8 @@ import kotlinx.coroutines.flow.flowOn
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val dispatcher: CoroutineToolsProvider,
-    private val roomProgramsRepository: RoomProgramsRepository
+    private val roomProgramsRepository: RoomProgramsRepository,
+    private val dispatcher: CoroutineToolsProvider
 ): ViewModel() {
 
     val programsPreviews: Flow<List<ProgramPreview>?> =

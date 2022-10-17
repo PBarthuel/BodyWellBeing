@@ -9,3 +9,8 @@ object ExercisesConstants {
     const val ABS_EXERCISE_TYPE: Int = 6
     const val LEG_EXERCISE_TYPE: Int = 7
 }
+
+object TasksType {
+    const val WORKOUT: Int = 1
+    const val ARTICLE: Int = 2
+}
