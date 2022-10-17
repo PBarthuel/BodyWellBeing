@@ -18,4 +18,7 @@ interface ProgramsDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun createProgram(programEntity: ProgramEntity)
+
+    @Query("DELETE FROM ProgramEntity")
+    suspend fun clearProgramsDb()
 }

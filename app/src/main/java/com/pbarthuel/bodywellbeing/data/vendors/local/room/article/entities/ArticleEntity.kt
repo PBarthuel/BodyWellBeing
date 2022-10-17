@@ -31,6 +31,6 @@ data class ArticleEntity(
             title = title,
             thumbnail = thumbnail,
             sections = Json.decodeFromString(sections),
-            isFavorite = false // TODO rajouter ça dans la base room
+            isFavorite = isFavorite
         )
 }

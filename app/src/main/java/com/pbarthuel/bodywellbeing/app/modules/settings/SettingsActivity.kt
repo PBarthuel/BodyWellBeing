@@ -61,8 +61,7 @@ class SettingsActivity : ComponentActivity() {
                 when (screenState.value) {
                     SettingsScreenState.Logout -> {
                         Intent(this, LoginActivity::class.java).also {
-                            it.flags =
-                                Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                            it.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                             startActivity(it)
                         }
                     }

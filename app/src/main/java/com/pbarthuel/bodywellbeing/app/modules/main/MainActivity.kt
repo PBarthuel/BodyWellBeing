@@ -57,7 +57,6 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.pbarthuel.bodywellbeing.R
 import com.pbarthuel.bodywellbeing.app.model.CondenseExercise
 import com.pbarthuel.bodywellbeing.app.modules.articleDetail.ArticleDetailActivity
-import com.pbarthuel.bodywellbeing.app.modules.body.BodyScreen
 import com.pbarthuel.bodywellbeing.app.modules.createExercise.CreateExerciseActivity
 import com.pbarthuel.bodywellbeing.app.modules.exerciseDetail.ClassicExerciseDetailActivity
 import com.pbarthuel.bodywellbeing.app.modules.exerciseDetail.CustomExerciseDetailActivity
@@ -107,7 +106,6 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberAnimatedNavController()
                     val bottomNavigationItems = listOf(
                         Destinations.MainBottomBarNavigation.Home,
-                        Destinations.MainBottomBarNavigation.Body,
                         Destinations.MainBottomBarNavigation.Infos,
                         Destinations.MainBottomBarNavigation.Profile
                     )
@@ -191,11 +189,6 @@ class MainActivity : ComponentActivity() {
                                             }
                                         )
                                     }
-                                    composable(Destinations.MainBottomBarNavigation.Body.root) {
-                                        viewModel.onScreenChanged(MainScreenState.Body)
-                                        shouldShowBars = true
-                                        BodyScreen()
-                                    }
                                     composable(Destinations.MainBottomBarNavigation.Infos.root) {
                                         viewModel.onScreenChanged(MainScreenState.Exercises)
                                         shouldShowBars = true
@@ -203,10 +196,10 @@ class MainActivity : ComponentActivity() {
                                             onExerciseCardClicked = { exercise ->
                                                 onExerciseCardClicked(condenseExercise = exercise)
                                             },
-                                            onArticleCardClicked = {
+                                            onArticleCardClicked = { article ->
                                                 startActivity(
                                                     Intent(this@MainActivity, ArticleDetailActivity::class.java)
-                                                        .putExtra(EXTRA_ARTICLE_ID, it.id)
+                                                        .putExtra(EXTRA_ARTICLE_ID, article.id)
                                                 )
                                             }
                                         )
@@ -218,6 +211,12 @@ class MainActivity : ComponentActivity() {
                                             viewModel = hiltViewModel(),
                                             onExerciseCardClicked = { exercise ->
                                                 onExerciseCardClicked(condenseExercise = exercise)
+                                            },
+                                            onArticleCardClicked = { article ->
+                                                startActivity(
+                                                    Intent(this@MainActivity, ArticleDetailActivity::class.java)
+                                                        .putExtra(EXTRA_ARTICLE_ID, article.id)
+                                                )
                                             }
                                         )
                                     }
@@ -327,7 +326,6 @@ object Destinations {
         val icon: ImageVector
     ) {
         object Home : MainBottomBarNavigation("home", R.string.home, Icons.Filled.Home)
-        object Body : MainBottomBarNavigation("body", R.string.body, Icons.Filled.AddCircle)
         object Infos : MainBottomBarNavigation("infos", R.string.infos, Icons.Filled.Favorite)
 
         object Profile : MainBottomBarNavigation("profile", R.string.profile, Icons.Filled.Person)

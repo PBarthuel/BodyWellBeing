@@ -23,7 +23,7 @@ class RoomArticlesRepositoryImpl @Inject constructor(
         }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    override fun getArticleDetail(articleId: String): Flow<Article?> =
+    override fun getArticleFromId(articleId: String): Flow<Article?> =
         articleDao.getArticleFromId(articleId = articleId).mapLatest {
             it?.toDomain()
         }
@@ -48,4 +48,7 @@ class RoomArticlesRepositoryImpl @Inject constructor(
 
     override suspend fun updateIsFavorite(articleId: String, isFavorite: Boolean) =
         articleDao.updateIsFavorite(isFavorite = isFavorite, articleId = articleId)
+
+    override suspend fun clearArticlesDb() =
+        articleDao.clearArticlesDb()
 }

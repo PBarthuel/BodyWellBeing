@@ -10,4 +10,5 @@ interface RoomProgramsRepository {
     fun getAllProgramsPreviews(): Flow<List<ProgramPreview>?>
     fun getProgramOverview(programId: String): Flow<ProgramOverview?>
     suspend fun createProgram(program: WsProgram)
+    suspend fun clearProgramsDb()
 }

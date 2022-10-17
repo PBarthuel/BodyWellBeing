@@ -20,6 +20,7 @@ import androidx.compose.ui.platform.LocalContext
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.google.accompanist.insets.ProvideWindowInsets
+import com.pbarthuel.bodywellbeing.app.ui.component.button.FavoriteButton
 import com.pbarthuel.bodywellbeing.app.ui.component.text.Body1
 import com.pbarthuel.bodywellbeing.app.ui.component.text.Header1
 import com.pbarthuel.bodywellbeing.app.ui.component.text.Header3
@@ -28,6 +29,7 @@ import com.pbarthuel.bodywellbeing.app.ui.theme.HorizontalMargin
 import com.pbarthuel.bodywellbeing.app.ui.theme.VerticalMargin
 import com.pbarthuel.bodywellbeing.viewModel.modules.articleDetail.ArticleDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.lang.Exception
 
 @AndroidEntryPoint
 class ArticleDetailActivity : ComponentActivity() {
@@ -41,27 +43,38 @@ class ArticleDetailActivity : ComponentActivity() {
             BodyWellBeingTheme {
                 ProvideWindowInsets {
                     Scaffold(modifier = Modifier.fillMaxSize()) {
-                        val articleDetail by viewModel.articleDetail.collectAsState(initial = null)
+                        val articleDetail = viewModel.articleDetail.collectAsState(initial = null)
                         LazyColumn(modifier = Modifier.fillMaxSize()) {
-                            if (articleDetail != null) {
+                            if (articleDetail.value != null) {
                                 item {
                                     Image(
                                         modifier = Modifier.aspectRatio(1f),
                                         painter = rememberAsyncImagePainter(
                                             ImageRequest
                                                 .Builder(context = LocalContext.current)
-                                                .data(data = articleDetail!!.thumbnail)
+                                                .data(data = articleDetail.value?.thumbnail)
                                                 .build(),
                                         ),
                                         contentDescription = null,
                                         contentScale = ContentScale.Crop,
                                     )
+                                    FavoriteButton(
+                                        isFavorite = articleDetail.value?.isFavorite,
+                                        onFavoriteClicked = {
+                                            viewModel.modifyFavoriteState(
+                                                article = articleDetail.value
+                                                    ?: throw Exception("During modifyFavoriteState article is null"),
+                                                isFavorite = articleDetail.value?.isFavorite
+                                                    ?: throw Exception("During modifyFavoriteState isFavorite is null")
+                                            )
+                                        }
+                                    )
                                     Header1(
-                                        text = articleDetail!!.title,
+                                        text = articleDetail.value?.title ?: "",
                                         modifier = Modifier.padding(top = VerticalMargin, start = HorizontalMargin, end = HorizontalMargin)
                                     )
                                 }
-                                items(articleDetail!!.sections) { section ->
+                                items(articleDetail.value?.sections ?: listOf()) { section ->
                                     Column(modifier = Modifier.padding(horizontal = HorizontalMargin)) {
                                         Header3(
                                             text = section.title,

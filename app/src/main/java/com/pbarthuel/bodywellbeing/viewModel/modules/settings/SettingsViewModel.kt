@@ -3,8 +3,10 @@ package com.pbarthuel.bodywellbeing.viewModel.modules.settings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pbarthuel.bodywellbeing.domain.repositories.local.dataStore.PreferenceDataStoreRepository
+import com.pbarthuel.bodywellbeing.domain.repositories.local.room.articles.RoomArticlesRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.RoomCustomExercisesRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.RoomExercisesRepository
+import com.pbarthuel.bodywellbeing.domain.repositories.local.room.programs.RoomProgramsRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.user.RoomUserRepository
 import com.pbarthuel.bodywellbeing.viewModel.utils.CoroutineToolsProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,7 +26,9 @@ class SettingsViewModel @Inject constructor(
     private val preferenceDataStoreRepository: PreferenceDataStoreRepository,
     private val roomExercisesRepository: RoomExercisesRepository,
     private val roomUserRepository: RoomUserRepository,
-    private val customExercisesRepository: RoomCustomExercisesRepository,
+    private val roomCustomExercisesRepository: RoomCustomExercisesRepository,
+    private val roomProgramsRepository: RoomProgramsRepository,
+    private val roomArticlesRepository: RoomArticlesRepository,
     private val dispatcher: CoroutineToolsProvider
 ) : ViewModel() {
 
@@ -36,9 +40,11 @@ class SettingsViewModel @Inject constructor(
             kotlin.runCatching {
                 _screenState.value = SettingsScreenState.Loading
                 roomExercisesRepository.resetAllIsFavoriteAtLogout()
-                customExercisesRepository.clearExercisesDb()
-                preferenceDataStoreRepository.clearDataStore()
+                roomCustomExercisesRepository.clearExercisesDb()
+                roomProgramsRepository.clearProgramsDb()
+                roomArticlesRepository.clearArticlesDb()
                 roomUserRepository.clearUserDb()
+                preferenceDataStoreRepository.clearDataStore()
             }.onSuccess {
                 _screenState.value = SettingsScreenState.Logout
             }

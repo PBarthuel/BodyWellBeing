@@ -4,13 +4,11 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
@@ -19,7 +17,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -35,7 +32,6 @@ import com.pbarthuel.bodywellbeing.app.ui.theme.VerticalMargin
 import com.pbarthuel.bodywellbeing.viewModel.modules.exerciseDetail.ClassicExerciseDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Exception
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @AndroidEntryPoint
 class ClassicExerciseDetailActivity : ComponentActivity() {
@@ -78,7 +74,7 @@ class ClassicExerciseDetailActivity : ComponentActivity() {
                                         )
                                 ) {
                                     FavoriteButton(
-                                        exercise = exercise,
+                                        isFavorite = exercise.value?.isFavorite,
                                         onFavoriteClicked = {
                                             viewModel.modifyFavoriteState(
                                                 exercise = exercise.value

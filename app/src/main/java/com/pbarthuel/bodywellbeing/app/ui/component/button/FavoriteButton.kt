@@ -16,12 +16,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.pbarthuel.bodywellbeing.R
-import com.pbarthuel.bodywellbeing.app.model.Exercise
 
 @Composable
 fun FavoriteButton(
     modifier: Modifier = Modifier,
-    exercise: State<Exercise?>,
+    isFavorite: Boolean?,
     onFavoriteClicked: () -> Unit
 ) {
     Column(modifier = modifier.wrapContentSize()) {
@@ -29,7 +28,7 @@ fun FavoriteButton(
         val normalSize = 40.dp
 
         var heartIcon by remember { mutableStateOf(R.drawable.ic_heart_grey) }
-        heartIcon = when (exercise.value?.isFavorite) {
+        heartIcon = when (isFavorite) {
             true -> R.drawable.ic_heart_red
             false -> R.drawable.ic_heart_grey
             else -> R.drawable.ic_heart_grey

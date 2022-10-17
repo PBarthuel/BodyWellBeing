@@ -26,4 +26,7 @@ interface ArticleDao {
 
     @Query("SELECT * FROM ArticleEntity WHERE is_favorite == 1")
     fun getFavoritesArticles(): Flow<List<ArticleEntity>>
+
+    @Query("DELETE FROM ArticleEntity")
+    suspend fun clearArticlesDb()
 }

@@ -37,4 +37,7 @@ class RoomProgramsRepositoryImpl@Inject constructor(
             )
         )
     }
+
+    override suspend fun clearProgramsDb() =
+        programsDao.clearProgramsDb()
 }

@@ -15,4 +15,7 @@ interface TasksDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun createTask(taskEntity: TaskEntity)
+
+    @Query("DELETE FROM TaskEntity")
+    suspend fun clearTasksDb()
 }
