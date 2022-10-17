@@ -3,6 +3,7 @@ package com.pbarthuel.bodywellbeing.app.modules.profile
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -10,6 +11,7 @@ import androidx.compose.ui.Modifier
 import com.pbarthuel.bodywellbeing.R
 import com.pbarthuel.bodywellbeing.app.model.CondenseExercise
 import com.pbarthuel.bodywellbeing.app.model.User
+import com.pbarthuel.bodywellbeing.app.ui.component.card.ArticleCard
 import com.pbarthuel.bodywellbeing.app.ui.component.card.FavoriteExercisesCardSection
 import com.pbarthuel.bodywellbeing.app.ui.component.card.ProfileDetailCard
 import com.pbarthuel.bodywellbeing.app.ui.theme.VerticalMargin
@@ -22,6 +24,7 @@ fun ProfileScreen(
 ) {
     val user by viewModel.user.collectAsState(initial = User())
     val favoritesExercises by viewModel.favoritesExercises.collectAsState(initial = listOf())
+    val favoriteArticles by viewModel.favoritesArticles.collectAsState(initial = listOf())
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -42,6 +45,11 @@ fun ProfileScreen(
                     // TODO redirection vers l'écran des exercices
                 }
             )
+        }
+        items(favoriteArticles) { item ->
+            ArticleCard(article = item) {
+
+            }
         }
     }
 }

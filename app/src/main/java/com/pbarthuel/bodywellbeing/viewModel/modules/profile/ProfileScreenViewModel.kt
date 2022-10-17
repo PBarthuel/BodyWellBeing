@@ -3,6 +3,8 @@ package com.pbarthuel.bodywellbeing.viewModel.modules.profile
 import androidx.lifecycle.ViewModel
 import com.pbarthuel.bodywellbeing.app.model.CondenseExercise
 import com.pbarthuel.bodywellbeing.app.model.User
+import com.pbarthuel.bodywellbeing.app.model.article.Article
+import com.pbarthuel.bodywellbeing.domain.repositories.local.room.articles.RoomArticlesRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.RoomCustomExercisesRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.RoomExercisesRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.user.RoomUserRepository
@@ -18,7 +20,8 @@ class ProfileScreenViewModel @Inject constructor(
     private val dispatcher: CoroutineToolsProvider,
     private val roomUserRepository: RoomUserRepository,
     private val roomExercisesRepository: RoomExercisesRepository,
-    private val roomCustomExercisesRepository: RoomCustomExercisesRepository
+    private val roomCustomExercisesRepository: RoomCustomExercisesRepository,
+    private val roomArticlesRepository: RoomArticlesRepository
 ) : ViewModel() {
 
     val user: Flow<User> = roomUserRepository.getUser().flowOn(dispatcher.io)
@@ -27,5 +30,7 @@ class ProfileScreenViewModel @Inject constructor(
         roomExercisesRepository.getFavoritesExercises(),
         roomCustomExercisesRepository.getFavoritesExercises()
     ) { exercises, customExercises -> (exercises + customExercises) }.flowOn(dispatcher.io)
+
+    val favoritesArticles: Flow<List<Article>> = roomArticlesRepository.getFavoritesExercises()
 
 }

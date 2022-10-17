@@ -19,7 +19,9 @@ data class ArticleEntity(
     @ColumnInfo(name = "thumbnail")
     val thumbnail: String,
     @ColumnInfo(name = "sections")
-    val sections: String
+    val sections: String,
+    @ColumnInfo(name = "is_favorite")
+    val isFavorite: Boolean = false
 ) {
 
     @OptIn(ExperimentalSerializationApi::class)

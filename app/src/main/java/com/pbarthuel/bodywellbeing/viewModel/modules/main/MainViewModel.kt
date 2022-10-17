@@ -49,7 +49,6 @@ class MainViewModel @Inject constructor(
     private val roomProgramsRepository: RoomProgramsRepository,
     private val roomUserRepository: RoomUserRepository,
     private val preferenceDataStoreRepository: PreferenceDataStoreRepository,
-    private val userArticleCloudFirestoreDao: UserArticleCloudFirestoreDao,
     private val dispatcher: CoroutineToolsProvider
 ) : ViewModel() {
 
@@ -135,6 +134,19 @@ class MainViewModel @Inject constructor(
                     if (articles.isNotEmpty()) {
                         articles.forEach {
                             roomArticlesRepository.createArticle(it)
+                        }
+                    }
+                }
+        }
+        viewModelScope.launch(dispatcher.io) {
+            articleCloudFirestoreRepository.getAllFavoriteArticles(userId = userId)
+                .collect { favoriteArticles ->
+                    if (favoriteArticles.isNotEmpty()) {
+                        favoriteArticles.forEach { article ->
+                            roomArticlesRepository.updateIsFavorite(
+                                articleId = article.id,
+                                isFavorite = true
+                            )
                         }
                     }
                 }

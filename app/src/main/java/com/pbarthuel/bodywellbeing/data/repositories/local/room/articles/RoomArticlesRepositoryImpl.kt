@@ -22,9 +22,16 @@ class RoomArticlesRepositoryImpl @Inject constructor(
             entities.map { it.toDomain() }
         }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     override fun getArticleDetail(articleId: String): Flow<Article?> =
         articleDao.getArticleFromId(articleId = articleId).mapLatest {
             it?.toDomain()
+        }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    override fun getFavoritesExercises(): Flow<List<Article>> =
+        articleDao.getFavoritesArticles().mapLatest { articles ->
+            articles.map { article -> article.toDomain() }
         }
 
     @OptIn(ExperimentalSerializationApi::class)
@@ -34,7 +41,11 @@ class RoomArticlesRepositoryImpl @Inject constructor(
                 id = article.id,
                 title = article.title,
                 thumbnail = article.thumbnail,
-                sections = Json.encodeToString(article.sections)
+                sections = Json.encodeToString(article.sections),
+                isFavorite = article.isFavorite
             )
         )
+
+    override suspend fun updateIsFavorite(articleId: String, isFavorite: Boolean) =
+        articleDao.updateIsFavorite(isFavorite = isFavorite, articleId = articleId)
 }
