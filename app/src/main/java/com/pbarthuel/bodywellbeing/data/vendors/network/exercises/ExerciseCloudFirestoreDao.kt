@@ -1,4 +1,4 @@
-package com.pbarthuel.bodywellbeing.data.vendors.network
+package com.pbarthuel.bodywellbeing.data.vendors.network.exercises
 
 import android.util.Log
 import com.google.firebase.firestore.ktx.firestore

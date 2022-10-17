@@ -132,7 +132,7 @@ class MainActivity : ComponentActivity() {
                                         when (screenState.value) {
                                             MainScreenState.Home -> {
                                                 if (isUserAdmin.value == true) {
-                                                    IconButton(onClick = { viewModel.createArticle() }) {
+                                                    IconButton(onClick = { viewModel.createFavoriteArticle() }) {
                                                         Icon(
                                                             Icons.Filled.AddCircle,
                                                             contentDescription = "Create Program"

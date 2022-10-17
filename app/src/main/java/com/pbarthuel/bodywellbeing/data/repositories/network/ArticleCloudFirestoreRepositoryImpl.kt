@@ -3,7 +3,7 @@ package com.pbarthuel.bodywellbeing.data.repositories.network
 import com.pbarthuel.bodywellbeing.app.model.article.Article
 import com.pbarthuel.bodywellbeing.data.model.article.WsArticle
 import com.pbarthuel.bodywellbeing.data.model.article.WsArticleSection
-import com.pbarthuel.bodywellbeing.data.vendors.network.ArticleCloudFirestoreDao
+import com.pbarthuel.bodywellbeing.data.vendors.network.articles.ArticleCloudFirestoreDao
 import com.pbarthuel.bodywellbeing.domain.repositories.network.ArticleCloudFirestoreRepository
 import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi

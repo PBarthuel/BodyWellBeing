@@ -1,10 +1,12 @@
 package com.pbarthuel.bodywellbeing.data.model.article
 
+import com.google.firebase.firestore.IgnoreExtraProperties
 import com.google.gson.annotations.SerializedName
 import com.pbarthuel.bodywellbeing.app.model.article.Article
 import kotlinx.serialization.Serializable
 
 @Serializable
+@IgnoreExtraProperties
 data class WsArticle(
     @SerializedName("id") val id: String = "",
     @SerializedName("title") val title: String = "",

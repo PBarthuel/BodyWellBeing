@@ -5,7 +5,10 @@ import androidx.lifecycle.viewModelScope
 import com.pbarthuel.bodywellbeing.app.model.Exercise
 import com.pbarthuel.bodywellbeing.app.model.article.Article
 import com.pbarthuel.bodywellbeing.app.model.article.ArticleSection
+import com.pbarthuel.bodywellbeing.data.model.article.WsArticle
+import com.pbarthuel.bodywellbeing.data.model.article.WsArticleSection
 import com.pbarthuel.bodywellbeing.data.model.program.WsProgram
+import com.pbarthuel.bodywellbeing.data.vendors.network.articles.UserArticleCloudFirestoreDao
 import com.pbarthuel.bodywellbeing.domain.repositories.local.dataStore.PreferenceDataStoreRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.articles.RoomArticlesRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.RoomCustomExercisesRepository
@@ -46,6 +49,7 @@ class MainViewModel @Inject constructor(
     private val roomProgramsRepository: RoomProgramsRepository,
     private val roomUserRepository: RoomUserRepository,
     private val preferenceDataStoreRepository: PreferenceDataStoreRepository,
+    private val userArticleCloudFirestoreDao: UserArticleCloudFirestoreDao,
     private val dispatcher: CoroutineToolsProvider
 ) : ViewModel() {
 
@@ -141,25 +145,5 @@ class MainViewModel @Inject constructor(
     fun createProgram() {
         val program = Json.decodeFromString<WsProgram>("""{ "id": "3", "title": "First Program", "thumbnail": "https://st.depositphotos.com/1146092/4777/i/950/depositphotos_47770061-stock-photo-cool-dog.jpg", "description": "This is a description, This is a description, This is a description, This is a description !", "days": [ { "dayIndex": 1, "tasks": [ { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "article" }, { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "exercises" } ] }, { "dayIndex": 3, "tasks": [ { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "article" }, { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "exercises" } ] }, { "dayIndex": 5, "tasks": [ { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "article" }, { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "exercises" } ] }, { "dayIndex": 7, "tasks": [ { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "article" }, { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "exercises" } ] }, { "dayIndex": 9, "tasks": [ { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "article" }, { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "exercises" } ] }, { "dayIndex": 11, "tasks": [ { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "article" }, { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "exercises" } ] }, { "dayIndex": 13, "tasks": [ { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "article" }, { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "exercises" } ] } ] }""")
         programCloudFirestoreRepository.createProgram(program)
-    }
-
-    fun createArticle() {
-        articleCloudFirestoreRepository.createArticle(
-            Article(
-                id = "2",
-                title = "This is the first article !",
-                thumbnail = "https://wallpaperaccess.com/full/154009.jpg",
-                sections = listOf(
-                    ArticleSection(
-                        title = "First section.",
-                        description = "This is a description to test the code, This is a description to test the code, This is a description to test the code, This is a description to test the code, This is a description to test the code, This is a description to test the code, This is a description to test the code, This is a description to test the code, This is a description to test the code, This is a description to test the code, This is a description to test the code, This is a description to test the code, This is a description to test the code, This is a description to test the code !"
-                    ),
-                    ArticleSection(
-                        title = "Second section.",
-                        description = "This is a description to test the code, This is a description to test the code, This is a description to test the code, This is a description to test the code, This is a description to test the code, This is a description to test the code, This is a description to test the code, This is a description to test the code, This is a description to test the code, This is a description to test the code, This is a description to test the code, This is a description to test the code, This is a description to test the code, This is a description to test the code !"
-                    )
-                )
-            )
-        )
     }
 }
