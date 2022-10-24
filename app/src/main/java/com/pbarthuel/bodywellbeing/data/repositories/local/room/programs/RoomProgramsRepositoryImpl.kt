@@ -2,7 +2,7 @@ package com.pbarthuel.bodywellbeing.data.repositories.local.room.programs
 
 import com.pbarthuel.bodywellbeing.app.model.program.ProgramOverview
 import com.pbarthuel.bodywellbeing.app.model.program.ProgramPreview
-import com.pbarthuel.bodywellbeing.data.model.program.WsProgram
+import com.pbarthuel.bodywellbeing.data.model.program.WsProgramDetail
 import com.pbarthuel.bodywellbeing.data.vendors.local.room.programs.program.ProgramsDao
 import com.pbarthuel.bodywellbeing.data.vendors.local.room.programs.program.entities.ProgramEntity
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.programs.RoomProgramsRepository
@@ -27,7 +27,20 @@ class RoomProgramsRepositoryImpl@Inject constructor(
             program?.toProgramOverview()
         }
 
-    override suspend fun createProgram(program: WsProgram) {
+    override suspend fun joinProgram(programId: String, startDate: Long) =
+        programsDao.joinProgram(programId = programId, startDate = startDate)
+
+    override suspend fun isProgramJoined(): Boolean =
+        when (programsDao.isProgramJoined()) {
+            null -> false
+            else -> true
+        }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    override fun getJoinedProgramOverview(): Flow<ProgramOverview?> =
+        programsDao.getJoinedProgram().mapLatest { it?.toProgramOverview() }
+
+    override suspend fun createProgram(program: WsProgramDetail) {
         programsDao.createProgram(
             ProgramEntity(
                 id = program.id,

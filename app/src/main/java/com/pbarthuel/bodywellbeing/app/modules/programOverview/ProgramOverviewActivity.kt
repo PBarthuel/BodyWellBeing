@@ -87,9 +87,7 @@ class ProgramOverviewActivity : ComponentActivity() {
                                     vertical = VerticalMargin,
                                     horizontal = HorizontalMargin
                                 )
-                            ) {
-
-                            }
+                            ) { viewModel.joinProgram() }
                         }
                     }
                 }

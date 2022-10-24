@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 interface TasksDao {
 
     @Query("SELECT * FROM TaskEntity")
-    fun getAllTasks(): Flow<List<TaskEntity>?>
+    fun getAllTasks(): Flow<List<TaskEntity>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun createTask(taskEntity: TaskEntity)

@@ -3,17 +3,14 @@ package com.pbarthuel.bodywellbeing.viewModel.modules.main
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pbarthuel.bodywellbeing.app.model.Exercise
-import com.pbarthuel.bodywellbeing.app.model.article.Article
-import com.pbarthuel.bodywellbeing.app.model.article.ArticleSection
-import com.pbarthuel.bodywellbeing.data.model.article.WsArticle
-import com.pbarthuel.bodywellbeing.data.model.article.WsArticleSection
-import com.pbarthuel.bodywellbeing.data.model.program.WsProgram
-import com.pbarthuel.bodywellbeing.data.vendors.network.articles.UserArticleCloudFirestoreDao
+import com.pbarthuel.bodywellbeing.data.model.program.WsProgramDetail
+import com.pbarthuel.bodywellbeing.domain.model.program.Task
 import com.pbarthuel.bodywellbeing.domain.repositories.local.dataStore.PreferenceDataStoreRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.articles.RoomArticlesRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.RoomCustomExercisesRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.RoomExercisesRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.programs.RoomProgramsRepository
+import com.pbarthuel.bodywellbeing.domain.repositories.local.room.tasks.RoomTasksRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.user.RoomUserRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.network.ArticleCloudFirestoreRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.network.ExerciseCloudFirestoreRepository
@@ -24,16 +21,15 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 sealed class MainScreenState {
     object Home : MainScreenState()
-    object Body : MainScreenState()
     object Exercises : MainScreenState()
     object Profile : MainScreenState()
 }
@@ -47,6 +43,7 @@ class MainViewModel @Inject constructor(
     private val roomCustomExercisesRepository: RoomCustomExercisesRepository,
     private val roomArticlesRepository: RoomArticlesRepository,
     private val roomProgramsRepository: RoomProgramsRepository,
+    private val roomTasksRepository: RoomTasksRepository,
     private val roomUserRepository: RoomUserRepository,
     private val preferenceDataStoreRepository: PreferenceDataStoreRepository,
     private val dispatcher: CoroutineToolsProvider
@@ -66,6 +63,8 @@ class MainViewModel @Inject constructor(
     }
 
     fun isUserAdmin(): Flow<Boolean?> = roomUserRepository.isUserAdmin().flowOn(dispatcher.io)
+
+    fun isProgramJoined(): Flow<List<Task>?> = roomTasksRepository.getAllTasks().flowOn(dispatcher.io) // TODO changer cette logique
 
     fun onScreenChanged(screenState: MainScreenState) {
         _screenState.value = screenState
@@ -116,7 +115,7 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun syncProgram() {
+    fun syncAllPrograms() {
         viewModelScope.launch(dispatcher.io) {
             programCloudFirestoreRepository.getAllPrograms()
                 .collect { programs ->
@@ -153,9 +152,27 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    @OptIn(ExperimentalSerializationApi::class)
-    fun createProgram() {
-        val program = Json.decodeFromString<WsProgram>("""{ "id": "3", "title": "First Program", "thumbnail": "https://st.depositphotos.com/1146092/4777/i/950/depositphotos_47770061-stock-photo-cool-dog.jpg", "description": "This is a description, This is a description, This is a description, This is a description !", "days": [ { "dayIndex": 1, "tasks": [ { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "article" }, { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "exercises" } ] }, { "dayIndex": 3, "tasks": [ { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "article" }, { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "exercises" } ] }, { "dayIndex": 5, "tasks": [ { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "article" }, { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "exercises" } ] }, { "dayIndex": 7, "tasks": [ { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "article" }, { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "exercises" } ] }, { "dayIndex": 9, "tasks": [ { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "article" }, { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "exercises" } ] }, { "dayIndex": 11, "tasks": [ { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "article" }, { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "exercises" } ] }, { "dayIndex": 13, "tasks": [ { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "article" }, { "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee", "type": "exercises" } ] } ] }""")
-        programCloudFirestoreRepository.createProgram(program)
+    fun syncJoinedProgram() {
+        viewModelScope.launch(dispatcher.io) {
+            programCloudFirestoreRepository.getJoinedProgram(userId = userId)
+                .collect {
+                    if (it != null) {
+                        roomProgramsRepository.joinProgram(
+                            programId = it.id,
+                            startDate = it.startDate ?: throw Exception("StartDate shouldn't be null")
+                        )
+                        if (roomTasksRepository.getAllTasks().first().isNullOrEmpty()) {
+                            it.days.forEach { day ->
+                                day.tasks.forEach { task ->
+                                    roomTasksRepository.createTask(
+                                        task = task,
+                                        dayIndex = day.day
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+        }
     }
 }

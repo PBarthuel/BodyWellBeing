@@ -8,7 +8,7 @@ import com.pbarthuel.bodywellbeing.data.vendors.local.room.programs.program.enti
 import com.pbarthuel.bodywellbeing.data.vendors.local.room.programs.program.entities.TaskEntity
 
 @Database(
-    version = 1,
+    version = 2,
     entities = [
         (ProgramEntity::class),
         (TaskEntity::class)

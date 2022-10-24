@@ -30,6 +30,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
@@ -95,8 +96,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         viewModel.syncExercise()
-        viewModel.syncProgram()
+        viewModel.syncAllPrograms()
         viewModel.syncArticle()
+        viewModel.syncJoinedProgram()
         checkActivityTackPermissionStatus()
 
         setContent {
@@ -111,6 +113,7 @@ class MainActivity : ComponentActivity() {
                     )
                     val screenState = viewModel.screenState.collectAsState()
                     val isUserAdmin = viewModel.isUserAdmin().collectAsState(initial = false)
+                    val isProgramJoined = viewModel.isProgramJoined().collectAsState(initial = listOf())
                     var topBarTitle by remember { mutableStateOf(getString(R.string.home)) }
                     var shouldShowBars by remember { mutableStateOf(true) }
                     Scaffold(
@@ -130,10 +133,20 @@ class MainActivity : ComponentActivity() {
                                         when (screenState.value) {
                                             MainScreenState.Home -> {
                                                 if (isUserAdmin.value == true) {
-                                                    IconButton(onClick = { }) {
+                                                    IconButton(onClick = {}) {
                                                         Icon(
                                                             Icons.Filled.AddCircle,
                                                             contentDescription = "Create Program"
+                                                        )
+                                                    }
+                                                }
+                                                if (!isProgramJoined.value.isNullOrEmpty()) {
+                                                    IconButton(onClick = {
+                                                        // TODO implement it
+                                                    }) {
+                                                        Icon(
+                                                            Icons.Filled.Clear,
+                                                            contentDescription = "Leave Program"
                                                         )
                                                     }
                                                 }
@@ -154,7 +167,6 @@ class MainActivity : ComponentActivity() {
                                                     )
                                                 }
                                             }
-                                            else -> {}
                                         }
                                     }
                                 )

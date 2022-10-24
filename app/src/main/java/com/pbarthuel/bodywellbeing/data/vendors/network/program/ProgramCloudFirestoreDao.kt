@@ -1,10 +1,10 @@
-package com.pbarthuel.bodywellbeing.data.vendors.network
+package com.pbarthuel.bodywellbeing.data.vendors.network.program
 
 import android.util.Log
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
-import com.pbarthuel.bodywellbeing.data.model.program.WsProgram
+import com.pbarthuel.bodywellbeing.data.model.program.WsProgramDetail
 import javax.inject.Inject
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.awaitClose
@@ -15,7 +15,7 @@ class ProgramCloudFirestoreDao @Inject constructor() {
 
     private val db = Firebase.firestore.collection("program")
 
-    fun createProgram(program: WsProgram) {
+    fun createProgram(program: WsProgramDetail) {
         db.document(program.id)
             .set(program)
             .addOnSuccessListener {
@@ -26,7 +26,7 @@ class ProgramCloudFirestoreDao @Inject constructor() {
             }
     }
 
-    fun getAllPrograms(): Flow<List<WsProgram>> = callbackFlow {
+    fun getAllPrograms(): Flow<List<WsProgramDetail>> = callbackFlow {
         db.addSnapshotListener { value, error ->
             if (error != null) {
                 Log.d("ProgramCloudFirestoreDao", "Listen failed ")
@@ -34,12 +34,21 @@ class ProgramCloudFirestoreDao @Inject constructor() {
 
             if (value != null && !value.isEmpty) {
                 trySend(value.documents.map {
-                    it.toObject<WsProgram>()!!
+                    it.toObject<WsProgramDetail>()!!
                 })
             } else {
                 Log.d("ProgramCloudFirestoreDao", "Fail to retrieving data ")
             }
         }
         awaitClose { cancel() }
+    }
+
+    fun getProgramById(programId: String): Flow<WsProgramDetail> = callbackFlow {
+        db.document(programId)
+            .get()
+            .addOnSuccessListener {
+                trySend(it.toObject<WsProgramDetail>()!!)
+            }
+        awaitClose { close() }
     }
 }

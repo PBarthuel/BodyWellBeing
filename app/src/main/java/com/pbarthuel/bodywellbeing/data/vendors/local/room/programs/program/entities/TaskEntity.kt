@@ -3,6 +3,7 @@ package com.pbarthuel.bodywellbeing.data.vendors.local.room.programs.program.ent
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.pbarthuel.bodywellbeing.domain.model.program.Task
 import kotlinx.serialization.Serializable
 
 @Entity
@@ -21,4 +22,14 @@ data class TaskEntity(
     val dayIndex: Int,
     @ColumnInfo(name = "type")
     val type: Int
-)
+) {
+
+    fun toDomain(dayIndex: Int): Task =
+        Task(
+            id = id,
+            thumbnail = thumbnail,
+            type = type,
+            title = title,
+            dayIndex = dayIndex
+        )
+}

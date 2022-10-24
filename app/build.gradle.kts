@@ -87,6 +87,9 @@ dependencies {
     implementation("com.google.accompanist:accompanist-navigation-material:${LibVersion.accompanistVersion}")
     implementation("com.google.accompanist:accompanist-swiperefresh:${LibVersion.accompanistVersion}")
 
+    // JodaTime
+    implementation("joda-time:joda-time:2.11.1")
+
     // DataStore
     implementation("androidx.datastore:datastore-preferences:1.0.0")
     implementation("androidx.datastore:datastore-preferences-core:1.0.0")

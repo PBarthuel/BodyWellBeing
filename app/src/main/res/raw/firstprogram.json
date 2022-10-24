@@ -9,11 +9,15 @@
       "tasks": [
         {
           "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee",
-          "type": "article"
+          "title": "Patate",
+          "thumbnail": "https://image.shutterstock.com/image-vector/empty-set-null-slashed-zero-260nw-2106956618.jpg",
+          "type": 2
         },
         {
           "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee",
-          "type": "exercises"
+          "title": "Courgette",
+          "thumbnail": "https://image.shutterstock.com/image-vector/empty-set-null-symbol-mathematic-260nw-2024500229.jpg",
+          "type": 1
         }
       ]
     },
@@ -22,11 +26,15 @@
       "tasks": [
         {
           "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee",
-          "type": "article"
+          "title": "Patate",
+          "thumbnail": "https://image.shutterstock.com/image-vector/empty-set-null-slashed-zero-260nw-2106956618.jpg",
+          "type": 2
         },
         {
           "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee",
-          "type": "exercises"
+          "title": "Courgette",
+          "thumbnail": "https://image.shutterstock.com/image-vector/empty-set-null-symbol-mathematic-260nw-2024500229.jpg",
+          "type": 1
         }
       ]
     },
@@ -35,11 +43,15 @@
       "tasks": [
         {
           "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee",
-          "type": "article"
+          "title": "Patate",
+          "thumbnail": "https://image.shutterstock.com/image-vector/empty-set-null-slashed-zero-260nw-2106956618.jpg",
+          "type": 2
         },
         {
           "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee",
-          "type": "exercises"
+          "title": "Courgette",
+          "thumbnail": "https://image.shutterstock.com/image-vector/empty-set-null-symbol-mathematic-260nw-2024500229.jpg",
+          "type": 1
         }
       ]
     },
@@ -48,11 +60,15 @@
       "tasks": [
         {
           "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee",
-          "type": "article"
+          "title": "Patate",
+          "thumbnail": "https://image.shutterstock.com/image-vector/empty-set-null-slashed-zero-260nw-2106956618.jpg",
+          "type": 2
         },
         {
           "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee",
-          "type": "exercises"
+          "title": "Courgette",
+          "thumbnail": "https://image.shutterstock.com/image-vector/empty-set-null-symbol-mathematic-260nw-2024500229.jpg",
+          "type": 1
         }
       ]
     },
@@ -61,11 +77,15 @@
       "tasks": [
         {
           "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee",
-          "type": "article"
+          "title": "Patate",
+          "thumbnail": "https://image.shutterstock.com/image-vector/empty-set-null-slashed-zero-260nw-2106956618.jpg",
+          "type": 2
         },
         {
           "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee",
-          "type": "exercises"
+          "title": "Courgette",
+          "thumbnail": "https://image.shutterstock.com/image-vector/empty-set-null-symbol-mathematic-260nw-2024500229.jpg",
+          "type": 1
         }
       ]
     },
@@ -74,11 +94,15 @@
       "tasks": [
         {
           "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee",
-          "type": "article"
+          "title": "Patate",
+          "thumbnail": "https://image.shutterstock.com/image-vector/empty-set-null-slashed-zero-260nw-2106956618.jpg",
+          "type": 2
         },
         {
           "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee",
-          "type": "exercises"
+          "title": "Courgette",
+          "thumbnail": "https://image.shutterstock.com/image-vector/empty-set-null-symbol-mathematic-260nw-2024500229.jpg",
+          "type": 1
         }
       ]
     },
@@ -87,11 +111,15 @@
       "tasks": [
         {
           "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee",
-          "type": "article"
+          "title": "Patate",
+          "thumbnail": "https://image.shutterstock.com/image-vector/empty-set-null-slashed-zero-260nw-2106956618.jpg",
+          "type": 2
         },
         {
           "id": "274eb337-7fda-4c4d-9014-7cfa432fc1ee",
-          "type": "exercises"
+          "title": "Courgette",
+          "thumbnail": "https://image.shutterstock.com/image-vector/empty-set-null-symbol-mathematic-260nw-2024500229.jpg",
+          "type": 1
         }
       ]
     }

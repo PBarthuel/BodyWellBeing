@@ -16,6 +16,15 @@ interface ProgramsDao {
     @Query("SELECT * FROM ProgramEntity WHERE id == :programId")
     fun getProgramFromId(programId: String): Flow<ProgramEntity?>
 
+    @Query("UPDATE ProgramEntity SET startDate = :startDate WHERE id == :programId")
+    fun joinProgram(programId: String, startDate: Long)
+
+    @Query("SELECT * FROM ProgramEntity WHERE startDate != 0")
+    fun isProgramJoined(): ProgramEntity? //TODO peut être changer ça
+
+    @Query("SELECT * FROM ProgramEntity WHERE startDate != null")
+    fun getJoinedProgram(): Flow<ProgramEntity?>
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun createProgram(programEntity: ProgramEntity)
 

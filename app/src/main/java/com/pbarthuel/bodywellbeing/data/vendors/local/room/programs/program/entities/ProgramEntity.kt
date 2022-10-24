@@ -3,7 +3,6 @@ package com.pbarthuel.bodywellbeing.data.vendors.local.room.programs.program.ent
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.pbarthuel.bodywellbeing.app.model.Exercise
 import com.pbarthuel.bodywellbeing.app.model.program.ProgramOverview
 import com.pbarthuel.bodywellbeing.app.model.program.ProgramPreview
 import kotlinx.serialization.Serializable
@@ -18,7 +17,9 @@ data class ProgramEntity(
     @ColumnInfo(name = "thumbnail")
     val thumbnail: String,
     @ColumnInfo(name = "description")
-    val description: String
+    val description: String,
+    @ColumnInfo(name = "startDate")
+    val startDate: Long = 0,
 ) {
     fun toProgramPreview(): ProgramPreview =
         ProgramPreview(

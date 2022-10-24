@@ -7,6 +7,7 @@ import com.pbarthuel.bodywellbeing.domain.repositories.local.room.articles.RoomA
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.RoomCustomExercisesRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.exercises.RoomExercisesRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.programs.RoomProgramsRepository
+import com.pbarthuel.bodywellbeing.domain.repositories.local.room.tasks.RoomTasksRepository
 import com.pbarthuel.bodywellbeing.domain.repositories.local.room.user.RoomUserRepository
 import com.pbarthuel.bodywellbeing.viewModel.utils.CoroutineToolsProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -29,6 +30,7 @@ class SettingsViewModel @Inject constructor(
     private val roomCustomExercisesRepository: RoomCustomExercisesRepository,
     private val roomProgramsRepository: RoomProgramsRepository,
     private val roomArticlesRepository: RoomArticlesRepository,
+    private val roomTasksRepository: RoomTasksRepository,
     private val dispatcher: CoroutineToolsProvider
 ) : ViewModel() {
 
@@ -42,6 +44,7 @@ class SettingsViewModel @Inject constructor(
                 roomExercisesRepository.resetAllIsFavoriteAtLogout()
                 roomCustomExercisesRepository.clearExercisesDb()
                 roomProgramsRepository.clearProgramsDb()
+                roomTasksRepository.clearTasksDb()
                 roomArticlesRepository.clearArticlesDb()
                 roomUserRepository.clearUserDb()
                 preferenceDataStoreRepository.clearDataStore()

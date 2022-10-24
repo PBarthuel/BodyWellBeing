@@ -1,7 +1,5 @@
 package com.pbarthuel.bodywellbeing.app.modules.home
 
-import androidx.compose.animation.Crossfade
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -17,17 +15,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.pbarthuel.bodywellbeing.app.model.article.Article
 import com.pbarthuel.bodywellbeing.app.model.program.ProgramPreview
 import com.pbarthuel.bodywellbeing.app.ui.component.StepGoalGauge
+import com.pbarthuel.bodywellbeing.app.ui.component.card.ArticleCard
 import com.pbarthuel.bodywellbeing.app.ui.component.card.ProgramCard
 import com.pbarthuel.bodywellbeing.app.ui.component.text.Header3
 import com.pbarthuel.bodywellbeing.app.ui.theme.HorizontalMargin
 import com.pbarthuel.bodywellbeing.app.ui.theme.VerticalMargin
+import com.pbarthuel.bodywellbeing.domain.model.program.Task
 import com.pbarthuel.bodywellbeing.viewModel.modules.home.HomeViewModel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @Composable
 fun HomeScreen(
@@ -36,19 +35,22 @@ fun HomeScreen(
     onProgramCardClicked: (ProgramPreview) -> Unit,
     onStepGaugeClick: () -> Unit
 ) {
-    //Crossfade(targetState = true) {
-        HomeScreenWithEnrolledProgram(activityTrackPermissionState = activityTrackPermissionState) {
-
-        }
-        HomeScreenWithoutEnrolledProgram(
+    val tasks = viewModel.programTasks.collectAsState(initial = listOf())
+    when (tasks.value.isNullOrEmpty()) {
+        true -> HomeScreenWithoutEnrolledProgram(
             viewModel = viewModel,
             activityTrackPermissionState = activityTrackPermissionState,
             onProgramCardClicked = onProgramCardClicked
         ) {
 
         }
-   // }
+        else -> HomeScreenWithEnrolledProgram(
+            activityTrackPermissionState = activityTrackPermissionState,
+            tasks = tasks.value!!
+        ) {
 
+        }
+    }
 }
 
 val programs = listOf(
@@ -95,9 +97,11 @@ fun HomeScreenWithoutEnrolledProgram(
         verticalArrangement = Arrangement.spacedBy(VerticalMargin)
     ) {
         item {
-            Column(modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+            ) {
                 StepGoalGauge(
                     modifier = Modifier
                         .align(CenterHorizontally)
@@ -129,13 +133,16 @@ fun HomeScreenWithoutEnrolledProgram(
 @Composable
 fun HomeScreenWithEnrolledProgram(
     activityTrackPermissionState: State<Boolean>,
+    tasks: List<Task>,
     onStepGaugeClick: () -> Unit
 ) {
     LazyColumn(modifier = Modifier.fillMaxSize()) {
         item {
-            Column(modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+            ) {
                 StepGoalGauge(
                     modifier = Modifier
                         .align(CenterHorizontally)
@@ -152,6 +159,18 @@ fun HomeScreenWithEnrolledProgram(
                     title = if (activityTrackPermissionState.value) "Cool" else "Click here to grant permission",
                     animate = true
                 )
+            }
+        }
+        items(tasks) { task ->
+            ArticleCard(
+                article = Article(
+                    id = task.id,
+                    title = task.title,
+                    thumbnail = task.thumbnail,
+                    listOf()
+                )
+            ) {
+
             }
         }
     }
