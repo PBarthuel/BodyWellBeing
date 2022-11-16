@@ -142,7 +142,7 @@ class MainActivity : ComponentActivity() {
                                                 }
                                                 if (!isProgramJoined.value.isNullOrEmpty()) {
                                                     IconButton(onClick = {
-                                                        // TODO implement it
+                                                        viewModel.leaveProgram()
                                                     }) {
                                                         Icon(
                                                             Icons.Filled.Clear,

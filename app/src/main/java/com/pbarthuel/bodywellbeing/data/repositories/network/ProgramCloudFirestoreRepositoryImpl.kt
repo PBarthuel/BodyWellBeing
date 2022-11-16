@@ -35,6 +35,6 @@ class ProgramCloudFirestoreRepositoryImpl @Inject constructor(
     override fun getJoinedProgram(userId: String): Flow<ProgramDetail?> =
         userProgramCloudFirestoreDao.getJoinedProgram(userId = userId).mapLatest { it?.toDomain() }
 
-    override fun leaveProgram(userId: String) =
-        userProgramCloudFirestoreDao.leaveProgram(userId = userId)
+    override fun leaveProgram(userId: String, programId: String) =
+        userProgramCloudFirestoreDao.leaveProgram(userId = userId, programId = programId)
 }

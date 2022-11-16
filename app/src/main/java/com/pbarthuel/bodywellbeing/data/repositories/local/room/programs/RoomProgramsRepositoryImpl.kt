@@ -51,6 +51,9 @@ class RoomProgramsRepositoryImpl@Inject constructor(
         )
     }
 
+    override suspend fun clearProgramsStartDate(programId: String) =
+        programsDao.clearProgramsStartDate(programId = programId)
+
     override suspend fun clearProgramsDb() =
         programsDao.clearProgramsDb()
 }

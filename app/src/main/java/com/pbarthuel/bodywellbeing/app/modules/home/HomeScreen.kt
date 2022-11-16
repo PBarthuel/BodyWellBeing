@@ -1,5 +1,6 @@
 package com.pbarthuel.bodywellbeing.app.modules.home
 
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -36,19 +37,21 @@ fun HomeScreen(
     onStepGaugeClick: () -> Unit
 ) {
     val tasks = viewModel.programTasks.collectAsState(initial = listOf())
-    when (tasks.value.isNullOrEmpty()) {
-        true -> HomeScreenWithoutEnrolledProgram(
-            viewModel = viewModel,
-            activityTrackPermissionState = activityTrackPermissionState,
-            onProgramCardClicked = onProgramCardClicked
-        ) {
+    Crossfade(targetState = tasks.value) { tasksList ->
+        when (tasksList.isEmpty()) {
+            true -> HomeScreenWithoutEnrolledProgram(
+                viewModel = viewModel,
+                activityTrackPermissionState = activityTrackPermissionState,
+                onProgramCardClicked = onProgramCardClicked
+            ) {
 
-        }
-        else -> HomeScreenWithEnrolledProgram(
-            activityTrackPermissionState = activityTrackPermissionState,
-            tasks = tasks.value!!
-        ) {
+            }
+            else -> HomeScreenWithEnrolledProgram(
+                activityTrackPermissionState = activityTrackPermissionState,
+                tasks = tasksList
+            ) {
 
+            }
         }
     }
 }

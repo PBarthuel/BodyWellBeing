@@ -12,5 +12,6 @@ interface RoomProgramsRepository {
     suspend fun isProgramJoined(): Boolean
     fun getJoinedProgramOverview(): Flow<ProgramOverview?>
     suspend fun createProgram(program: WsProgramDetail)
+    suspend fun clearProgramsStartDate(programId: String)
     suspend fun clearProgramsDb()
 }

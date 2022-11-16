@@ -10,5 +10,5 @@ interface ProgramCloudFirestoreRepository {
     fun createProgram(program: WsProgramDetail)
     fun joinProgram(userId: String, program: ProgramDetail)
     fun getJoinedProgram(userId: String): Flow<ProgramDetail?>
-    fun leaveProgram(userId: String)
+    fun leaveProgram(userId: String, programId: String)
 }

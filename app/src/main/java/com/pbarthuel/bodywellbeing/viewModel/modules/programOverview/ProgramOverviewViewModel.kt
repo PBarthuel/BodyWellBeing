@@ -48,11 +48,6 @@ class ProgramOverviewViewModel @Inject constructor(
                 userId = userId,
                 program = program
             )
-            /*program.days.forEach { day ->
-                day.tasks.forEach { task ->
-                    roomTasksRepository.createTask(task = task, dayIndex = day.day)
-                }
-            }*/
         }
     }
 }

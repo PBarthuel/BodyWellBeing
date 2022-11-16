@@ -93,7 +93,7 @@ class MainViewModel @Inject constructor(
                     }
                 }
         }
-        // TODO a la première connection la synchro bu a voir pourquoi
+        // TODO a la première connection la synchro bug a voir pourquoi
         viewModelScope.launch(dispatcher.io) {
             exerciseCloudFirestoreRepository.getAllFavoriteExercises(userId = userId)
                 .collect { favoriteExercises ->
@@ -173,6 +173,20 @@ class MainViewModel @Inject constructor(
                         }
                     }
                 }
+        }
+    }
+
+    fun leaveProgram() {
+        viewModelScope.launch(dispatcher.io) {
+            val joinedProgramId =
+                roomProgramsRepository.getJoinedProgramOverview().first()?.programId
+                    ?: throw Exception("joinedProgramId shouldn't be null")
+            kotlin.runCatching {
+                programCloudFirestoreRepository.leaveProgram(userId = userId, programId = joinedProgramId)
+            }.onSuccess {
+                roomProgramsRepository.clearProgramsStartDate(programId = joinedProgramId)
+                roomTasksRepository.clearTasksDb()
+            }
         }
     }
 }

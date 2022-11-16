@@ -52,11 +52,11 @@ class UserProgramCloudFirestoreDao @Inject constructor() {
         awaitClose { close() }
     }
 
-    fun leaveProgram(userId: String) {
+    fun leaveProgram(userId: String, programId: String) {
         db.collection(USER_PROGRAM_COLLECTION)
             .document(userId)
             .collection(JOINED_COLLECTION)
-            .document()
+            .document(programId)
             .delete()
             .addOnSuccessListener {
                 Log.d("UserProgramCloudFirestoreDao", "leaveProgram: success")

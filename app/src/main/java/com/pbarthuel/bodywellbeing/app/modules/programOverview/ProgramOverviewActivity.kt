@@ -87,7 +87,11 @@ class ProgramOverviewActivity : ComponentActivity() {
                                     vertical = VerticalMargin,
                                     horizontal = HorizontalMargin
                                 )
-                            ) { viewModel.joinProgram() }
+                            ) {
+                                kotlin.runCatching {
+                                    viewModel.joinProgram()
+                                }.onSuccess { finish() }
+                            }
                         }
                     }
                 }
